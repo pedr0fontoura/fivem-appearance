@@ -28,7 +28,7 @@ async function post(event: string, data = {}): Promise<any> {
   return response.json();
 }
 
-function onEvent(type: string, func: any) {
+function onEvent(type: string, func: any): void {
   if (events[type]) {
     console.log(`[Nui] Event ${type} is already declared.`);
     return;
@@ -36,7 +36,7 @@ function onEvent(type: string, func: any) {
   events[type] = func;
 }
 
-function emitEvent(type: string, payload: any) {
+function emitEvent(type: string, payload: any): void {
   window.dispatchEvent(
     new MessageEvent('message', {
       data: { type, payload },
