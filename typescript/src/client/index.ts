@@ -12,6 +12,8 @@ import {
 } from './defaults';
 
 async function setPlayerModel(model: string): Promise<void> {
+  if (!model) return;
+
   RequestModel(model);
 
   while (!HasModelLoaded(model)) {
@@ -167,30 +169,28 @@ async function setPlayerAppearance(appearance: PedAppearance): Promise<void> {
 function setPedAppearance(ped: number, appearance: PedAppearance): void {
   const { components, props, headBlend, faceFeatures, headOverlays, hair, eyeColor } = appearance;
 
-  const playerPed = PlayerPedId();
+  setPedComponents(ped, components);
 
-  setPedComponents(playerPed, components);
-
-  setPedProps(playerPed, props);
+  setPedProps(ped, props);
 
   if (headBlend) {
-    setPedHeadBlend(playerPed, headBlend);
+    setPedHeadBlend(ped, headBlend);
   }
 
   if (faceFeatures) {
-    setPedFaceFeatures(playerPed, faceFeatures);
+    setPedFaceFeatures(ped, faceFeatures);
   }
 
   if (headOverlays) {
-    setPedHeadOverlays(playerPed, headOverlays);
+    setPedHeadOverlays(ped, headOverlays);
   }
 
   if (hair) {
-    setPedHair(playerPed, hair);
+    setPedHair(ped, hair);
   }
 
   if (eyeColor) {
-    setPedEyeColor(playerPed, eyeColor);
+    setPedEyeColor(ped, eyeColor);
   }
 }
 
