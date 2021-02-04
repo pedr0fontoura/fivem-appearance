@@ -26,9 +26,11 @@
   "rules": {
     "camelcase": "off",
     "consistent-return": "off",
+    "radix": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-": "off",
+    "react/no-array-index-key": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-props-no-spreading": "off",
