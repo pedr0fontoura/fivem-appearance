@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface ItemProps {
-  title: string;
+  title?: string;
 }
 
 const Container = styled.div`
@@ -29,12 +29,18 @@ const Inputs = styled.div`
   gap: 10px;
 
   margin-top: 10px;
+
+  > div {
+    & + div {
+      margin-top: 10px;
+    }
+  }
 `;
 
 const Item: React.FC<ItemProps> = ({ children, title }) => {
   return (
     <Container>
-      <span>{title}</span>
+      {title && <span>{title}</span>}
       <Inputs>{children}</Inputs>
     </Container>
   );

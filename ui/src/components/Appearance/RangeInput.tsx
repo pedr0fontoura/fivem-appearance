@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 
 interface RangeInputProps {
@@ -6,28 +6,33 @@ interface RangeInputProps {
   min: number;
   max: number;
   factor?: number;
-  default?: number;
+  defaultValue?: number;
   onChange: (value: number) => void;
 }
 
 const Container = styled.div`
   width: 100%;
 
-  span {
-    font-weight: 200;
-    font-size: smaller;
-  }
+  > span {
+    width: 100%;
 
-  small {
+    display: flex;
+    justify-content: space-between;
     font-weight: 200;
-    font-size: 8px;
   }
 
   > div {
     display: flex;
     align-items: center;
 
+    position: relative;
+
     margin-top: 10px;
+
+    > small {
+      font-weight: 200;
+      font-size: 8px;
+    }
   }
 
   input[type='range'] {
@@ -53,8 +58,10 @@ const Container = styled.div`
   }
 `;
 
-const RangeInput: React.FC<RangeInputProps> = ({ min, max, factor, title, onChange }) => {
+const RangeInput: React.FC<RangeInputProps> = ({ min, max, factor = 1, title, defaultValue, onChange }) => {
   const [value, setValue] = useState(Math.floor((min + max) / 2));
+
+  const [currentValue] = useState(defaultValue);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -70,20 +77,32 @@ const RangeInput: React.FC<RangeInputProps> = ({ min, max, factor, title, onChan
 
       setValue(parsedValue);
 
-      const finalValue = factor ? parsedValue * factor : parsedValue;
+      let fixedValue = parsedValue * factor;
+      fixedValue = +fixedValue.toFixed(2);
 
-      onChange(finalValue);
+      onChange(fixedValue);
     },
     [setValue, onChange, factor],
   );
 
+  const fixedValue = useMemo(() => {
+    let n = value * factor;
+    n = +n.toFixed(2);
+    return n;
+  }, [value, factor]);
+
   return (
     <Container onClick={handleContainerClick}>
-      {title ? <span>{title}</span> : null}
+      <span>
+        <small>
+          {title}: {fixedValue}
+        </small>
+        <small>{currentValue}</small>
+      </span>
       <div>
-        <small>{factor ? min * factor : min}</small>
+        <small>{min * factor}</small>
         <input type="range" ref={inputRef} value={value} min={min} max={max} onChange={handleChange} />
-        <small>{factor ? max * factor : max}</small>
+        <small>{max * factor}</small>
       </div>
     </Container>
   );

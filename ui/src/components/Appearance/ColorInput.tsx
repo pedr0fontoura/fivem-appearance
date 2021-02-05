@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 
 interface ColorInputProps {
   title?: string;
-  colors: number[][];
-  default?: number;
+  colors?: number[][];
+  defaultValue?: number;
   onChange: (value: number) => void;
 }
 
@@ -15,14 +15,12 @@ interface ButtonProps {
 const Container = styled.div`
   width: 100%;
 
-  span {
-    font-weight: 200;
-    font-size: smaller;
-  }
+  > span {
+    width: 100%;
 
-  small {
+    display: flex;
+    justify-content: space-between;
     font-weight: 200;
-    font-size: 8px;
   }
 
   > div {
@@ -56,8 +54,10 @@ const Button = styled.button<ButtonProps>`
     `}
 `;
 
-const ColorInput: React.FC<ColorInputProps> = ({ title, colors, onChange }) => {
+const ColorInput: React.FC<ColorInputProps> = ({ title, colors = [], defaultValue, onChange }) => {
   const [selected, setSelected] = useState<number>();
+
+  const [currentValue] = useState(defaultValue);
 
   const selectColor = useCallback(
     color => {
@@ -69,7 +69,10 @@ const ColorInput: React.FC<ColorInputProps> = ({ title, colors, onChange }) => {
 
   return (
     <Container>
-      {title ? <span>{title}</span> : null}
+      <span>
+        <small>{title}</small>
+        <small>{currentValue}</small>
+      </span>
       <div>
         {colors.map((color, index) => (
           <Button

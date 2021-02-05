@@ -73,9 +73,108 @@ export interface PedAppearance {
   model: string;
   components: PedComponent[];
   props: PedProp[];
-  headBlend?: PedHeadBlend;
-  faceFeatures?: PedFaceFeatures;
-  headOverlays?: PedHeadOverlays;
-  hair?: PedHair;
-  eyeColor?: number;
+  headBlend: PedHeadBlend;
+  faceFeatures: PedFaceFeatures;
+  headOverlays: PedHeadOverlays;
+  hair: PedHair;
+  eyeColor: number;
+}
+
+interface ComponentSettings {
+  component_id: number;
+  drawable: {
+    min: number;
+    max: number;
+  };
+  texture: {
+    min: number;
+    max: number;
+  };
+}
+
+interface PropSettings {
+  prop_id: number;
+  drawable: {
+    min: number;
+    max: number;
+  };
+  texture: {
+    min: number;
+    max: number;
+  };
+}
+
+interface HeadBlendSettings {
+  shape: {
+    min: number;
+    max: number;
+  };
+  skin: {
+    min: number;
+    max: number;
+  };
+  mix: {
+    min: number;
+    max: number;
+    factor: number;
+  };
+}
+
+interface FaceFeaturesSettings {
+  min: number;
+  max: number;
+  factor: number;
+}
+
+interface HeadOverlayValueSettings {
+  style: {
+    min: number;
+    max: number;
+  };
+  opacity: {
+    min: number;
+    max: number;
+    factor: number;
+  };
+  colors?: number[][];
+}
+
+interface HeadOverlaysSettings {
+  blemishes: HeadOverlayValueSettings;
+  beard: HeadOverlayValueSettings;
+  eyebrows: HeadOverlayValueSettings;
+  ageing: HeadOverlayValueSettings;
+  makeUp: HeadOverlayValueSettings;
+  blush: HeadOverlayValueSettings;
+  complexion: HeadOverlayValueSettings;
+  sunDamage: HeadOverlayValueSettings;
+  lipstick: HeadOverlayValueSettings;
+  moleAndFreckles: HeadOverlayValueSettings;
+  chestHair: HeadOverlayValueSettings;
+  bodyBlemishes: HeadOverlayValueSettings;
+}
+
+interface HairSettings {
+  style: {
+    min: number;
+    max: number;
+  };
+  colors: number[][];
+  highlights: number[][];
+}
+
+interface EyeColorSettings {
+  min: number;
+  max: number;
+}
+
+export interface AppearanceSettings {
+  models: string[];
+  components: ComponentSettings[];
+  props: PropSettings[];
+  headBlend: HeadBlendSettings;
+  faceFeatures: FaceFeaturesSettings;
+  headOverlays: HeadOverlaysSettings;
+  hair: HairSettings;
+  eyeColor: EyeColorSettings;
 }

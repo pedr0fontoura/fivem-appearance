@@ -4,9 +4,9 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 interface InputProps {
   title?: string;
-  min: number;
-  max: number;
-  default?: number;
+  min?: number;
+  max?: number;
+  defaultValue?: number;
   onChange: (value: number) => void;
 }
 
@@ -19,7 +19,11 @@ const Container = styled.div`
 
   margin-top: ${({ title }) => (title ? '5px' : '0')};
 
-  small {
+  > span {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
     font-weight: 200;
   }
 
@@ -30,7 +34,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
 
-    margin-top: 5px;
+    margin-top: 10px;
 
     button {
       height: 100%;
@@ -79,8 +83,10 @@ const Container = styled.div`
   }
 `;
 
-const Input: React.FC<InputProps> = ({ title, min, max, onChange }) => {
+const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, onChange }) => {
   const [value, setValue] = useState(min);
+
+  const [currentValue] = useState(defaultValue);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -117,7 +123,10 @@ const Input: React.FC<InputProps> = ({ title, min, max, onChange }) => {
 
   return (
     <Container onClick={handleContainerClick}>
-      {title ? <small>{title}</small> : null}
+      <span>
+        <small>{title}</small>
+        <small>{currentValue}</small>
+      </span>
       <div>
         <button type="button" onClick={() => setSafeValue(value - 1)}>
           <FiChevronLeft strokeWidth={5} />
