@@ -80,7 +80,7 @@ export interface PedAppearance {
   eyeColor: number;
 }
 
-interface ComponentSettings {
+export interface ComponentSettings {
   component_id: number;
   drawable: {
     min: number;
@@ -92,7 +92,7 @@ interface ComponentSettings {
   };
 }
 
-interface PropSettings {
+export interface PropSettings {
   prop_id: number;
   drawable: {
     min: number;
@@ -104,7 +104,7 @@ interface PropSettings {
   };
 }
 
-interface HeadBlendSettings {
+export interface HeadBlendSettings {
   shape: {
     min: number;
     max: number;
@@ -120,13 +120,13 @@ interface HeadBlendSettings {
   };
 }
 
-interface FaceFeaturesSettings {
+export interface FaceFeaturesSettings {
   min: number;
   max: number;
   factor: number;
 }
 
-interface HeadOverlayValueSettings {
+export interface HeadOverlayValueSettings {
   style: {
     min: number;
     max: number;
@@ -139,7 +139,7 @@ interface HeadOverlayValueSettings {
   colors?: number[][];
 }
 
-interface HeadOverlaysSettings {
+export interface HeadOverlaysSettings {
   blemishes: HeadOverlayValueSettings;
   beard: HeadOverlayValueSettings;
   eyebrows: HeadOverlayValueSettings;
@@ -154,7 +154,7 @@ interface HeadOverlaysSettings {
   bodyBlemishes: HeadOverlayValueSettings;
 }
 
-interface HairSettings {
+export interface HairSettings {
   style: {
     min: number;
     max: number;
@@ -163,7 +163,7 @@ interface HairSettings {
   highlights: number[][];
 }
 
-interface EyeColorSettings {
+export interface EyeColorSettings {
   min: number;
   max: number;
 }
