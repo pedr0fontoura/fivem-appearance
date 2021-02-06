@@ -13,7 +13,7 @@ export default createGlobalStyle`
     background: transparent;
     -webkit-font-smoothing: antialiased;
     overflow: hidden;
-    background: url('https://cdn.discordapp.com/attachments/694641187901931601/786575235734437938/unknown.png');
+    /* background: url('https://cdn.discordapp.com/attachments/694641187901931601/786575235734437938/unknown.png'); */
   }
 
   button {

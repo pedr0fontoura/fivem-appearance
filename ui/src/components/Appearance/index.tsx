@@ -33,7 +33,7 @@ import Modal from '../Modal';
 
 import { Wrapper, Container } from './styles';
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.REACT_APP_ENV !== 'production') {
   mock('cfx-appearance:getSettingsAndData', () => ({
     appearanceData: { ...APPEARANCE_INITIAL_STATE, model: 'mp_f_freemode_01' },
     appearanceSettings: { ...SETTINGS_INITIAL_STATE, eyeColor: { min: 0, max: 24 } },

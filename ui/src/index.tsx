@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import Nui, { EventListener } from './Nui';
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.REACT_APP_ENV === 'development') {
   window.Nui = Nui;
 }
 

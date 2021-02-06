@@ -15,7 +15,7 @@ interface NuiContextData {
 
 const INITIAL_STATE: NuiState = {
   display: {
-    appearance: false,
+    appearance: true,
   },
 };
 
