@@ -38,9 +38,14 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 10px;
 
   padding: 20px 0;
+
+  > * {
+    & + * {
+      margin-top: 10px;
+    }
+  }
 `;
 
 const ToggleButton = styled.button<ToggleButtonProps>`
@@ -152,9 +157,14 @@ const ExtendedChildren = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 10px;
 
   padding-left: 10px;
+
+  > * {
+    & + * {
+      margin-left: 10px;
+    }
+  }
 `;
 
 const ToggleOption: React.FC<ToggleOptionProps> = ({ children, active, onClick }) => {

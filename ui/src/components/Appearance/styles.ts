@@ -48,5 +48,10 @@ export const FlexWrapper = styled.div`
   width: 100%;
 
   display: flex;
-  gap: 10px;
+
+  > div {
+    & + div {
+      margin-left: 10px;
+    }
+  }
 `;
