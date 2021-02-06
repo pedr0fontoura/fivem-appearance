@@ -1,4 +1,4 @@
-import { mocks } from './mocks';
+import { mocks } from './mock';
 
 interface Events {
   [key: string]: any;

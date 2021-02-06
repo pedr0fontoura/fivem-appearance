@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
@@ -6,6 +6,7 @@ interface InputProps {
   title?: string;
   items: any[];
   defaultValue?: string;
+  clientValue?: string;
   onChange: (value: string) => void;
 }
 
@@ -119,12 +120,20 @@ const Container = styled.div`
   }
 `;
 
-const ListInput: React.FC<InputProps> = ({ title, items, defaultValue, onChange }) => {
+const ListInput: React.FC<InputProps> = ({ title, items, defaultValue, clientValue, onChange }) => {
   const [value, setValue] = useState(0);
-
-  const [currentValue] = useState(defaultValue);
+  const [currentValue] = useState(clientValue);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (defaultValue) {
+      const index = items.findIndex(item => item === defaultValue);
+      if (index !== -1) {
+        setValue(index);
+      }
+    }
+  }, [defaultValue, items, setValue]);
 
   const handleContainerClick = useCallback(() => {
     if (inputRef.current) {

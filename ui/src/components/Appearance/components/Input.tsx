@@ -7,6 +7,7 @@ interface InputProps {
   min?: number;
   max?: number;
   defaultValue?: number;
+  clientValue?: number;
   onChange: (value: number) => void;
 }
 
@@ -83,10 +84,9 @@ const Container = styled.div`
   }
 `;
 
-const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, onChange }) => {
-  const [value, setValue] = useState(min);
-
-  const [currentValue] = useState(defaultValue);
+const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, clientValue, onChange }) => {
+  const [value, setValue] = useState(defaultValue || min);
+  const [currentValue] = useState(clientValue);
 
   const inputRef = useRef<HTMLInputElement>(null);
 

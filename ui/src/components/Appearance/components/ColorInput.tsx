@@ -5,6 +5,7 @@ interface ColorInputProps {
   title?: string;
   colors?: number[][];
   defaultValue?: number;
+  clientValue?: number;
   onChange: (value: number) => void;
 }
 
@@ -54,10 +55,10 @@ const Button = styled.button<ButtonProps>`
     `}
 `;
 
-const ColorInput: React.FC<ColorInputProps> = ({ title, colors = [], defaultValue, onChange }) => {
-  const [selected, setSelected] = useState<number>();
+const ColorInput: React.FC<ColorInputProps> = ({ title, colors = [], defaultValue, clientValue, onChange }) => {
+  const [selected, setSelected] = useState(defaultValue);
 
-  const [currentValue] = useState(defaultValue);
+  const [currentValue] = useState(clientValue);
 
   const selectColor = useCallback(
     color => {

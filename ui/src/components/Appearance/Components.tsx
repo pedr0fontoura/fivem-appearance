@@ -28,6 +28,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(1)?.drawable.min}
           max={getComponentSettings(1)?.drawable.max}
           defaultValue={getComponentDrawable(1)}
+          clientValue={getComponentSettings(1)?.drawable.clientValue}
           onChange={value => handleComponentDrawableChange(1, value)}
         />
         <Input
@@ -35,6 +36,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(1)?.texture.min}
           max={getComponentSettings(1)?.texture.max}
           defaultValue={getComponentTexture(1)}
+          clientValue={getComponentSettings(1)?.texture.clientValue}
           onChange={value => handleComponentTextureChange(1, value)}
         />
       </FlexWrapper>
@@ -46,6 +48,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(3)?.drawable.min}
           max={getComponentSettings(3)?.drawable.max}
           defaultValue={getComponentDrawable(3)}
+          clientValue={getComponentSettings(3)?.drawable.clientValue}
           onChange={value => handleComponentDrawableChange(3, value)}
         />
         <Input
@@ -53,6 +56,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(3)?.texture.min}
           max={getComponentSettings(3)?.texture.max}
           defaultValue={getComponentTexture(3)}
+          clientValue={getComponentSettings(3)?.texture.clientValue}
           onChange={value => handleComponentTextureChange(3, value)}
         />
       </FlexWrapper>
@@ -64,6 +68,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(4)?.drawable.min}
           max={getComponentSettings(4)?.texture.max}
           defaultValue={getComponentDrawable(4)}
+          clientValue={getComponentSettings(4)?.texture.clientValue}
           onChange={value => handleComponentDrawableChange(4, value)}
         />
         <Input
@@ -71,6 +76,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(4)?.texture.min}
           max={getComponentSettings(4)?.texture.max}
           defaultValue={getComponentTexture(4)}
+          clientValue={getComponentSettings(4)?.texture.clientValue}
           onChange={value => handleComponentTextureChange(4, value)}
         />
       </FlexWrapper>
@@ -82,6 +88,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(5)?.drawable.min}
           max={getComponentSettings(5)?.drawable.max}
           defaultValue={getComponentDrawable(5)}
+          clientValue={getComponentSettings(5)?.drawable.clientValue}
           onChange={value => handleComponentDrawableChange(5, value)}
         />
         <Input
@@ -89,6 +96,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(5)?.texture.min}
           max={getComponentSettings(5)?.texture.max}
           defaultValue={getComponentTexture(5)}
+          clientValue={getComponentSettings(5)?.texture.clientValue}
           onChange={value => handleComponentTextureChange(5, value)}
         />
       </FlexWrapper>
@@ -100,6 +108,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(6)?.drawable.min}
           max={getComponentSettings(6)?.drawable.max}
           defaultValue={getComponentDrawable(6)}
+          clientValue={getComponentSettings(6)?.drawable.clientValue}
           onChange={value => handleComponentDrawableChange(6, value)}
         />
         <Input
@@ -107,6 +116,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(6)?.texture.min}
           max={getComponentSettings(6)?.texture.max}
           defaultValue={getComponentTexture(6)}
+          clientValue={getComponentSettings(6)?.texture.clientValue}
           onChange={value => handleComponentTextureChange(6, value)}
         />
       </FlexWrapper>
@@ -118,6 +128,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(7)?.drawable.min}
           max={getComponentSettings(7)?.drawable.max}
           defaultValue={getComponentDrawable(7)}
+          clientValue={getComponentSettings(7)?.drawable.clientValue}
           onChange={value => handleComponentDrawableChange(7, value)}
         />
         <Input
@@ -125,6 +136,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(7)?.texture.min}
           max={getComponentSettings(7)?.texture.max}
           defaultValue={getComponentTexture(7)}
+          clientValue={getComponentSettings(7)?.texture.clientValue}
           onChange={value => handleComponentTextureChange(7, value)}
         />
       </FlexWrapper>
@@ -136,6 +148,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(8)?.drawable.min}
           max={getComponentSettings(8)?.drawable.max}
           defaultValue={getComponentDrawable(8)}
+          clientValue={getComponentSettings(8)?.drawable.clientValue}
           onChange={value => handleComponentDrawableChange(8, value)}
         />
         <Input
@@ -143,6 +156,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(8)?.texture.min}
           max={getComponentSettings(8)?.texture.max}
           defaultValue={getComponentTexture(8)}
+          clientValue={getComponentSettings(8)?.texture.clientValue}
           onChange={value => handleComponentTextureChange(8, value)}
         />
       </FlexWrapper>
@@ -154,6 +168,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(9)?.drawable.min}
           max={getComponentSettings(9)?.drawable.max}
           defaultValue={getComponentDrawable(9)}
+          clientValue={getComponentSettings(9)?.drawable.clientValue}
           onChange={value => handleComponentDrawableChange(9, value)}
         />
         <Input
@@ -161,6 +176,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(9)?.texture.min}
           max={getComponentSettings(9)?.texture.max}
           defaultValue={getComponentTexture(9)}
+          clientValue={getComponentSettings(9)?.texture.clientValue}
           onChange={value => handleComponentTextureChange(9, value)}
         />
       </FlexWrapper>
@@ -172,6 +188,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(10)?.drawable.min}
           max={getComponentSettings(10)?.drawable.max}
           defaultValue={getComponentDrawable(10)}
+          clientValue={getComponentSettings(10)?.drawable.clientValue}
           onChange={value => handleComponentDrawableChange(10, value)}
         />
         <Input
@@ -179,6 +196,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(10)?.texture.min}
           max={getComponentSettings(10)?.texture.max}
           defaultValue={getComponentTexture(10)}
+          clientValue={getComponentSettings(10)?.texture.clientValue}
           onChange={value => handleComponentTextureChange(10, value)}
         />
       </FlexWrapper>
@@ -190,6 +208,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(11)?.drawable.min}
           max={getComponentSettings(11)?.drawable.max}
           defaultValue={getComponentDrawable(11)}
+          clientValue={getComponentSettings(11)?.drawable.clientValue}
           onChange={value => handleComponentDrawableChange(11, value)}
         />
         <Input
@@ -197,6 +216,7 @@ const Components: React.FC<ComponentsProps> = ({
           min={getComponentSettings(11)?.texture.min}
           max={getComponentSettings(11)?.texture.max}
           defaultValue={getComponentTexture(11)}
+          clientValue={getComponentSettings(11)?.texture.clientValue}
           onChange={value => handleComponentTextureChange(11, value)}
         />
       </FlexWrapper>

@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, ReactElement, useCallback } from 'react';
 import styled, { css } from 'styled-components';
-import { FaVideo, FaStreetView, FaUndo, FaRedo, FaSmile, FaMale, FaShoePrints } from 'react-icons/fa';
+import { FaVideo, FaStreetView, FaUndo, FaRedo, FaSmile, FaMale, FaShoePrints, FaSave, FaTimes } from 'react-icons/fa';
+
+import { CameraState, RotateState } from './interfaces';
 
 interface ToggleButtonProps {
   active: boolean;
@@ -19,14 +21,15 @@ interface ExtendendOptionProps {
   icon: ReactElement;
 }
 
-interface CameraState {
-  head: boolean;
-  body: boolean;
-  bottom: boolean;
+interface CameraProps {
+  camera: CameraState;
+  rotate: RotateState;
+  handleCameraChange: (key: keyof CameraState) => void;
+  handleRotateLeft: () => void;
+  handleRotateRight: () => void;
+  handleSave: () => void;
+  handleExit: () => void;
 }
-
-const INITIAL_CAMERA_STATE = { head: false, body: false, bottom: false };
-const INITIAL_ROTATE_STATE = { left: false, right: false };
 
 const Container = styled.div`
   height: 100vh;
@@ -83,6 +86,8 @@ const ToggleButton = styled.button<ToggleButtonProps>`
 const Option = styled.button`
   height: 40px;
   width: 40px;
+
+  position: relative;
 
   display: flex;
   align-items: center;
@@ -189,43 +194,25 @@ const ExtendedOption: React.FC<ExtendendOptionProps> = ({ children, icon }) => {
   );
 };
 
-const Options: React.FC = () => {
-  const [camera, setCamera] = useState(INITIAL_CAMERA_STATE);
-  const [rotate, setRotate] = useState(INITIAL_ROTATE_STATE);
-
-  const toggleCamera = useCallback(
-    (key: keyof CameraState) => {
-      setCamera(state => {
-        const currentCameraState = state[key];
-
-        const cameraState = { ...state };
-
-        Object.assign(cameraState, INITIAL_CAMERA_STATE);
-
-        return { ...cameraState, [key]: !currentCameraState };
-      });
-    },
-    [setCamera],
-  );
-
-  const handleRotateLeft = useCallback(() => {
-    setRotate(state => ({ left: !state.left, right: false }));
-  }, [setRotate]);
-
-  const handleRotateRight = useCallback(() => {
-    setRotate(state => ({ left: false, right: !state.right }));
-  }, [setRotate]);
-
+const Options: React.FC<CameraProps> = ({
+  camera,
+  rotate,
+  handleCameraChange,
+  handleRotateLeft,
+  handleRotateRight,
+  handleExit,
+  handleSave,
+}) => {
   return (
     <Container>
       <ExtendedOption icon={<FaVideo size={20} />}>
-        <ToggleOption active={camera.head} onClick={() => toggleCamera('head')}>
+        <ToggleOption active={camera.head} onClick={() => handleCameraChange('head')}>
           <FaSmile size={20} />
         </ToggleOption>
-        <ToggleOption active={camera.body} onClick={() => toggleCamera('body')}>
+        <ToggleOption active={camera.body} onClick={() => handleCameraChange('body')}>
           <FaMale size={20} />
         </ToggleOption>
-        <ToggleOption active={camera.bottom} onClick={() => toggleCamera('bottom')}>
+        <ToggleOption active={camera.bottom} onClick={() => handleCameraChange('bottom')}>
           <FaShoePrints size={20} />
         </ToggleOption>
       </ExtendedOption>
@@ -238,6 +225,12 @@ const Options: React.FC = () => {
       <ToggleOption active={rotate.right} onClick={handleRotateRight}>
         <FaUndo size={20} />
       </ToggleOption>
+      <Option onClick={handleSave}>
+        <FaSave size={20} />
+      </Option>
+      <Option onClick={handleExit}>
+        <FaTimes size={20} />
+      </Option>
     </Container>
   );
 };

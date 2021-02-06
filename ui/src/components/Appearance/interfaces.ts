@@ -80,15 +80,24 @@ export interface PedAppearance {
   eyeColor: number;
 }
 
+export interface PedSettings {
+  model: {
+    items: string[];
+    clientValue: string;
+  };
+}
+
 export interface ComponentSettings {
   component_id: number;
   drawable: {
     min: number;
     max: number;
+    clientValue: number;
   };
   texture: {
     min: number;
     max: number;
+    clientValue: number;
   };
 }
 
@@ -97,10 +106,12 @@ export interface PropSettings {
   drawable: {
     min: number;
     max: number;
+    clientValue: number;
   };
   texture: {
     min: number;
     max: number;
+    clientValue: number;
   };
 }
 
@@ -108,56 +119,54 @@ export interface HeadBlendSettings {
   shape: {
     min: number;
     max: number;
+    clientValue: number;
   };
   skin: {
     min: number;
     max: number;
+    clientValue: number;
   };
   mix: {
     min: number;
     max: number;
     factor: number;
+    clientValue: number;
   };
 }
 
-export interface FaceFeaturesSettings {
-  min: number;
-  max: number;
-  factor: number;
-}
+type FaceFeaturesSettingsKey = keyof PedFaceFeatures;
 
-export interface HeadOverlayValueSettings {
+type FaceFeaturesSettingsValue = { min: number; max: number; factor: number; clientValue: number };
+
+export type FaceFeaturesSettings = Record<FaceFeaturesSettingsKey, FaceFeaturesSettingsValue>;
+
+type HeadOverlaysSettingsKey = keyof PedHeadOverlays;
+
+type HeadOverlaysSettingsValue = {
   style: {
     min: number;
     max: number;
+    clientValue: number;
   };
   opacity: {
     min: number;
     max: number;
     factor: number;
+    clientValue: number;
   };
-  colors?: number[][];
-}
+  color?: {
+    items: number[][];
+    clientValue: number;
+  };
+};
 
-export interface HeadOverlaysSettings {
-  blemishes: HeadOverlayValueSettings;
-  beard: HeadOverlayValueSettings;
-  eyebrows: HeadOverlayValueSettings;
-  ageing: HeadOverlayValueSettings;
-  makeUp: HeadOverlayValueSettings;
-  blush: HeadOverlayValueSettings;
-  complexion: HeadOverlayValueSettings;
-  sunDamage: HeadOverlayValueSettings;
-  lipstick: HeadOverlayValueSettings;
-  moleAndFreckles: HeadOverlayValueSettings;
-  chestHair: HeadOverlayValueSettings;
-  bodyBlemishes: HeadOverlayValueSettings;
-}
+export type HeadOverlaysSettings = Record<HeadOverlaysSettingsKey, HeadOverlaysSettingsValue>;
 
 export interface HairSettings {
   style: {
     min: number;
     max: number;
+    clientValue: number;
   };
   colors: number[][];
   highlights: number[][];
@@ -166,10 +175,11 @@ export interface HairSettings {
 export interface EyeColorSettings {
   min: number;
   max: number;
+  clientValue: number;
 }
 
 export interface AppearanceSettings {
-  models: string[];
+  ped: PedSettings;
   components: ComponentSettings[];
   props: PropSettings[];
   headBlend: HeadBlendSettings;
@@ -177,4 +187,15 @@ export interface AppearanceSettings {
   headOverlays: HeadOverlaysSettings;
   hair: HairSettings;
   eyeColor: EyeColorSettings;
+}
+
+export interface CameraState {
+  head: boolean;
+  body: boolean;
+  bottom: boolean;
+}
+
+export interface RotateState {
+  left: boolean;
+  right: boolean;
 }

@@ -7,6 +7,7 @@ interface RangeInputProps {
   max: number;
   factor?: number;
   defaultValue?: number;
+  clientValue?: number;
   onChange: (value: number) => void;
 }
 
@@ -58,10 +59,17 @@ const Container = styled.div`
   }
 `;
 
-const RangeInput: React.FC<RangeInputProps> = ({ min, max, factor = 1, title, defaultValue, onChange }) => {
-  const [value, setValue] = useState(Math.floor((min + max) / 2));
-
-  const [currentValue] = useState(defaultValue);
+const RangeInput: React.FC<RangeInputProps> = ({
+  min,
+  max,
+  factor = 1,
+  title,
+  defaultValue,
+  clientValue,
+  onChange,
+}) => {
+  const [value, setValue] = useState(defaultValue ? defaultValue / factor : 0);
+  const [currentValue] = useState(clientValue);
 
   const inputRef = useRef<HTMLInputElement>(null);
 

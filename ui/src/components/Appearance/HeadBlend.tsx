@@ -19,6 +19,7 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, headBlend, handleHeadBl
         min={settings.shape.min}
         max={settings.shape.max}
         defaultValue={headBlend.shapeFirst}
+        clientValue={settings.shape.clientValue}
         onChange={value => handleHeadBlendChange('shapeFirst', value)}
       />
       <Input
@@ -26,6 +27,7 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, headBlend, handleHeadBl
         min={settings.shape.min}
         max={settings.shape.max}
         defaultValue={headBlend.shapeSecond}
+        clientValue={settings.shape.clientValue}
         onChange={value => handleHeadBlendChange('shapeSecond', value)}
       />
       <RangeInput
@@ -34,6 +36,7 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, headBlend, handleHeadBl
         max={settings.mix.max}
         factor={settings.mix.factor}
         defaultValue={headBlend.shapeMix}
+        clientValue={settings.mix.clientValue}
         onChange={value => handleHeadBlendChange('shapeMix', value)}
       />
     </Item>
@@ -43,6 +46,7 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, headBlend, handleHeadBl
         min={settings.skin.min}
         max={settings.skin.max}
         defaultValue={headBlend.skinFirst}
+        clientValue={settings.skin.clientValue}
         onChange={value => handleHeadBlendChange('skinFirst', value)}
       />
       <Input
@@ -50,6 +54,7 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, headBlend, handleHeadBl
         min={settings.skin.min}
         max={settings.skin.max}
         defaultValue={headBlend.skinSecond}
+        clientValue={settings.skin.clientValue}
         onChange={value => handleHeadBlendChange('skinSecond', value)}
       />
       <RangeInput
@@ -58,6 +63,7 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, headBlend, handleHeadBl
         max={settings.mix.max}
         factor={settings.mix.factor}
         defaultValue={headBlend.skinMix}
+        clientValue={settings.mix.clientValue}
         onChange={value => handleHeadBlendChange('skinMix', value)}
       />
     </Item>
