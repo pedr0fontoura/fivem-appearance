@@ -1,11 +1,11 @@
 fx_version "cerulean"
 game { "gta5" }
 
-ui_page "nui/build/index.html"
+ui_page "ui/build/index.html"
 
 files {
-  "nui/build/index.html",
-  "nui/build/static/js/*.js",
+  "ui/build/index.html",
+  "ui/build/static/js/*.js",
 }
 
 client_script "typescript/build/client.js"
