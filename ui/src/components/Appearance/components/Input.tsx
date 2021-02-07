@@ -96,7 +96,7 @@ const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, 
     }
   }, [inputRef]);
 
-  const setSafeValue = useCallback(
+  const getSafeValue = useCallback(
     (_value: number) => {
       let safeValue = _value;
 
@@ -106,19 +106,27 @@ const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, 
         safeValue = min;
       }
 
-      setValue(safeValue);
+      return safeValue;
     },
-    [min, max, setValue],
+    [min, max],
   );
 
   const handleChange = useCallback(
-    e => {
-      const parsedValue = parseInt(e.target.value);
+    (_value: any) => {
+      let parsedValue;
 
-      setSafeValue(parsedValue);
-      onChange(parsedValue);
+      if (typeof _value === 'string') {
+        parsedValue = parseInt(_value);
+      } else {
+        parsedValue = _value;
+      }
+
+      const safeValue = getSafeValue(parsedValue);
+
+      setValue(safeValue);
+      onChange(safeValue);
     },
-    [setSafeValue, onChange],
+    [getSafeValue, setValue, onChange],
   );
 
   return (
@@ -128,11 +136,11 @@ const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, 
         <small>{currentValue}</small>
       </span>
       <div>
-        <button type="button" onClick={() => setSafeValue(value - 1)}>
+        <button type="button" onClick={() => handleChange(value - 1)}>
           <FiChevronLeft strokeWidth={5} />
         </button>
-        <input type="number" ref={inputRef} value={value} onChange={handleChange} />
-        <button type="button" onClick={() => setSafeValue(value + 1)}>
+        <input type="number" ref={inputRef} value={value} onChange={e => handleChange(e.target.value)} />
+        <button type="button" onClick={() => handleChange(value + 1)}>
           <FiChevronRight strokeWidth={5} />
         </button>
       </div>
