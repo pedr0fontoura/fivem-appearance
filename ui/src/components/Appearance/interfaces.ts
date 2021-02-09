@@ -83,7 +83,6 @@ export interface PedAppearance {
 export interface PedSettings {
   model: {
     items: string[];
-    clientValue: string;
   };
 }
 
@@ -92,12 +91,10 @@ export interface ComponentSettings {
   drawable: {
     min: number;
     max: number;
-    clientValue: number;
   };
   texture: {
     min: number;
     max: number;
-    clientValue: number;
   };
 }
 
@@ -106,37 +103,45 @@ export interface PropSettings {
   drawable: {
     min: number;
     max: number;
-    clientValue: number;
   };
   texture: {
     min: number;
     max: number;
-    clientValue: number;
   };
 }
 
 export interface HeadBlendSettings {
-  shape: {
+  shapeFirst: {
     min: number;
     max: number;
-    clientValue: number;
   };
-  skin: {
+  shapeSecond: {
     min: number;
     max: number;
-    clientValue: number;
   };
-  mix: {
+  skinFirst: {
+    min: number;
+    max: number;
+  };
+  skinSecond: {
+    min: number;
+    max: number;
+  };
+  shapeMix: {
     min: number;
     max: number;
     factor: number;
-    clientValue: number;
+  };
+  skinMix: {
+    min: number;
+    max: number;
+    factor: number;
   };
 }
 
 type FaceFeaturesSettingsKey = keyof PedFaceFeatures;
 
-type FaceFeaturesSettingsValue = { min: number; max: number; factor: number; clientValue: number };
+type FaceFeaturesSettingsValue = { min: number; max: number; factor: number };
 
 export type FaceFeaturesSettings = Record<FaceFeaturesSettingsKey, FaceFeaturesSettingsValue>;
 
@@ -146,17 +151,14 @@ type HeadOverlaysSettingsValue = {
   style: {
     min: number;
     max: number;
-    clientValue: number;
   };
   opacity: {
     min: number;
     max: number;
     factor: number;
-    clientValue: number;
   };
   color?: {
     items: number[][];
-    clientValue: number;
   };
 };
 
@@ -166,16 +168,18 @@ export interface HairSettings {
   style: {
     min: number;
     max: number;
-    clientValue: number;
   };
-  colors: number[][];
-  highlights: number[][];
+  color: {
+    items: number[][];
+  };
+  highlight: {
+    items: number[][];
+  };
 }
 
 export interface EyeColorSettings {
   min: number;
   max: number;
-  clientValue: number;
 }
 
 export interface AppearanceSettings {

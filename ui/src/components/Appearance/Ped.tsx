@@ -6,18 +6,19 @@ import { PedSettings } from './interfaces';
 
 interface PedProps {
   settings: PedSettings;
-  model: string;
+  storedData: string;
+  data: string;
   handleModelChange: (value: string) => void;
 }
 
-const Ped: React.FC<PedProps> = ({ settings, model, handleModelChange }) => (
+const Ped: React.FC<PedProps> = ({ settings, storedData, data, handleModelChange }) => (
   <Section title="Ped">
     <Item>
       <ListInput
         title="Model"
         items={settings.model.items}
-        defaultValue={model}
-        clientValue={settings.model.clientValue}
+        defaultValue={data}
+        clientValue={storedData}
         onChange={value => handleModelChange(value)}
       />
     </Item>

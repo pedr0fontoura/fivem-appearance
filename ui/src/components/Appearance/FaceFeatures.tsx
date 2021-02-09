@@ -6,11 +6,12 @@ import RangeInput from './components/RangeInput';
 
 interface FaceFeaturesProps {
   settings: FaceFeaturesSettings;
-  faceFeatures: PedFaceFeatures;
+  storedData: PedFaceFeatures;
+  data: PedFaceFeatures;
   handleFaceFeatureChange: (key: keyof PedFaceFeatures, value: number) => void;
 }
 
-const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, handleFaceFeatureChange }) => (
+const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data, handleFaceFeatureChange }) => (
   <Section title="Características faciais">
     <Item title="Nariz">
       <RangeInput
@@ -18,8 +19,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.noseWidth.min}
         max={settings.noseWidth.max}
         factor={settings.noseWidth.factor}
-        defaultValue={faceFeatures.noseWidth}
-        clientValue={settings.noseWidth.clientValue}
+        defaultValue={data.noseWidth}
+        clientValue={storedData.noseWidth}
         onChange={value => handleFaceFeatureChange('noseWidth', value)}
       />
       <RangeInput
@@ -27,8 +28,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.nosePeakHigh.min}
         max={settings.nosePeakHigh.max}
         factor={settings.nosePeakHigh.factor}
-        defaultValue={faceFeatures.nosePeakHigh}
-        clientValue={settings.nosePeakHigh.clientValue}
+        defaultValue={data.nosePeakHigh}
+        clientValue={storedData.nosePeakHigh}
         onChange={value => handleFaceFeatureChange('nosePeakHigh', value)}
       />
       <RangeInput
@@ -36,8 +37,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.nosePeakSize.min}
         max={settings.nosePeakSize.max}
         factor={settings.nosePeakSize.factor}
-        defaultValue={faceFeatures.nosePeakSize}
-        clientValue={settings.nosePeakSize.clientValue}
+        defaultValue={data.nosePeakSize}
+        clientValue={storedData.nosePeakSize}
         onChange={value => handleFaceFeatureChange('nosePeakSize', value)}
       />
       <RangeInput
@@ -45,8 +46,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.noseBoneHigh.min}
         max={settings.noseBoneHigh.max}
         factor={settings.noseBoneHigh.factor}
-        defaultValue={faceFeatures.noseBoneHigh}
-        clientValue={settings.noseBoneHigh.clientValue}
+        defaultValue={data.noseBoneHigh}
+        clientValue={storedData.noseBoneHigh}
         onChange={value => handleFaceFeatureChange('noseBoneHigh', value)}
       />
       <RangeInput
@@ -54,8 +55,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.nosePeakLowering.min}
         max={settings.nosePeakLowering.max}
         factor={settings.nosePeakLowering.factor}
-        defaultValue={faceFeatures.nosePeakLowering}
-        clientValue={settings.nosePeakLowering.clientValue}
+        defaultValue={data.nosePeakLowering}
+        clientValue={storedData.nosePeakLowering}
         onChange={value => handleFaceFeatureChange('nosePeakLowering', value)}
       />
       <RangeInput
@@ -63,8 +64,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.noseBoneTwist.min}
         max={settings.noseBoneTwist.max}
         factor={settings.noseBoneTwist.factor}
-        defaultValue={faceFeatures.noseBoneTwist}
-        clientValue={settings.noseBoneTwist.clientValue}
+        defaultValue={data.noseBoneTwist}
+        clientValue={storedData.noseBoneTwist}
         onChange={value => handleFaceFeatureChange('noseBoneTwist', value)}
       />
     </Item>
@@ -74,8 +75,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.eyeBrownHigh.min}
         max={settings.eyeBrownHigh.max}
         factor={settings.eyeBrownHigh.factor}
-        defaultValue={faceFeatures.eyeBrownHigh}
-        clientValue={settings.eyeBrownHigh.clientValue}
+        defaultValue={data.eyeBrownHigh}
+        clientValue={storedData.eyeBrownHigh}
         onChange={value => handleFaceFeatureChange('eyeBrownHigh', value)}
       />
       <RangeInput
@@ -83,8 +84,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.eyeBrownForward.min}
         max={settings.eyeBrownForward.max}
         factor={settings.eyeBrownForward.factor}
-        defaultValue={faceFeatures.eyeBrownForward}
-        clientValue={settings.eyeBrownForward.clientValue}
+        defaultValue={data.eyeBrownForward}
+        clientValue={storedData.eyeBrownForward}
         onChange={value => handleFaceFeatureChange('eyeBrownForward', value)}
       />
     </Item>
@@ -94,8 +95,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.cheeksBoneHigh.min}
         max={settings.cheeksBoneHigh.max}
         factor={settings.cheeksBoneHigh.factor}
-        defaultValue={faceFeatures.cheeksBoneHigh}
-        clientValue={settings.cheeksBoneHigh.clientValue}
+        defaultValue={data.cheeksBoneHigh}
+        clientValue={storedData.cheeksBoneHigh}
         onChange={value => handleFaceFeatureChange('cheeksBoneHigh', value)}
       />
       <RangeInput
@@ -103,8 +104,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.cheeksBoneWidth.min}
         max={settings.cheeksBoneWidth.max}
         factor={settings.cheeksBoneWidth.factor}
-        defaultValue={faceFeatures.cheeksBoneWidth}
-        clientValue={settings.cheeksBoneWidth.clientValue}
+        defaultValue={data.cheeksBoneWidth}
+        clientValue={storedData.cheeksBoneWidth}
         onChange={value => handleFaceFeatureChange('cheeksBoneWidth', value)}
       />
       <RangeInput
@@ -112,8 +113,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.cheeksWidth.min}
         max={settings.cheeksWidth.max}
         factor={settings.cheeksWidth.factor}
-        defaultValue={faceFeatures.cheeksWidth}
-        clientValue={settings.cheeksWidth.clientValue}
+        defaultValue={data.cheeksWidth}
+        clientValue={storedData.cheeksWidth}
         onChange={value => handleFaceFeatureChange('cheeksWidth', value)}
       />
     </Item>
@@ -123,8 +124,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.eyesOpening.min}
         max={settings.eyesOpening.max}
         factor={settings.eyesOpening.factor}
-        defaultValue={faceFeatures.eyesOpening}
-        clientValue={settings.eyesOpening.clientValue}
+        defaultValue={data.eyesOpening}
+        clientValue={storedData.eyesOpening}
         onChange={value => handleFaceFeatureChange('eyesOpening', value)}
       />
       <RangeInput
@@ -132,8 +133,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.lipsThickness.min}
         max={settings.lipsThickness.max}
         factor={settings.lipsThickness.factor}
-        defaultValue={faceFeatures.lipsThickness}
-        clientValue={settings.lipsThickness.clientValue}
+        defaultValue={data.lipsThickness}
+        clientValue={storedData.lipsThickness}
         onChange={value => handleFaceFeatureChange('lipsThickness', value)}
       />
     </Item>
@@ -143,8 +144,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.jawBoneWidth.min}
         max={settings.jawBoneWidth.max}
         factor={settings.jawBoneWidth.factor}
-        defaultValue={faceFeatures.jawBoneWidth}
-        clientValue={settings.jawBoneWidth.clientValue}
+        defaultValue={data.jawBoneWidth}
+        clientValue={storedData.jawBoneWidth}
         onChange={value => handleFaceFeatureChange('jawBoneWidth', value)}
       />
       <RangeInput
@@ -152,8 +153,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.jawBoneBackSize.min}
         max={settings.jawBoneBackSize.max}
         factor={settings.jawBoneBackSize.factor}
-        defaultValue={faceFeatures.jawBoneBackSize}
-        clientValue={settings.jawBoneBackSize.clientValue}
+        defaultValue={data.jawBoneBackSize}
+        clientValue={storedData.jawBoneBackSize}
         onChange={value => handleFaceFeatureChange('jawBoneBackSize', value)}
       />
     </Item>
@@ -163,8 +164,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.chinBoneLowering.min}
         max={settings.chinBoneLowering.max}
         factor={settings.chinBoneLowering.factor}
-        defaultValue={faceFeatures.chinBoneLowering}
-        clientValue={settings.chinBoneLowering.clientValue}
+        defaultValue={data.chinBoneLowering}
+        clientValue={storedData.chinBoneLowering}
         onChange={value => handleFaceFeatureChange('chinBoneLowering', value)}
       />
       <RangeInput
@@ -172,8 +173,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.chinBoneLenght.min}
         max={settings.chinBoneLenght.max}
         factor={settings.chinBoneLenght.factor}
-        defaultValue={faceFeatures.chinBoneLenght}
-        clientValue={settings.chinBoneLenght.clientValue}
+        defaultValue={data.chinBoneLenght}
+        clientValue={storedData.chinBoneLenght}
         onChange={value => handleFaceFeatureChange('chinBoneLenght', value)}
       />
       <RangeInput
@@ -181,8 +182,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.chinBoneSize.min}
         max={settings.chinBoneSize.max}
         factor={settings.chinBoneSize.factor}
-        defaultValue={faceFeatures.chinBoneSize}
-        clientValue={settings.chinBoneSize.clientValue}
+        defaultValue={data.chinBoneSize}
+        clientValue={storedData.chinBoneSize}
         onChange={value => handleFaceFeatureChange('chinBoneSize', value)}
       />
       <RangeInput
@@ -190,8 +191,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.chinHole.min}
         max={settings.chinHole.max}
         factor={settings.chinHole.factor}
-        defaultValue={faceFeatures.chinHole}
-        clientValue={settings.chinHole.clientValue}
+        defaultValue={data.chinHole}
+        clientValue={storedData.chinHole}
         onChange={value => handleFaceFeatureChange('chinHole', value)}
       />
     </Item>
@@ -201,8 +202,8 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, faceFeatures, han
         min={settings.neckThickness.min}
         max={settings.neckThickness.max}
         factor={settings.neckThickness.factor}
-        defaultValue={faceFeatures.neckThickness}
-        clientValue={settings.neckThickness.clientValue}
+        defaultValue={data.neckThickness}
+        clientValue={storedData.neckThickness}
         onChange={value => handleFaceFeatureChange('neckThickness', value)}
       />
     </Item>

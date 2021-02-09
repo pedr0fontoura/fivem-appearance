@@ -160,7 +160,11 @@ const ListInput: React.FC<InputProps> = ({ title, items, defaultValue, clientVal
 
   const handleChange = useCallback(
     e => {
-      const parsedValue = parseInt(e.target.value);
+      let parsedValue = parseInt(e.target.value);
+
+      if (Number.isNaN(parsedValue)) {
+        parsedValue = 0;
+      }
 
       setSafeValue(parsedValue);
     },

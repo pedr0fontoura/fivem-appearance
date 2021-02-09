@@ -6,8 +6,8 @@ interface InputProps {
   title?: string;
   min?: number;
   max?: number;
-  defaultValue?: number;
-  clientValue?: number;
+  defaultValue: number;
+  clientValue: number;
   onChange: (value: number) => void;
 }
 
@@ -85,7 +85,6 @@ const Container = styled.div`
 `;
 
 const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, clientValue, onChange }) => {
-  const [value, setValue] = useState(defaultValue || min);
   const [currentValue] = useState(clientValue);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -123,10 +122,9 @@ const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, 
 
       const safeValue = getSafeValue(parsedValue);
 
-      setValue(safeValue);
       onChange(safeValue);
     },
-    [getSafeValue, setValue, onChange],
+    [getSafeValue, onChange],
   );
 
   return (
@@ -136,11 +134,11 @@ const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, 
         <small>{currentValue}</small>
       </span>
       <div>
-        <button type="button" onClick={() => handleChange(value - 1)}>
+        <button type="button" onClick={() => handleChange(defaultValue - 1)}>
           <FiChevronLeft strokeWidth={5} />
         </button>
-        <input type="number" ref={inputRef} value={value} onChange={e => handleChange(e.target.value)} />
-        <button type="button" onClick={() => handleChange(value + 1)}>
+        <input type="number" ref={inputRef} value={defaultValue} onChange={e => handleChange(e.target.value)} />
+        <button type="button" onClick={() => handleChange(defaultValue + 1)}>
           <FiChevronRight strokeWidth={5} />
         </button>
       </div>

@@ -34,14 +34,22 @@ import Modal from '../Modal';
 import { Wrapper, Container } from './styles';
 
 if (process.env.REACT_APP_ENV !== 'production') {
-  mock('cfx-appearance:getSettingsAndData', () => ({
+  mock('appearance_get_settings_and_data', () => ({
     appearanceData: { ...APPEARANCE_INITIAL_STATE, model: 'mp_f_freemode_01' },
     appearanceSettings: { ...SETTINGS_INITIAL_STATE, eyeColor: { min: 0, max: 24 } },
   }));
+
+  mock('appearance_change_model', () => SETTINGS_INITIAL_STATE);
+
+  mock('appearance_change_component', () => SETTINGS_INITIAL_STATE.components);
+
+  mock('appearance_change_prop', () => SETTINGS_INITIAL_STATE.props);
 }
 
 const Appearance: React.FC = () => {
   const [data, setData] = useState<PedAppearance>(APPEARANCE_INITIAL_STATE);
+  const [storedData, setStoredData] = useState<PedAppearance>(APPEARANCE_INITIAL_STATE);
+
   const [settings, setSettings] = useState<AppearanceSettings>(SETTINGS_INITIAL_STATE);
 
   const [camera, setCamera] = useState(CAMERA_INITIAL_STATE);
@@ -74,45 +82,65 @@ const Appearance: React.FC = () => {
 
   const getComponentSettings = useCallback(
     (component_id: number) => {
-      return settings.components.find(c => c.component_id === component_id);
+      let componentSettings = settings.components.find(c => c.component_id === component_id);
+
+      if (!componentSettings) {
+        [componentSettings] = settings.components;
+      }
+
+      return componentSettings;
     },
     [settings.components],
   );
 
   const getPropSettings = useCallback(
     (prop_id: number) => {
-      return settings.props.find(p => p.prop_id === prop_id);
+      let propSettings = settings.props.find(p => p.prop_id === prop_id);
+
+      if (!propSettings) {
+        [propSettings] = settings.props;
+      }
+
+      return propSettings;
     },
     [settings.props],
   );
 
-  const getComponentDrawable = useCallback(
-    (component_id: number) => {
-      return components.find(c => c.component_id === component_id)?.drawable;
-    },
-    [components],
-  );
+  const getStoredComponent = (component_id: number) => {
+    let component = storedData.components.find(c => c.component_id === component_id);
 
-  const getComponentTexture = useCallback(
-    (component_id: number) => {
-      return components.find(c => c.component_id === component_id)?.texture;
-    },
-    [components],
-  );
+    if (!component) {
+      [component] = storedData.components;
+    }
+    return component;
+  };
 
-  const getPropDrawable = useCallback(
-    (prop_id: number) => {
-      return props.find(p => p.prop_id === prop_id)?.drawable;
-    },
-    [props],
-  );
+  const getStoredProp = (prop_id: number) => {
+    let prop = storedData.props.find(p => p.prop_id === prop_id);
 
-  const getPropTexture = useCallback(
-    (prop_id: number) => {
-      return props.find(p => p.prop_id === prop_id)?.texture;
-    },
-    [props],
-  );
+    if (!prop) {
+      [prop] = storedData.props;
+    }
+    return prop;
+  };
+
+  const getComponent = (component_id: number) => {
+    let component = components.find(c => c.component_id === component_id);
+
+    if (!component) {
+      [component] = components;
+    }
+    return component;
+  };
+
+  const getProp = (prop_id: number) => {
+    let prop = props.find(p => p.prop_id === prop_id);
+
+    if (!prop) {
+      [prop] = props;
+    }
+    return prop;
+  };
 
   const handleCameraChange = useCallback(
     (key: keyof CameraState) => {
@@ -137,35 +165,59 @@ const Appearance: React.FC = () => {
     setRotate(state => ({ left: false, right: !state.right }));
   }, [setRotate]);
 
-  const handleSave = useCallback(() => {
+  const handleSaveModal = useCallback(() => {
     setSaveModal(true);
   }, [setSaveModal]);
 
-  const handleExit = useCallback(() => {
+  const handleExitModal = useCallback(() => {
     setExitModal(true);
   }, [setExitModal]);
 
-  const handleModelChange = useCallback(
-    (value: string) => {
-      setData(state => ({
-        ...state,
-        model: value,
-      }));
+  const handleSave = useCallback(
+    async (accept: boolean) => {
+      if (accept) {
+        await Nui.post('appearance_save', data);
+        setSaveModal(false);
+      } else {
+        setSaveModal(false);
+      }
     },
-    [setData],
+    [setSaveModal, data],
+  );
+
+  const handleExit = useCallback(
+    async (accept: boolean) => {
+      if (accept) {
+        await Nui.post('appearance_exit');
+        setExitModal(false);
+      } else {
+        setExitModal(false);
+      }
+    },
+    [setExitModal],
+  );
+
+  const handleModelChange = useCallback(
+    async (value: string) => {
+      const updatedData = { ...APPEARANCE_INITIAL_STATE, model: value };
+      setData(updatedData);
+
+      const updatedSettings = await Nui.post('appearance_change_model', updatedData);
+
+      setSettings(updatedSettings);
+    },
+    [setData, setSettings],
   );
 
   const handleHeadBlendChange = useCallback(
     (key: keyof PedHeadBlend, value: number) => {
-      setData(state => ({
-        ...state,
-        headBlend: {
-          ...state.headBlend,
-          [key]: value,
-        },
-      }));
+      const updatedHeadBlend = { ...headBlend, [key]: value };
+
+      setData(state => ({ ...state, headBlend: updatedHeadBlend }));
+
+      Nui.post('appearance_change_head_blend', updatedHeadBlend);
     },
-    [setData],
+    [setData, headBlend],
   );
 
   const handleFaceFeatureChange = useCallback(
@@ -177,8 +229,10 @@ const Appearance: React.FC = () => {
           [key]: value,
         },
       }));
+
+      Nui.post('appearance_change_face_feature', { ...faceFeatures, [key]: value });
     },
-    [setData],
+    [setData, faceFeatures],
   );
 
   const handleHairChange = useCallback(
@@ -190,24 +244,21 @@ const Appearance: React.FC = () => {
           [key]: value,
         },
       }));
+
+      Nui.post('appearance_change_hair', { ...hair, [key]: value });
     },
-    [setData],
+    [setData, hair],
   );
 
   const handleHeadOverlayChange = useCallback(
     (key: keyof PedHeadOverlays, option: keyof PedHeadOverlayValue, value: number) => {
-      setData(state => ({
-        ...state,
-        headOverlays: {
-          ...state.headOverlays,
-          [key]: {
-            ...[key],
-            [option]: value,
-          },
-        },
-      }));
+      const updatedValue = { ...headOverlays[key], [option]: value };
+
+      setData(state => ({ ...state, headOverlays: { ...state.headOverlays, [key]: updatedValue } }));
+
+      Nui.post('appearance_change_head_overlay', { ...headOverlays, [key]: updatedValue });
     },
-    [setData],
+    [setData, headOverlays],
   );
 
   const handleEyeColorChange = useCallback(
@@ -216,88 +267,106 @@ const Appearance: React.FC = () => {
         ...state,
         eyeColor: value,
       }));
+
+      Nui.post('appearance_change_eye_color', value);
     },
     [setData],
   );
 
   const handleComponentDrawableChange = useCallback(
-    (component_id: number, drawable: number) => {
-      setData(state => {
-        const component = state.components.find(c => c.component_id === component_id);
+    async (component_id: number, drawable: number) => {
+      const component = components.find(c => c.component_id === component_id);
 
-        if (!component) return state;
+      if (!component) return;
 
-        const filteredComponents = state.components.filter(c => c.component_id !== component_id);
+      const updatedComponent = { ...component, drawable, texture: 0 };
 
-        const updatedComponents = [...filteredComponents, { ...component, drawable }];
+      const filteredComponents = components.filter(c => c.component_id !== component_id);
 
-        return {
-          ...state,
-          components: updatedComponents,
-        };
-      });
+      const updatedComponents = [...filteredComponents, updatedComponent];
+
+      setData(state => ({ ...state, components: updatedComponents }));
+
+      const updatedComponentsSettings = await Nui.post('appearance_change_component', updatedComponents);
+
+      setSettings(state => ({
+        ...state,
+        components: updatedComponentsSettings,
+      }));
     },
-    [setData],
+    [setData, components, setSettings],
   );
 
   const handleComponentTextureChange = useCallback(
-    (component_id: number, texture: number) => {
-      setData(state => {
-        const component = state.components.find(c => c.component_id === component_id);
+    async (component_id: number, texture: number) => {
+      const component = components.find(c => c.component_id === component_id);
 
-        if (!component) return state;
+      if (!component) return;
 
-        const filteredComponents = state.components.filter(c => c.component_id !== component_id);
+      const updatedComponent = { ...component, texture };
 
-        const updatedComponents = [...filteredComponents, { ...component, texture }];
+      const filteredComponents = components.filter(c => c.component_id !== component_id);
 
-        return {
-          ...state,
-          components: updatedComponents,
-        };
-      });
+      const updatedComponents = [...filteredComponents, updatedComponent];
+
+      setData(state => ({ ...state, components: updatedComponents }));
+
+      const updatedComponentsSettings = await Nui.post('appearance_change_component', updatedComponents);
+
+      setSettings(state => ({
+        ...state,
+        components: updatedComponentsSettings,
+      }));
     },
-    [setData],
+    [setData, components, setSettings],
   );
 
   const handlePropDrawableChange = useCallback(
-    (prop_id: number, drawable: number) => {
-      setData(state => {
-        const component = state.props.find(c => c.prop_id === prop_id);
+    async (prop_id: number, drawable: number) => {
+      const prop = props.find(p => p.prop_id === prop_id);
 
-        if (!component) return state;
+      if (!prop) return;
 
-        const filteredComponents = state.props.filter(c => c.prop_id !== prop_id);
+      const updatedProp = { ...prop, drawable, texture: 0 };
 
-        const updatedComponents = [...filteredComponents, { ...component, drawable }];
+      const filteredProps = props.filter(p => p.prop_id !== prop_id);
 
-        return {
-          ...state,
-          props: updatedComponents,
-        };
-      });
+      const updatedProps = [...filteredProps, updatedProp];
+
+      setData(state => ({ ...state, props: updatedProps }));
+
+      const updatedPropsSettings = await Nui.post('appearance_change_prop', updatedProps);
+
+      setSettings(state => ({
+        ...state,
+        props: updatedPropsSettings,
+      }));
     },
-    [setData],
+    [setData, props, setSettings],
   );
 
   const handlePropTextureChange = useCallback(
-    (prop_id: number, texture: number) => {
-      setData(state => {
-        const component = state.props.find(c => c.prop_id === prop_id);
+    async (prop_id: number, texture: number) => {
+      const prop = props.find(p => p.prop_id === prop_id);
 
-        if (!component) return state;
+      if (!prop) return;
 
-        const filteredComponents = state.props.filter(c => c.prop_id !== prop_id);
+      const updatedProp = { ...prop, texture };
 
-        const updatedComponents = [...filteredComponents, { ...component, texture }];
+      const filteredProps = props.filter(p => p.prop_id !== prop_id);
 
-        return {
-          ...state,
-          props: updatedComponents,
-        };
-      });
+      const updatedProps = [...filteredProps, updatedProp];
+
+      setData(state => ({ ...state, props: updatedProps }));
+
+      const updatedPropsSettings = await Nui.post('appearance_change_prop', updatedProps);
+
+      setSettings(state => ({
+        ...state,
+        props: updatedPropsSettings,
+      }));
     },
-    [setData],
+    [setData, props, setSettings],
   );
 
   const isPedFreemodeModel = useMemo(() => {
@@ -305,7 +374,7 @@ const Appearance: React.FC = () => {
   }, [data.model]);
 
   useEffect(() => {
-    Nui.onEvent('cfx-appearance:display', () => {
+    Nui.onEvent('appearance_display', () => {
       setDisplay({ appearance: true });
     });
   }, [setDisplay]);
@@ -313,8 +382,9 @@ const Appearance: React.FC = () => {
   useEffect(() => {
     if (display.appearance) {
       (async () => {
-        const { appearanceSettings, appearanceData } = await Nui.post('cfx-appearance:getSettingsAndData');
+        const { appearanceSettings, appearanceData } = await Nui.post('appearance_get_settings_and_data');
         setSettings(appearanceSettings);
+        setStoredData(appearanceData);
         setData(appearanceData);
       })();
     }
@@ -332,17 +402,24 @@ const Appearance: React.FC = () => {
             <animated.div key={key} style={style}>
               <Wrapper>
                 <Container>
-                  <Ped settings={settings.ped} model={model} handleModelChange={handleModelChange} />
+                  <Ped
+                    settings={settings.ped}
+                    storedData={storedData.model}
+                    data={model}
+                    handleModelChange={handleModelChange}
+                  />
                   {isPedFreemodeModel && (
                     <>
                       <HeadBlend
                         settings={settings.headBlend}
-                        headBlend={headBlend}
+                        storedData={storedData.headBlend}
+                        data={headBlend}
                         handleHeadBlendChange={handleHeadBlendChange}
                       />
                       <FaceFeatures
                         settings={settings.faceFeatures}
-                        faceFeatures={faceFeatures}
+                        storedData={storedData.faceFeatures}
+                        data={faceFeatures}
                         handleFaceFeatureChange={handleFaceFeatureChange}
                       />
                       <HeadOverlays
@@ -351,9 +428,16 @@ const Appearance: React.FC = () => {
                           headOverlays: settings.headOverlays,
                           eyeColor: settings.eyeColor,
                         }}
-                        hair={hair}
-                        headOverlays={headOverlays}
-                        eyeColor={eyeColor}
+                        storedData={{
+                          hair: storedData.hair,
+                          headOverlays: storedData.headOverlays,
+                          eyeColor: storedData.eyeColor,
+                        }}
+                        data={{
+                          hair,
+                          headOverlays,
+                          eyeColor,
+                        }}
                         handleHairChange={handleHairChange}
                         handleHeadOverlayChange={handleHeadOverlayChange}
                         handleEyeColorChange={handleEyeColorChange}
@@ -362,15 +446,15 @@ const Appearance: React.FC = () => {
                   )}
                   <Components
                     getComponentSettings={getComponentSettings}
-                    getComponentDrawable={getComponentDrawable}
-                    getComponentTexture={getComponentTexture}
+                    getStoredComponent={getStoredComponent}
+                    getComponent={getComponent}
                     handleComponentDrawableChange={handleComponentDrawableChange}
                     handleComponentTextureChange={handleComponentTextureChange}
                   />
                   <Props
                     getPropSettings={getPropSettings}
-                    getPropDrawable={getPropDrawable}
-                    getPropTexture={getPropTexture}
+                    getStoredProp={getStoredProp}
+                    getProp={getProp}
                     handlePropDrawableChange={handlePropDrawableChange}
                     handlePropTextureChange={handlePropTextureChange}
                   />
@@ -381,8 +465,8 @@ const Appearance: React.FC = () => {
                   handleCameraChange={handleCameraChange}
                   handleRotateLeft={handleRotateLeft}
                   handleRotateRight={handleRotateRight}
-                  handleSave={handleSave}
-                  handleExit={handleExit}
+                  handleSave={handleSaveModal}
+                  handleExit={handleExitModal}
                 />
               </Wrapper>
             </animated.div>
@@ -395,10 +479,8 @@ const Appearance: React.FC = () => {
               <Modal
                 title="Salvar customização"
                 description="Você continua feio"
-                handleAccept={() => {}}
-                handleDecline={() => {
-                  setSaveModal(false);
-                }}
+                handleAccept={() => handleSave(true)}
+                handleDecline={() => handleSave(false)}
               />
             </animated.div>
           ),
@@ -410,10 +492,8 @@ const Appearance: React.FC = () => {
               <Modal
                 title="Sair da customização"
                 description="Nenhuma alteração será salva"
-                handleAccept={() => {}}
-                handleDecline={() => {
-                  setExitModal(false);
-                }}
+                handleAccept={() => handleExit(true)}
+                handleDecline={() => handleExit(false)}
               />
             </animated.div>
           ),
