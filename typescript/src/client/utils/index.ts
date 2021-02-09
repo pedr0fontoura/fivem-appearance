@@ -1,3 +1,5 @@
+import { HAIR_DECALS } from '../constants';
+
 export const Delay = (ms: number): Promise<void> => new Promise(res => setTimeout(res, ms));
 
 export const isPedFreemodeModel = (ped: number): boolean => {
@@ -39,4 +41,30 @@ export const getPedProps = (ped: number): PedProp[] => {
   });
 
   return props;
+};
+
+const getPedHairDecorationType = (ped: number): 'male' | 'female' => {
+  const pedModel = GetEntityModel(ped);
+
+  let hairDecorationType: 'male' | 'female';
+
+  if (pedModel === GetHashKey('mp_m_freemode_01')) {
+    hairDecorationType = 'male';
+  } else if (pedModel === GetHashKey('mp_f_freemode_01')) {
+    hairDecorationType = 'female';
+  }
+
+  return hairDecorationType;
+};
+
+export const getPedHairDecal = (ped: number, hairStyle: number): HairDecal => {
+  const hairDecorationType = getPedHairDecorationType(ped);
+
+  if (!hairDecorationType) return;
+
+  const hairDecal = HAIR_DECALS[hairDecorationType].find(
+    hairDecoration => hairDecoration.id === hairStyle,
+  );
+
+  return hairDecal;
 };

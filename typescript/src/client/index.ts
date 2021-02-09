@@ -1,6 +1,6 @@
-import { Delay } from './utils';
+import { Delay, isPedFreemodeModel } from './utils';
 
-import { getPedHairDecal } from './misc';
+import { getPedHairDecal } from './utils';
 
 import {
   DEFAULT_HEAD_BLEND,
@@ -9,9 +9,13 @@ import {
   DEFAULT_HAIR,
   DEFAULT_COMPONENTS,
   DEFAULT_PROPS,
-} from './defaults';
+  FACE_FEATURES,
+  HEAD_OVERLAYS,
+} from './constants';
 
-async function setPlayerModel(model: string): Promise<void> {
+import * as Interface from './modules/interface';
+
+export async function setPlayerModel(model: string): Promise<void> {
   if (!model) return;
 
   RequestModel(model);
@@ -24,13 +28,19 @@ async function setPlayerModel(model: string): Promise<void> {
 
   SetModelAsNoLongerNeeded(model);
 
-  SetPedDefaultComponentVariation(PlayerId());
+  const playerPed = PlayerPedId();
+
+  SetPedDefaultComponentVariation(playerPed);
+
+  if (isPedFreemodeModel(playerPed)) {
+    SetPedHeadBlendData(playerPed, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
+  }
 
   // Emit event for async hooks since async exports are not a thing
   emit('cfx-appearance:playerModelChanged');
 }
 
-function setPedHeadBlend(ped: number, headBlend: PedHeadBlend = DEFAULT_HEAD_BLEND) {
+export function setPedHeadBlend(ped: number, headBlend: PedHeadBlend = DEFAULT_HEAD_BLEND): void {
   const { shapeFirst, shapeSecond, shapeMix, skinFirst, skinSecond, skinMix } = headBlend;
 
   SetPedHeadBlendData(
@@ -48,43 +58,39 @@ function setPedHeadBlend(ped: number, headBlend: PedHeadBlend = DEFAULT_HEAD_BLE
   );
 }
 
-function setPedFaceFeatures(
+export function setPedFaceFeatures(
   ped: number,
   faceFeatures: PedFaceFeatures = DEFAULT_FACE_FEATURES,
 ): void {
-  Object.keys(faceFeatures).forEach(faceFeature => {
-    const index = FaceFeatures[faceFeature];
+  Object.keys(FACE_FEATURES).forEach((key, index) => {
+    const faceFeature = faceFeatures[key];
 
-    const value = faceFeatures[faceFeature];
-
-    SetPedFaceFeature(ped, index, value);
+    SetPedFaceFeature(ped, index, faceFeature);
   });
 }
 
-function setPedHeadOverlays(
+export function setPedHeadOverlays(
   ped: number,
   headOverlays: PedHeadOverlays = DEFAULT_HEAD_OVERLAYS,
 ): void {
-  Object.keys(headOverlays).forEach(headOverlay => {
-    const index: number = HeadOverlays[headOverlay];
+  HEAD_OVERLAYS.forEach((key, index) => {
+    const headOverlay: PedHeadOverlayValue = headOverlays[key];
 
-    const overlay: PedHeadOverlayValue = headOverlays[headOverlay];
+    SetPedHeadOverlay(ped, index, headOverlay.style, headOverlay.opacity);
 
-    SetPedHeadOverlay(ped, index, overlay.style, overlay.opacity);
-
-    if (overlay.color) {
+    if (headOverlay.color) {
       let colorType = 1;
 
-      if (index === HeadOverlays.blush || index === HeadOverlays.lipstick) {
+      if (key === ('blush' || 'lipstick')) {
         colorType = 2;
       }
 
-      SetPedHeadOverlayColor(ped, index, colorType, overlay.color, overlay.color);
+      SetPedHeadOverlayColor(ped, index, colorType, headOverlay.color, headOverlay.color);
     }
   });
 }
 
-function setPedHair(ped: number, hair: PedHair = DEFAULT_HAIR): void {
+export function setPedHair(ped: number, hair: PedHair = DEFAULT_HAIR): void {
   const { style, color, highlight } = hair;
 
   SetPedComponentVariation(ped, 2, style, 0, 0);
@@ -102,17 +108,23 @@ function setPedHair(ped: number, hair: PedHair = DEFAULT_HAIR): void {
   }
 }
 
-function setPedEyeColor(ped: number, eyeColor = 0): void {
+export function setPedEyeColor(ped: number, eyeColor = 0): void {
   SetPedEyeColor(ped, eyeColor);
 }
 
-function setPedComponents(ped: number, components: PedComponent[] = DEFAULT_COMPONENTS): void {
+export function setPedComponents(
+  ped: number,
+  components: PedComponent[] = DEFAULT_COMPONENTS,
+): void {
+  const excludeFromFreemodeModels = 2 || 1;
   components.forEach(({ component_id, drawable, texture }) => {
-    SetPedComponentVariation(ped, component_id, drawable, texture, 0);
+    if (!(component_id === excludeFromFreemodeModels && isPedFreemodeModel(ped))) {
+      SetPedComponentVariation(ped, component_id, drawable, texture, 0);
+    }
   });
 }
 
-function setPedProps(ped: number, props: PedProp[] = DEFAULT_PROPS): void {
+export function setPedProps(ped: number, props: PedProp[] = DEFAULT_PROPS): void {
   props.forEach(({ prop_id, drawable, texture }) => {
     if (drawable === -1) {
       ClearPedProp(ped, prop_id);
@@ -197,8 +209,28 @@ function setPedAppearance(ped: number, appearance: PedAppearance): void {
 function init(): void {
   global.Delay = Delay;
 
+  Interface.loadModule();
+
+  SetNuiFocus(true, true);
+  SetNuiFocusKeepInput(false);
+
   exports('setPlayerAppearance', setPlayerAppearance);
   exports('setPedAppearance', setPedAppearance);
 }
 
-init();
+addEventListener('onResourceStart', (resource: string) => {
+  if (resource !== GetCurrentResourceName()) {
+    return;
+  }
+
+  init();
+});
+
+addEventListener('onResourceStop', (resource: string) => {
+  if (resource !== GetCurrentResourceName()) {
+    return;
+  }
+
+  SetNuiFocus(false, false);
+  SetNuiFocusKeepInput(false);
+});

@@ -6,6 +6,17 @@ interface Vector3 {
   z: number;
 }
 
+interface HairDecal {
+  id: number;
+  collection: string;
+  overlay: string;
+}
+
+interface HairDecals {
+  male: HairDecal[];
+  female: HairDecal[];
+}
+
 interface PedHeadBlend {
   shapeFirst: number;
   shapeSecond: number;
@@ -13,29 +24,6 @@ interface PedHeadBlend {
   skinSecond: number;
   shapeMix: number;
   skinMix: number;
-}
-
-declare enum FaceFeatures {
-  noseWidth,
-  nosePeakHigh,
-  nosePeakSize,
-  noseBoneHigh,
-  nosePeakLowering,
-  noseBoneTwist,
-  eyeBrownHigh,
-  eyeBrownForward,
-  cheeksBoneHigh,
-  cheeksBoneWidth,
-  cheeksWidth,
-  eyesOpening,
-  lipsThickness,
-  jawBoneWidth,
-  jawBoneBackSize,
-  chinBoneLowering,
-  chinBoneLenght,
-  chinBoneSize,
-  chinHole,
-  neckThickness,
 }
 
 interface PedFaceFeatures {
@@ -65,21 +53,6 @@ interface PedHeadOverlayValue {
   style: number;
   opacity: number;
   color?: number;
-}
-
-declare enum HeadOverlays {
-  blemishes,
-  beard,
-  eyebrows,
-  ageing,
-  makeUp,
-  blush,
-  complexion,
-  sunDamage,
-  lipstick,
-  moleAndFreckles,
-  chestHair,
-  bodyBlemishes,
 }
 
 interface PedHeadOverlays {
@@ -119,9 +92,133 @@ interface PedAppearance {
   model: string;
   components: PedComponent[];
   props: PedProp[];
-  headBlend?: PedHeadBlend;
-  faceFeatures?: PedFaceFeatures;
-  headOverlays?: PedHeadOverlays;
-  hair?: PedHair;
-  eyeColor?: number;
+  headBlend: PedHeadBlend;
+  faceFeatures: PedFaceFeatures;
+  headOverlays: PedHeadOverlays;
+  hair: PedHair;
+  eyeColor: number;
+}
+
+interface PedSettings {
+  model: {
+    items: string[];
+  };
+}
+
+interface ComponentSettings {
+  component_id: number;
+  drawable: {
+    min: number;
+    max: number;
+  };
+  texture: {
+    min: number;
+    max: number;
+  };
+}
+
+interface PropSettings {
+  prop_id: number;
+  drawable: {
+    min: number;
+    max: number;
+  };
+  texture: {
+    min: number;
+    max: number;
+  };
+}
+
+interface HeadBlendSettings {
+  shapeFirst: {
+    min: number;
+    max: number;
+  };
+  shapeSecond: {
+    min: number;
+    max: number;
+  };
+  skinFirst: {
+    min: number;
+    max: number;
+  };
+  skinSecond: {
+    min: number;
+    max: number;
+  };
+  shapeMix: {
+    min: number;
+    max: number;
+    factor: number;
+  };
+  skinMix: {
+    min: number;
+    max: number;
+    factor: number;
+  };
+}
+
+type FaceFeaturesSettingsKey = keyof PedFaceFeatures;
+
+type FaceFeaturesSettingsValue = { min: number; max: number; factor: number };
+
+type FaceFeaturesSettings = Record<FaceFeaturesSettingsKey, FaceFeaturesSettingsValue>;
+
+type HeadOverlaysSettingsKey = keyof PedHeadOverlays;
+
+type HeadOverlaysSettingsValue = {
+  style: {
+    min: number;
+    max: number;
+  };
+  opacity: {
+    min: number;
+    max: number;
+    factor: number;
+  };
+  color?: {
+    items: number[][];
+  };
+};
+
+type HeadOverlaysSettings = Record<HeadOverlaysSettingsKey, HeadOverlaysSettingsValue>;
+
+interface HairSettings {
+  style: {
+    min: number;
+    max: number;
+  };
+  color: {
+    items: number[][];
+  };
+  highlight: {
+    items: number[][];
+  };
+}
+
+interface EyeColorSettings {
+  min: number;
+  max: number;
+}
+
+interface AppearanceSettings {
+  ped: PedSettings;
+  components: ComponentSettings[];
+  props: PropSettings[];
+  headBlend: HeadBlendSettings;
+  faceFeatures: FaceFeaturesSettings;
+  headOverlays: HeadOverlaysSettings;
+  hair: HairSettings;
+  eyeColor: EyeColorSettings;
+}
+
+interface CameraState {
+  head: boolean;
+  body: boolean;
+  bottom: boolean;
+}
+
+interface RotateState {
+  left: boolean;
+  right: boolean;
 }
