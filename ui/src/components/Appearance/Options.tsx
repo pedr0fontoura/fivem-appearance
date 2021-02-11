@@ -21,10 +21,11 @@ interface ExtendendOptionProps {
   icon: ReactElement;
 }
 
-interface CameraProps {
+interface OptionsProps {
   camera: CameraState;
   rotate: RotateState;
-  handleCameraChange: (key: keyof CameraState) => void;
+  handleSetCamera: (key: keyof CameraState) => void;
+  handleTurnAround: () => void;
   handleRotateLeft: () => void;
   handleRotateRight: () => void;
   handleSave: () => void;
@@ -39,7 +40,7 @@ const Container = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
 
-  padding: 20px 0;
+  padding: 40px 0;
 
   > * {
     & + * {
@@ -204,10 +205,11 @@ const ExtendedOption: React.FC<ExtendendOptionProps> = ({ children, icon }) => {
   );
 };
 
-const Options: React.FC<CameraProps> = ({
+const Options: React.FC<OptionsProps> = ({
   camera,
   rotate,
-  handleCameraChange,
+  handleSetCamera,
+  handleTurnAround,
   handleRotateLeft,
   handleRotateRight,
   handleExit,
@@ -216,17 +218,17 @@ const Options: React.FC<CameraProps> = ({
   return (
     <Container>
       <ExtendedOption icon={<FaVideo size={20} />}>
-        <ToggleOption active={camera.head} onClick={() => handleCameraChange('head')}>
+        <ToggleOption active={camera.head} onClick={() => handleSetCamera('head')}>
           <FaSmile size={20} />
         </ToggleOption>
-        <ToggleOption active={camera.body} onClick={() => handleCameraChange('body')}>
+        <ToggleOption active={camera.body} onClick={() => handleSetCamera('body')}>
           <FaMale size={20} />
         </ToggleOption>
-        <ToggleOption active={camera.bottom} onClick={() => handleCameraChange('bottom')}>
+        <ToggleOption active={camera.bottom} onClick={() => handleSetCamera('bottom')}>
           <FaShoePrints size={20} />
         </ToggleOption>
       </ExtendedOption>
-      <Option>
+      <Option onClick={handleTurnAround}>
         <FaStreetView size={20} />
       </Option>
       <ToggleOption active={rotate.left} onClick={handleRotateLeft}>

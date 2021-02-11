@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Container = styled.div`
-  height: 100vh;
+  height: 100%;
   width: 20%;
   max-width: 400px;
 
@@ -20,7 +20,7 @@ export const Container = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
 
-  padding: 20px 10px;
+  padding: 40px 10px;
 
   background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
 

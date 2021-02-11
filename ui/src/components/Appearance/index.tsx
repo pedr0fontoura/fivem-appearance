@@ -36,7 +36,21 @@ import { Wrapper, Container } from './styles';
 if (process.env.REACT_APP_ENV !== 'production') {
   mock('appearance_get_settings_and_data', () => ({
     appearanceData: { ...APPEARANCE_INITIAL_STATE, model: 'mp_f_freemode_01' },
-    appearanceSettings: { ...SETTINGS_INITIAL_STATE, eyeColor: { min: 0, max: 24 } },
+    appearanceSettings: {
+      ...SETTINGS_INITIAL_STATE,
+      eyeColor: { min: 0, max: 24 },
+      hair: {
+        ...SETTINGS_INITIAL_STATE.hair,
+        color: {
+          items: [
+            [255, 0, 0],
+            [0, 255, 0],
+            [0, 0, 255],
+            [0, 0, 255],
+          ],
+        },
+      },
+    },
   }));
 
   mock('appearance_change_model', () => SETTINGS_INITIAL_STATE);
@@ -142,28 +156,43 @@ const Appearance: React.FC = () => {
     return prop;
   };
 
-  const handleCameraChange = useCallback(
+  const handleTurnAround = useCallback(() => {
+    Nui.post('appearance_turn_around');
+  }, []);
+
+  const handleSetCamera = useCallback(
     (key: keyof CameraState) => {
-      setCamera(state => {
-        const currentCameraState = state[key];
+      setCamera({ ...CAMERA_INITIAL_STATE, [key]: !camera[key] });
+      setRotate(ROTATE_INITIAL_STATE);
 
-        const cameraState = { ...state };
-
-        Object.assign(cameraState, CAMERA_INITIAL_STATE);
-
-        return { ...cameraState, [key]: !currentCameraState };
-      });
+      if (!camera[key]) {
+        Nui.post('appearance_set_camera', key);
+      } else {
+        Nui.post('appearance_set_camera', 'default');
+      }
     },
-    [setCamera],
+    [camera, setCamera, setRotate],
   );
 
   const handleRotateLeft = useCallback(() => {
-    setRotate(state => ({ left: !state.left, right: false }));
-  }, [setRotate]);
+    setRotate({ left: !rotate.left, right: false });
+
+    if (!rotate.left) {
+      Nui.post('appearance_rotate_camera', 'left');
+    } else {
+      Nui.post('appearance_set_camera', 'current');
+    }
+  }, [setRotate, rotate]);
 
   const handleRotateRight = useCallback(() => {
-    setRotate(state => ({ left: false, right: !state.right }));
-  }, [setRotate]);
+    setRotate({ left: false, right: !rotate.right });
+
+    if (!rotate.right) {
+      Nui.post('appearance_rotate_camera', 'right');
+    } else {
+      Nui.post('appearance_set_camera', 'current');
+    }
+  }, [setRotate, rotate]);
 
   const handleSaveModal = useCallback(() => {
     setSaveModal(true);
@@ -199,12 +228,10 @@ const Appearance: React.FC = () => {
 
   const handleModelChange = useCallback(
     async (value: string) => {
-      const updatedData = { ...APPEARANCE_INITIAL_STATE, model: value };
-      setData(updatedData);
+      const { appearanceSettings, appearanceData } = await Nui.post('appearance_change_model', value);
 
-      const updatedSettings = await Nui.post('appearance_change_model', updatedData);
-
-      setSettings(updatedSettings);
+      setSettings(appearanceSettings);
+      setData(appearanceData);
     },
     [setData, setSettings],
   );
@@ -377,6 +404,10 @@ const Appearance: React.FC = () => {
     Nui.onEvent('appearance_display', () => {
       setDisplay({ appearance: true });
     });
+
+    Nui.onEvent('appearance_hide', () => {
+      setDisplay({ appearance: false });
+    });
   }, [setDisplay]);
 
   useEffect(() => {
@@ -408,7 +439,7 @@ const Appearance: React.FC = () => {
                     data={model}
                     handleModelChange={handleModelChange}
                   />
-                  {isPedFreemodeModel && (
+                  {isPedFreemodeModel && settings && (
                     <>
                       <HeadBlend
                         settings={settings.headBlend}
@@ -462,7 +493,8 @@ const Appearance: React.FC = () => {
                 <Options
                   camera={camera}
                   rotate={rotate}
-                  handleCameraChange={handleCameraChange}
+                  handleSetCamera={handleSetCamera}
+                  handleTurnAround={handleTurnAround}
                   handleRotateLeft={handleRotateLeft}
                   handleRotateRight={handleRotateRight}
                   handleSave={handleSaveModal}

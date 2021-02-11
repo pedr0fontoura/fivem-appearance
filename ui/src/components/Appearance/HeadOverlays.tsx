@@ -42,7 +42,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
   handleHeadOverlayChange,
   handleEyeColorChange,
 }) => (
-  <Section title="Aparência">
+  <Section title="Aparência" deps={[settings]}>
     <Item title="Cabelo">
       <Input
         title="Estilo"

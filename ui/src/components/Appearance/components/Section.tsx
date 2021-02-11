@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { useTransition, animated } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 
 interface SectionProps {
   title: string;
+  deps?: any[];
 }
 
 interface HeaderProps {
@@ -57,26 +58,32 @@ const Header = styled.div<HeaderProps>`
 
 const Items = styled.div`
   padding: 0 2px 5px 2px;
+
+  overflow: hidden;
 `;
 
-const Section: React.FC<SectionProps> = ({ children, title }) => {
-  const [active, setActive] = useState(true);
+const Section: React.FC<SectionProps> = ({ children, title, deps = [] }) => {
+  const [active, setActive] = useState(false);
 
   const [height, setHeight] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
 
-  const itemsTransition = useTransition(active, null, {
-    from: { transform: 'translateY(-50px)', opacity: 0, height: 0 },
-    enter: { transform: 'translateY(0)', opacity: 1, height },
-    leave: { transform: 'translateY(-50px)', opacity: 0, height: 0 },
+  const props = useSpring({
+    height: active ? height : 0,
+    opacity: active ? 1 : 0,
   });
 
   useEffect(() => {
     if (ref.current) {
       setHeight(ref.current.offsetHeight);
-      setActive(false);
     }
   }, [ref, setHeight]);
+
+  useEffect(() => {
+    if (ref.current) {
+      setHeight(ref.current.offsetHeight);
+    }
+  }, [deps]);
 
   return (
     <Container>
@@ -84,15 +91,10 @@ const Section: React.FC<SectionProps> = ({ children, title }) => {
         <span>{title}</span>
         {active ? <FiChevronUp size={30} /> : <FiChevronDown size={30} />}
       </Header>
-      {children &&
-        itemsTransition.map(
-          ({ item, key, props }) =>
-            item && (
-              <animated.div key={key} style={props}>
-                <Items ref={ref}>{children}</Items>
-              </animated.div>
-            ),
-        )}
+
+      <animated.div style={{ ...props, overflow: 'hidden' }}>
+        <Items ref={ref}>{children}</Items>
+      </animated.div>
     </Container>
   );
 };

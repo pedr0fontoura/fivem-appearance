@@ -13,7 +13,7 @@ import {
   HEAD_OVERLAYS,
 } from './constants';
 
-import * as Interface from './modules/interface';
+import * as Customization from './modules/customization';
 
 export async function setPlayerModel(model: string): Promise<void> {
   if (!model) return;
@@ -62,7 +62,7 @@ export function setPedFaceFeatures(
   ped: number,
   faceFeatures: PedFaceFeatures = DEFAULT_FACE_FEATURES,
 ): void {
-  Object.keys(FACE_FEATURES).forEach((key, index) => {
+  FACE_FEATURES.forEach((key, index) => {
     const faceFeature = faceFeatures[key];
 
     SetPedFaceFeature(ped, index, faceFeature);
@@ -209,7 +209,7 @@ function setPedAppearance(ped: number, appearance: PedAppearance): void {
 function init(): void {
   global.Delay = Delay;
 
-  Interface.loadModule();
+  Customization.loadModule();
 
   SetNuiFocus(true, true);
   SetNuiFocusKeepInput(false);
