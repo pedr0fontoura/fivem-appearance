@@ -407,8 +407,13 @@ const Appearance: React.FC = () => {
 
     Nui.onEvent('appearance_hide', () => {
       setDisplay({ appearance: false });
+      setData(APPEARANCE_INITIAL_STATE);
+      setStoredData(APPEARANCE_INITIAL_STATE);
+      setSettings(SETTINGS_INITIAL_STATE);
+      setCamera(CAMERA_INITIAL_STATE);
+      setRotate(ROTATE_INITIAL_STATE);
     });
-  }, [setDisplay]);
+  }, [setDisplay, setData, setStoredData, setSettings, setCamera, setRotate]);
 
   useEffect(() => {
     if (display.appearance) {

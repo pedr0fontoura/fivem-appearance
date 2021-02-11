@@ -409,6 +409,7 @@ function startPlayerCustomization(
 
   const playerPed = PlayerPedId();
 
+  SetEntityInvincible(playerPed, true);
   ClearPedTasksImmediately(playerPed);
   TaskStandStill(playerPed, -1);
 
@@ -422,10 +423,14 @@ function startPlayerCustomization(
 
 export function exitPlayerCustomization(appearance?: PedAppearance): void {
   RenderScriptCams(false, false, 0, true, true);
-  DisplayRadar(false);
+  DestroyCam(cameraHandle, false);
+  DisplayRadar(true);
   SetNuiFocus(false, false);
 
-  ClearPedTasksImmediately(PlayerPedId());
+  const playerPed = PlayerPedId();
+
+  ClearPedTasksImmediately(playerPed);
+  SetEntityInvincible(playerPed, false);
 
   const nuiMessage = {
     type: 'appearance_hide',
@@ -456,3 +461,5 @@ export function loadModule(): void {
 
   exports('startPlayerCustomization', startPlayerCustomization);
 }
+
+export default { loadModule };

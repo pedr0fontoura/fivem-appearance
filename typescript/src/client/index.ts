@@ -13,7 +13,7 @@ import {
   HEAD_OVERLAYS,
 } from './constants';
 
-import * as Customization from './modules/customization';
+import Customization from './modules/customization';
 
 export async function setPlayerModel(model: string): Promise<void> {
   if (!model) return;
