@@ -8,7 +8,7 @@ A flexible player customization script for FiveM.
 - Default data structure for player / ped appearance
 - Camera control
 
-## Usage
+**Usage**
 
 1. Clone the repository into your `resources/[local]` folder.
 2. Install both client and interface dependencies, `cd typescript` / `cd ui`, `yarn` to install, then `yarn build`.
@@ -25,6 +25,20 @@ This is a development resource, if you don't use the exports the resource itself
 | setPedAppearance         | appearance (PedAppearance)                              |
 
 **Examples**
+
+Customization command (Lua)
+
+```lua
+RegisterCommand('customization', function()
+  exports['cfx-appearance']:startPlayerCustomization(function (appearance)
+    if (appearance) then
+      print('Saved')
+    else
+      print('Canceled')
+    end
+  end)
+end, false)
+```
 
 Start player customization with callback (TypeScript)
 
