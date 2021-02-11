@@ -66,6 +66,11 @@ export function registerNuiCallbacks(): void {
   on('__cfx_nui:appearance_change_model', (model: string, cb: (arg: any) => void): void => {
     setPlayerModel(model);
 
+    const playerPed = PlayerPedId();
+
+    ClearPedTasksImmediately(playerPed);
+    TaskStandStill(playerPed, -1);
+
     const appearanceData = getPlayerPedAppearance(model);
     const appearanceSettings = getAppearanceSettings(appearanceData);
 

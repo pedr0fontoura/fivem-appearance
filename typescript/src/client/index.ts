@@ -178,7 +178,7 @@ async function setPlayerAppearance(appearance: PedAppearance): Promise<void> {
   emit('cfx-appearance:playerAppearanceChanged');
 }
 
-function setPedAppearance(ped: number, appearance: PedAppearance): void {
+function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>): void {
   const { components, props, headBlend, faceFeatures, headOverlays, hair, eyeColor } = appearance;
 
   setPedComponents(ped, components);
@@ -210,9 +210,6 @@ function init(): void {
   global.Delay = Delay;
 
   Customization.loadModule();
-
-  SetNuiFocus(true, true);
-  SetNuiFocusKeepInput(false);
 
   exports('setPlayerAppearance', setPlayerAppearance);
   exports('setPedAppearance', setPedAppearance);

@@ -17,8 +17,8 @@ const CAMERAS = {
     point: { x: 0, y: 0, z: 0.6 },
   },
   body: {
-    coords: { x: 0, y: 2.2, z: 0.2 },
-    point: { x: 0, y: 0, z: 0 },
+    coords: { x: 0, y: 1.2, z: 0.2 },
+    point: { x: 0, y: 0, z: 0.2 },
   },
   bottom: {
     coords: { x: 0, y: 0.98, z: -0.7 },
@@ -29,7 +29,7 @@ const CAMERAS = {
 const OFFSETS = {
   default: { x: 1.5, y: -1 },
   head: { x: 0.7, y: -0.45 },
-  body: { x: 2.2, y: -1 },
+  body: { x: 1.2, y: -0.45 },
   bottom: { x: 0.7, y: -0.45 },
 };
 
@@ -377,8 +377,8 @@ function startPlayerCustomization(
 ): void;
 
 function startPlayerCustomization(
-  paramOne: PedAppearance | (() => void),
-  paramTwo?: () => void,
+  paramOne: PedAppearance | ((appearance?: PedAppearance) => void),
+  paramTwo?: (appearance?: PedAppearance) => void,
 ): void {
   let appearance;
   let cb;
@@ -402,10 +402,15 @@ function startPlayerCustomization(
 
   setCamera('default');
 
+  SetNuiFocus(true, true);
+  SetNuiFocusKeepInput(false);
   RenderScriptCams(true, false, 0, true, true);
   DisplayRadar(false);
 
-  TaskStandStill(PlayerPedId(), -1);
+  const playerPed = PlayerPedId();
+
+  ClearPedTasksImmediately(playerPed);
+  TaskStandStill(playerPed, -1);
 
   const nuiMessage = {
     type: 'appearance_display',
@@ -449,11 +454,5 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
 export function loadModule(): void {
   registerNuiCallbacks();
 
-  startPlayerCustomization(appearance => {
-    if (appearance) {
-      console.log(appearance);
-    } else {
-      console.log('haha');
-    }
-  });
+  exports('startPlayerCustomization', startPlayerCustomization);
 }
