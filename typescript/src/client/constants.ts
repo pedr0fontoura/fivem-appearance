@@ -645,5 +645,3 @@ export const HAIR_DECALS: HairDecals = {
     { id: 77, collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_F_001_F' },
   ],
 };
-
-export const PED_MODELS: string[] = ['mp_m_freemode_01', 'mp_f_freemode_01', 'player_zero'];

@@ -1,5 +1,4 @@
 import { DEFAULT_APPEARANCE, DEFAULT_SETTINGS } from '../../constants';
-import { PED_MODELS } from '../../constants';
 import { setPlayerAppearance } from '../../index';
 
 import { arrayToVector3 } from '../../utils/vector';
@@ -33,6 +32,8 @@ const OFFSETS = {
   body: { x: 1.2, y: -0.45 },
   bottom: { x: 0.7, y: -0.45 },
 };
+
+const pedModels: string[] = JSON.parse(LoadResourceFile(GetCurrentResourceName(), 'peds.json'));
 
 let callback: (appearance?: PedAppearance) => void;
 
@@ -159,7 +160,7 @@ export function getAppearance(): PedAppearance {
 export function getAppearanceSettings(appearanceData: PedAppearance): AppearanceSettings {
   const pedSettings = DEFAULT_SETTINGS.ped;
 
-  pedSettings.model.items = PED_MODELS;
+  pedSettings.model.items = pedModels;
 
   const componentsSettings = getComponentsSettings(appearanceData.components);
 
@@ -411,7 +412,6 @@ function startPlayerCustomization(
   const playerPed = PlayerPedId();
 
   SetEntityInvincible(playerPed, true);
-  ClearPedTasksImmediately(playerPed);
   TaskStandStill(playerPed, -1);
 
   const nuiMessage = {
@@ -440,7 +440,7 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
 
   SendNuiMessage(JSON.stringify(nuiMessage));
 
-  // If customization canceled, set old appearance
+  // If customization is canceled, set old appearance
   if (!appearance) {
     setPlayerAppearance(getAppearance());
   }

@@ -21,7 +21,7 @@ export async function setPlayerModel(model: string): Promise<void> {
   RequestModel(model);
 
   while (!HasModelLoaded(model)) {
-    await Delay(0);
+    await Delay(1000);
   }
 
   SetPlayerModel(PlayerId(), model);
@@ -30,14 +30,10 @@ export async function setPlayerModel(model: string): Promise<void> {
 
   const playerPed = PlayerPedId();
 
-  SetPedDefaultComponentVariation(playerPed);
-
   if (isPedFreemodeModel(playerPed)) {
+    SetPedDefaultComponentVariation(playerPed);
     SetPedHeadBlendData(playerPed, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
   }
-
-  // Emit event for async hooks since async exports are not a thing
-  emit('cfx-appearance:playerModelChanged');
 }
 
 export function setPedHeadBlend(ped: number, headBlend: PedHeadBlend = DEFAULT_HEAD_BLEND): void {
@@ -173,9 +169,6 @@ export async function setPlayerAppearance(appearance: PedAppearance): Promise<vo
   if (eyeColor) {
     setPedEyeColor(playerPed, eyeColor);
   }
-
-  // Emit event for async hooks since async exports are not a thing
-  emit('cfx-appearance:playerAppearanceChanged');
 }
 
 function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>): void {
