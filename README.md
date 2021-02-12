@@ -65,6 +65,48 @@ onNet("genericPlayerAppearanceLoadedServerEvent", (appearance) => {
 });
 ```
 
+## Data
+
+Snippets used to generate the resource's data files.
+
+**Peds**
+
+```javascript
+const puppeteer = require("puppeteer");
+const fs = require("fs");
+
+async function scrape() {
+  const browser = await puppeteer.launch();
+
+  const page = await browser.newPage();
+
+  await page.goto("https://docs.fivem.net/docs/game-references/ped-models/");
+
+  console.log("Searching for peds ...");
+
+  const result = await page.evaluate(() => {
+    const peds = [];
+
+    document.querySelectorAll("div.model > span > strong").forEach((ped) => {
+      peds.push(ped.innerHTML);
+    });
+
+    return peds;
+  });
+
+  browser.close();
+
+  return result;
+}
+
+scrape().then((peds) => {
+  fs.writeFile("peds.json", JSON.stringify(peds, null, 2), (err) => {
+    if (err) throw err;
+    console.log(`${peds.length} Peds saved`);
+  });
+});
+```
+
 ## Credits
 
 - root-cause for providing some of the customization data
