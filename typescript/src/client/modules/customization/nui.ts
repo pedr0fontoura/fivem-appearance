@@ -63,19 +63,22 @@ export function registerNuiCallbacks(): void {
     },
   );
 
-  on('__cfx_nui:appearance_change_model', (model: string, cb: (arg: any) => void): void => {
-    setPlayerModel(model);
+  on(
+    '__cfx_nui:appearance_change_model',
+    async (model: string, cb: (arg: any) => void): Promise<void> => {
+      await setPlayerModel(model);
 
-    const playerPed = PlayerPedId();
+      const playerPed = PlayerPedId();
 
-    ClearPedTasksImmediately(playerPed);
-    TaskStandStill(playerPed, -1);
+      ClearPedTasksImmediately(playerPed);
+      TaskStandStill(playerPed, -1);
 
-    const appearanceData = getPlayerPedAppearance(model);
-    const appearanceSettings = getAppearanceSettings(appearanceData);
+      const appearanceData = getPlayerPedAppearance(model);
+      const appearanceSettings = getAppearanceSettings(appearanceData);
 
-    cb({ appearanceSettings, appearanceData });
-  });
+      cb({ appearanceSettings, appearanceData });
+    },
+  );
 
   on(
     '__cfx_nui:appearance_change_component',

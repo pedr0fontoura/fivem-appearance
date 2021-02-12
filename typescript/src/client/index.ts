@@ -134,7 +134,7 @@ export function setPedProps(ped: number, props: PedProp[] = DEFAULT_PROPS): void
   });
 }
 
-async function setPlayerAppearance(appearance: PedAppearance): Promise<void> {
+export async function setPlayerAppearance(appearance: PedAppearance): Promise<void> {
   const {
     model,
     components,

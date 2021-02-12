@@ -1,5 +1,6 @@
 import { DEFAULT_APPEARANCE, DEFAULT_SETTINGS } from '../../constants';
 import { PED_MODELS } from '../../constants';
+import { setPlayerAppearance } from '../../index';
 
 import { arrayToVector3 } from '../../utils/vector';
 
@@ -126,7 +127,7 @@ export function getPropsSettings(props: PedProp[]): PropSettings[] {
 export function getPlayerPedAppearance(model?: string): PedAppearance {
   const playerPed = PlayerPedId();
 
-  const playerPedAppearance = DEFAULT_APPEARANCE;
+  const playerPedAppearance = { ...DEFAULT_APPEARANCE };
 
   if (model) {
     playerPedAppearance.model = model;
@@ -438,6 +439,11 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
   };
 
   SendNuiMessage(JSON.stringify(nuiMessage));
+
+  // If customization canceled, set old appearance
+  if (!appearance) {
+    setPlayerAppearance(getAppearance());
+  }
 
   if (callback) {
     callback(appearance);
