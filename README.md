@@ -22,7 +22,7 @@ This is a development resource, if you don't use the exports the resource itself
 | ------------------------ | ------------------------------------------------------- |
 | startPlayerCustomization | currentAppearance? (PedAppearance), callback (function) |
 | setPlayerAppearance      | appearance (PedAppearance)                              |
-| setPedAppearance         | appearance (PedAppearance)                              |
+| setPedAppearance         | ped (number), appearance (PedAppearance)                |
 
 **Examples**
 
