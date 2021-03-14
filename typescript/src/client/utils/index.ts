@@ -1,4 +1,4 @@
-import { HAIR_DECALS } from '../constants';
+import { HAIR_DECORATIONS } from '../constants';
 
 export const Delay = (ms: number): Promise<void> => new Promise(res => setTimeout(res, ms));
 
@@ -57,14 +57,14 @@ const getPedHairDecorationType = (ped: number): 'male' | 'female' => {
   return hairDecorationType;
 };
 
-export const getPedHairDecal = (ped: number, hairStyle: number): HairDecal => {
+export const getPedHairDecoration = (ped: number, hairStyle: number): HairDecoration => {
   const hairDecorationType = getPedHairDecorationType(ped);
 
   if (!hairDecorationType) return;
 
-  const hairDecal = HAIR_DECALS[hairDecorationType].find(
-    hairDecoration => hairDecoration.id === hairStyle,
+  const hairDecoration = HAIR_DECORATIONS[hairDecorationType].find(
+    decoration => decoration.id === hairStyle,
   );
 
-  return hairDecal;
+  return hairDecoration;
 };

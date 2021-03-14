@@ -1,6 +1,6 @@
 import { Delay, isPedFreemodeModel } from './utils';
 
-import { getPedHairDecal } from './utils';
+import { getPedHairDecoration } from './utils';
 
 import {
   DEFAULT_HEAD_BLEND,
@@ -95,12 +95,12 @@ export function setPedHair(ped: number, hair: PedHair = DEFAULT_HAIR): void {
 
   SetPedHairColor(ped, color, highlight);
 
-  const hairDecal = getPedHairDecal(ped, style);
+  const hairDecoration = getPedHairDecoration(ped, style);
 
   ClearPedDecorations(ped);
 
-  if (hairDecal) {
-    const { collection, overlay } = hairDecal;
+  if (hairDecoration) {
+    const { collection, overlay } = hairDecoration;
 
     AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(overlay));
   }

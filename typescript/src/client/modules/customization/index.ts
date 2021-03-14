@@ -1,5 +1,6 @@
 import { DEFAULT_APPEARANCE, DEFAULT_SETTINGS } from '../../constants';
 import { setPlayerAppearance } from '../../index';
+import { getPedHeadBlendData } from './ped';
 
 import { arrayToVector3 } from '../../utils/vector';
 
@@ -170,6 +171,8 @@ export function getPlayerPedAppearance(model?: string): PedAppearance {
   if (model) {
     playerPedAppearance.model = model;
   }
+
+  playerPedAppearance.headBlend = getPedHeadBlendData(playerPed);
 
   playerPedAppearance.components.forEach(component => {
     component.drawable = GetPedDrawableVariation(playerPed, component.component_id);

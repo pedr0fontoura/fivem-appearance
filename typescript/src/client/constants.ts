@@ -524,22 +524,22 @@ export const HEAD_OVERLAYS = [
   'bodyBlemishes',
 ];
 
-// Thanks to rootcause for the eye colors original names
+// Thanks to rootcause for the eye colors names and hair decorations hashes.
 export const EYE_COLORS: string[] = [
-  'Verde',
-  'Esmeralda',
-  'Azul Claro',
-  'Azul Oceano',
-  'Marrom Claro',
-  'Marrom Escuro',
-  'Avelã',
-  'Cinza Escuro',
-  'Cinza Claro',
-  'Rosa',
-  'Amarelo',
-  'Roxo',
-  'Apagão',
-  'Tons de Cinza',
+  'Green',
+  'Emerald',
+  'Light Blue',
+  'Ocean Blue',
+  'Light Brown',
+  'Dark Brown',
+  'Hazel',
+  'Dark Gray',
+  'Light Gray',
+  'Pink',
+  'Yellow',
+  'Purple',
+  'Blackout',
+  'Shades of Gray',
   'Tequila Sunrise',
   'Atomic',
   'Warp',
@@ -547,21 +547,20 @@ export const EYE_COLORS: string[] = [
   'Space Ranger',
   'Ying Yang',
   'Bullseye',
-  'Lagarto',
-  'Dragão',
-  'Extra Terrestre',
+  'Lizard',
+  'Dragon',
+  'Extra Terrestrial',
   'Goat',
   'Smiley',
-  'Possuído',
-  'Demônio',
-  'Infectado',
+  'Possessed',
+  'Demon',
+  'Infected',
   'Alien',
-  'Morto-vivo',
-  'Zumbi',
+  'Undead',
+  'Zombie',
 ];
 
-// Thanks to rootcause for the hair decals hashes
-export const HAIR_DECALS: HairDecals = {
+export const HAIR_DECORATIONS: HairDecorations = {
   male: [
     { id: 0, collection: 'mpbeach_overlays', overlay: 'FM_Hair_Fuzz' },
     { id: 1, collection: 'multiplayer_overlays', overlay: 'NG_M_Hair_001' },

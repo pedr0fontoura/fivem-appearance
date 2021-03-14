@@ -6,15 +6,15 @@ interface Vector3 {
   z: number;
 }
 
-interface HairDecal {
+interface HairDecoration {
   id: number;
   collection: string;
   overlay: string;
 }
 
-interface HairDecals {
-  male: HairDecal[];
-  female: HairDecal[];
+interface HairDecorations {
+  male: HairDecoration[];
+  female: HairDecoration[];
 }
 
 interface PedHeadBlend {
