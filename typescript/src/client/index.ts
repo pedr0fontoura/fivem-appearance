@@ -18,10 +18,12 @@ import Customization from './modules/customization';
 export async function setPlayerModel(model: string): Promise<void> {
   if (!model) return;
 
+  if (!IsModelInCdimage(model)) return;
+
   RequestModel(model);
 
   while (!HasModelLoaded(model)) {
-    await Delay(1000);
+    await Delay(0);
   }
 
   SetPlayerModel(PlayerId(), model);
@@ -108,26 +110,44 @@ export function setPedEyeColor(ped: number, eyeColor = 0): void {
   SetPedEyeColor(ped, eyeColor);
 }
 
+export function setPedComponent(ped: number, component: PedComponent): void {
+  if (!component) return;
+
+  const { component_id, drawable, texture } = component;
+
+  const excludedFromFreemodeModels = {
+    0: true,
+    2: true,
+  };
+
+  if (excludedFromFreemodeModels[component_id] && isPedFreemodeModel(ped)) {
+    return;
+  }
+
+  SetPedComponentVariation(ped, component_id, drawable, texture, 0);
+}
+
 export function setPedComponents(
   ped: number,
   components: PedComponent[] = DEFAULT_COMPONENTS,
 ): void {
-  const excludeFromFreemodeModels = 2 || 1;
-  components.forEach(({ component_id, drawable, texture }) => {
-    if (!(component_id === excludeFromFreemodeModels && isPedFreemodeModel(ped))) {
-      SetPedComponentVariation(ped, component_id, drawable, texture, 0);
-    }
-  });
+  components.forEach(component => setPedComponent(ped, component));
+}
+
+export function setPedProp(ped: number, prop: PedProp): void {
+  if (!prop) return;
+
+  const { prop_id, drawable, texture } = prop;
+
+  if (drawable === -1) {
+    ClearPedProp(ped, prop_id);
+  } else {
+    SetPedPropIndex(ped, prop_id, drawable, texture, false);
+  }
 }
 
 export function setPedProps(ped: number, props: PedProp[] = DEFAULT_PROPS): void {
-  props.forEach(({ prop_id, drawable, texture }) => {
-    if (drawable === -1) {
-      ClearPedProp(ped, prop_id);
-    } else {
-      SetPedPropIndex(ped, prop_id, drawable, texture, false);
-    }
-  });
+  props.forEach(prop => setPedProp(ped, prop));
 }
 
 export async function setPlayerAppearance(appearance: PedAppearance): Promise<void> {

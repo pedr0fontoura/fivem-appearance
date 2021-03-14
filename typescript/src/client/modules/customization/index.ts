@@ -40,6 +40,7 @@ let callback: (appearance?: PedAppearance) => void;
 let playerAppearance: PedAppearance;
 
 let playerCoords: Vector3;
+export let playerHeading: number;
 
 let cameraHandle: number;
 let currentCamera: string;
@@ -79,6 +80,24 @@ function getRgbColors(): { hair: number[][]; makeUp: number[][] } {
   return colors;
 }
 
+export function getComponentSettings(component: PedComponent): ComponentSettings {
+  const playerPed = PlayerPedId();
+
+  const settings = {
+    component_id: component.component_id,
+    drawable: {
+      min: 0,
+      max: GetNumberOfPedDrawableVariations(playerPed, component.component_id),
+    },
+    texture: {
+      min: 0,
+      max: GetNumberOfPedTextureVariations(playerPed, component.component_id, component.drawable),
+    },
+  };
+
+  return settings;
+}
+
 export function getComponentsSettings(components: PedComponent[]): ComponentSettings[] {
   const playerPed = PlayerPedId();
 
@@ -98,6 +117,24 @@ export function getComponentsSettings(components: PedComponent[]): ComponentSett
       component.drawable,
     );
   });
+
+  return settings;
+}
+
+export function getPropSettings(prop: PedProp): PropSettings {
+  const playerPed = PlayerPedId();
+
+  const settings = {
+    prop_id: prop.prop_id,
+    drawable: {
+      min: -1,
+      max: GetNumberOfPedPropDrawableVariations(playerPed, prop.prop_id),
+    },
+    texture: {
+      min: -1,
+      max: GetNumberOfPedPropTextureVariations(playerPed, prop.prop_id, prop.drawable),
+    },
+  };
 
   return settings;
 }
@@ -154,7 +191,9 @@ export function getPlayerPedAppearance(model?: string): PedAppearance {
 }
 
 export function getAppearance(): PedAppearance {
-  return playerAppearance ? playerAppearance : getPlayerPedAppearance();
+  return playerAppearance
+    ? { ...DEFAULT_APPEARANCE, ...playerAppearance }
+    : getPlayerPedAppearance();
 }
 
 export function getAppearanceSettings(appearanceData: PedAppearance): AppearanceSettings {
@@ -398,7 +437,11 @@ function startPlayerCustomization(
 
   callback = cb;
 
-  playerCoords = arrayToVector3(GetEntityCoords(PlayerPedId(), true));
+  const playerPed = PlayerPedId();
+
+  playerCoords = arrayToVector3(GetEntityCoords(playerPed, true));
+  playerHeading = GetEntityHeading(playerPed);
+
   reverseCamera = false;
   isCameraInterpolating = false;
 
@@ -408,8 +451,6 @@ function startPlayerCustomization(
   SetNuiFocusKeepInput(false);
   RenderScriptCams(true, false, 0, true, true);
   DisplayRadar(false);
-
-  const playerPed = PlayerPedId();
 
   SetEntityInvincible(playerPed, true);
   TaskStandStill(playerPed, -1);
@@ -440,7 +481,6 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
 
   SendNuiMessage(JSON.stringify(nuiMessage));
 
-  // If customization is canceled, set old appearance
   if (!appearance) {
     setPlayerAppearance(getAppearance());
   }

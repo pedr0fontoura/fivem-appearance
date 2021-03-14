@@ -8,6 +8,7 @@ import {
   rotateCamera,
   getPlayerPedAppearance,
   exitPlayerCustomization,
+  playerHeading,
 } from './index';
 
 import {
@@ -68,16 +69,16 @@ export function registerNuiCallbacks(): void {
     async (model: string, cb: (arg: any) => void): Promise<void> => {
       await setPlayerModel(model);
 
+      const playerPed = PlayerPedId();
+
+      SetEntityHeading(PlayerPedId(), playerHeading);
+      SetEntityInvincible(playerPed, true);
+      TaskStandStill(playerPed, -1);
+
       const appearanceData = getPlayerPedAppearance(model);
       const appearanceSettings = getAppearanceSettings(appearanceData);
 
       cb({ appearanceSettings, appearanceData });
-
-      const playerPed = PlayerPedId();
-
-      SetEntityInvincible(playerPed, true);
-
-      TaskStandStill(playerPed, -1);
     },
   );
 
