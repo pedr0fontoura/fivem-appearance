@@ -1,8 +1,8 @@
 import {
   getAppearance,
   getAppearanceSettings,
-  getComponentsSettings,
-  getPropsSettings,
+  getComponentSettings,
+  getPropSettings,
   pedTurnAround,
   setCamera,
   rotateCamera,
@@ -18,8 +18,8 @@ import {
   setPedHair,
   setPedHeadOverlays,
   setPedEyeColor,
-  setPedComponents,
-  setPedProps,
+  setPedComponent,
+  setPedProp,
 } from '../../index';
 
 export function registerNuiCallbacks(): void {
@@ -84,15 +84,15 @@ export function registerNuiCallbacks(): void {
 
   on(
     '__cfx_nui:appearance_change_component',
-    (components: PedComponent[], cb: (arg: any) => void): void => {
-      setPedComponents(PlayerPedId(), components);
-      cb(getComponentsSettings(components));
+    (component: PedComponent, cb: (arg: any) => void): void => {
+      setPedComponent(PlayerPedId(), component);
+      cb(getComponentSettings(component));
     },
   );
 
-  on('__cfx_nui:appearance_change_prop', (props: PedProp[], cb: (arg: any) => void): void => {
-    setPedProps(PlayerPedId(), props);
-    cb(getPropsSettings(props));
+  on('__cfx_nui:appearance_change_prop', (prop: PedProp, cb: (arg: any) => void): void => {
+    setPedProp(PlayerPedId(), prop);
+    cb(getPropSettings(prop));
   });
 
   on(

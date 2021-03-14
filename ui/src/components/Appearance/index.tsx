@@ -314,12 +314,15 @@ const Appearance: React.FC = () => {
 
       setData(state => ({ ...state, components: updatedComponents }));
 
-      const updatedComponentsSettings = await Nui.post('appearance_change_component', updatedComponents);
+      const updatedComponentSettings = await Nui.post('appearance_change_component', updatedComponent);
 
-      setSettings(state => ({
-        ...state,
-        components: updatedComponentsSettings,
-      }));
+      setSettings(state => {
+        const filteredComponentsSettings = state.components.filter(c => c.component_id !== component_id);
+
+        const updatedComponentsSettings = [...filteredComponentsSettings, updatedComponentSettings];
+
+        return { ...state, components: updatedComponentsSettings };
+      });
     },
     [setData, components, setSettings],
   );
@@ -338,12 +341,15 @@ const Appearance: React.FC = () => {
 
       setData(state => ({ ...state, components: updatedComponents }));
 
-      const updatedComponentsSettings = await Nui.post('appearance_change_component', updatedComponents);
+      const updatedComponentSettings = await Nui.post('appearance_change_component', updatedComponent);
 
-      setSettings(state => ({
-        ...state,
-        components: updatedComponentsSettings,
-      }));
+      setSettings(state => {
+        const filteredComponentsSettings = state.components.filter(c => c.component_id !== component_id);
+
+        const updatedComponentsSettings = [...filteredComponentsSettings, updatedComponentSettings];
+
+        return { ...state, components: updatedComponentsSettings };
+      });
     },
     [setData, components, setSettings],
   );
@@ -362,12 +368,15 @@ const Appearance: React.FC = () => {
 
       setData(state => ({ ...state, props: updatedProps }));
 
-      const updatedPropsSettings = await Nui.post('appearance_change_prop', updatedProps);
+      const updatedPropSettings = await Nui.post('appearance_change_prop', updatedProp);
 
-      setSettings(state => ({
-        ...state,
-        props: updatedPropsSettings,
-      }));
+      setSettings(state => {
+        const filteredPropsSettings = state.props.filter(c => c.prop_id !== prop_id);
+
+        const updatedPropsSettings = [...filteredPropsSettings, updatedPropSettings];
+
+        return { ...state, props: updatedPropsSettings };
+      });
     },
     [setData, props, setSettings],
   );
@@ -386,12 +395,15 @@ const Appearance: React.FC = () => {
 
       setData(state => ({ ...state, props: updatedProps }));
 
-      const updatedPropsSettings = await Nui.post('appearance_change_prop', updatedProps);
+      const updatedPropSettings = await Nui.post('appearance_change_prop', updatedProp);
 
-      setSettings(state => ({
-        ...state,
-        props: updatedPropsSettings,
-      }));
+      setSettings(state => {
+        const filteredPropsSettings = state.props.filter(c => c.prop_id !== prop_id);
+
+        const updatedPropsSettings = [...filteredPropsSettings, updatedPropSettings];
+
+        return { ...state, props: updatedPropsSettings };
+      });
     },
     [setData, props, setSettings],
   );
