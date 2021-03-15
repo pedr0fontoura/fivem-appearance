@@ -1,3 +1,5 @@
+import { FACE_FEATURES, HEAD_OVERLAYS } from '../../constants';
+
 const GET_PED_HEAD_BLEND_DATA = '0x2746bd9d88c5c5d0';
 
 export function getPedHeadBlendData(ped: number): PedHeadBlend {
@@ -21,4 +23,33 @@ export function getPedHeadBlendData(ped: number): PedHeadBlend {
     shapeMix: normalizedShapeMix,
     skinMix: normalizedSkinMix,
   };
+}
+
+export function getPedFaceFeatures(ped: number): PedFaceFeatures {
+  const faceFeatures = FACE_FEATURES.reduce((object, feature, index) => {
+    const normalizedValue = parseFloat(GetPedFaceFeature(ped, index).toFixed(1));
+
+    return { ...object, [feature]: normalizedValue };
+  }, {} as PedFaceFeatures);
+
+  return faceFeatures;
+}
+
+export function getPedHeadOverlays(ped: number): PedHeadOverlays {
+  const headOverlays = HEAD_OVERLAYS.reduce((object, overlay, index) => {
+    const [_, value, colorType, firstColor, secondColor, opacity] = GetPedHeadOverlayData(
+      ped,
+      index,
+    );
+
+    const safeValue = value === 255 ? 0 : value;
+    const normalizedOpacity = parseFloat(opacity.toFixed(1));
+
+    return {
+      ...object,
+      [overlay]: { style: safeValue, opacity: normalizedOpacity, color: firstColor },
+    };
+  }, {} as PedHeadOverlays);
+
+  return headOverlays;
 }

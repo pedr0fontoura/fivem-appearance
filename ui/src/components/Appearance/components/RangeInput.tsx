@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useMemo } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 interface RangeInputProps {
@@ -64,12 +64,10 @@ const RangeInput: React.FC<RangeInputProps> = ({
   max,
   factor = 1,
   title,
-  defaultValue,
+  defaultValue = 1,
   clientValue,
   onChange,
 }) => {
-  const [value, setValue] = useState(defaultValue ? defaultValue / factor : 0);
-
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleContainerClick = useCallback(() => {
@@ -80,36 +78,33 @@ const RangeInput: React.FC<RangeInputProps> = ({
 
   const handleChange = useCallback(
     e => {
-      const parsedValue = parseInt(e.target.value);
+      const parsedValue = parseFloat(e.target.value);
 
-      setValue(parsedValue);
-
-      let fixedValue = parsedValue * factor;
-      fixedValue = +fixedValue.toFixed(2);
-
-      onChange(fixedValue);
+      onChange(parsedValue);
     },
-    [setValue, onChange, factor],
+    [onChange],
   );
-
-  const fixedValue = useMemo(() => {
-    let n = value * factor;
-    n = +n.toFixed(2);
-    return n;
-  }, [value, factor]);
 
   return (
     <Container onClick={handleContainerClick}>
       <span>
         <small>
-          {title}: {fixedValue}
+          {title}: {defaultValue}
         </small>
         <small>{clientValue}</small>
       </span>
       <div>
-        <small>{min * factor}</small>
-        <input type="range" ref={inputRef} value={value} min={min} max={max} onChange={handleChange} />
-        <small>{max * factor}</small>
+        <small>{min}</small>
+        <input
+          type="range"
+          ref={inputRef}
+          value={defaultValue}
+          min={min}
+          max={max}
+          step={factor}
+          onChange={handleChange}
+        />
+        <small>{max}</small>
       </div>
     </Container>
   );

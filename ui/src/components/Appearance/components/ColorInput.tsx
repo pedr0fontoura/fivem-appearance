@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 interface ColorInputProps {
@@ -56,20 +56,17 @@ const Button = styled.button<ButtonProps>`
 `;
 
 const ColorInput: React.FC<ColorInputProps> = ({ title, colors = [], defaultValue, clientValue, onChange }) => {
-  const [selected, setSelected] = useState(defaultValue);
-
   const selectColor = useCallback(
     color => {
-      setSelected(color);
       onChange(color);
     },
-    [setSelected, onChange],
+    [onChange],
   );
 
   return (
     <Container>
       <span>
-        <small>{title}</small>
+        <small>{`${title}: ${defaultValue}`}</small>
         <small>{clientValue}</small>
       </span>
       <div>
@@ -77,7 +74,7 @@ const ColorInput: React.FC<ColorInputProps> = ({ title, colors = [], defaultValu
           <Button
             key={index}
             style={{ backgroundColor: `rgb(${color[0]}, ${color[1]}, ${color[2]})` }}
-            selected={selected === index}
+            selected={defaultValue === index}
             onClick={() => selectColor(index)}
           />
         ))}

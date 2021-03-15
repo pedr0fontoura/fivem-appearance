@@ -42,7 +42,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
   handleHeadOverlayChange,
   handleEyeColorChange,
 }) => (
-  <Section title="Aparência" deps={[settings]}>
+  <Section title="Aparência">
     <Item title="Cabelo">
       <Input
         title="Estilo"
@@ -56,6 +56,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         title="Cor"
         colors={settings.hair.color.items}
         defaultValue={data.hair.color}
+        clientValue={storedData.hair.color}
         onChange={value => handleHairChange('color', value)}
       />
       <ColorInput

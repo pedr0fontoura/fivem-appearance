@@ -1,6 +1,6 @@
 import { DEFAULT_APPEARANCE, DEFAULT_SETTINGS } from '../../constants';
 import { setPlayerAppearance } from '../../index';
-import { getPedHeadBlendData } from './ped';
+import { getPedHeadBlendData, getPedFaceFeatures, getPedHeadOverlays } from './ped';
 
 import { arrayToVector3 } from '../../utils/vector';
 
@@ -73,7 +73,7 @@ function getRgbColors(): { hair: number[][]; makeUp: number[][] } {
     makeUp: [],
   };
 
-  for (let i = 0; i <= 63; i++) {
+  for (let i = 1; i <= 63; i++) {
     colors.hair.push(GetPedHairRgbColor(i));
     colors.makeUp.push(GetMakeupRgbColor(i));
   }
@@ -173,6 +173,10 @@ export function getPlayerPedAppearance(model?: string): PedAppearance {
   }
 
   playerPedAppearance.headBlend = getPedHeadBlendData(playerPed);
+
+  playerPedAppearance.faceFeatures = getPedFaceFeatures(playerPed);
+
+  playerPedAppearance.headOverlays = getPedHeadOverlays(playerPed);
 
   playerPedAppearance.components.forEach(component => {
     component.drawable = GetPedDrawableVariation(playerPed, component.component_id);
@@ -491,6 +495,7 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
   }
 
   if (callback) {
+    console.log('SAVING', appearance);
     callback(appearance);
   }
 

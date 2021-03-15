@@ -173,114 +173,114 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
     },
     shapeMix: {
       min: 0,
-      max: 10,
+      max: 1,
       factor: 0.1,
     },
     skinMix: {
       min: 0,
-      max: 10,
+      max: 1,
       factor: 0.1,
     },
   },
   faceFeatures: {
     noseWidth: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     nosePeakHigh: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     nosePeakSize: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     noseBoneHigh: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     nosePeakLowering: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     noseBoneTwist: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     eyeBrownHigh: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     eyeBrownForward: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     cheeksBoneHigh: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     cheeksBoneWidth: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     cheeksWidth: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     eyesOpening: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     lipsThickness: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     jawBoneWidth: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     jawBoneBackSize: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     chinBoneLowering: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     chinBoneLenght: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     chinBoneSize: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     chinHole: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
     neckThickness: {
-      min: -10,
-      max: 10,
+      min: -1,
+      max: 1,
       factor: 0.1,
     },
   },
@@ -292,7 +292,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
     },
@@ -303,7 +303,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
       color: {
@@ -321,7 +321,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
       color: {
@@ -339,7 +339,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
     },
@@ -350,7 +350,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
       color: {
@@ -368,7 +368,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
       color: {
@@ -386,18 +386,18 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
     },
     sunDamage: {
       style: {
         min: 0,
-        max: 10,
+        max: 1,
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
     },
@@ -408,7 +408,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
       color: {
@@ -426,7 +426,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
     },
@@ -437,7 +437,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
       color: {
@@ -455,7 +455,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
       },
       opacity: {
         min: 0,
-        max: 10,
+        max: 1,
         factor: 0.1,
       },
     },
@@ -486,7 +486,7 @@ export const DEFAULT_SETTINGS: AppearanceSettings = {
   },
 };
 
-export const FACE_FEATURES = [
+export const FACE_FEATURES: Array<keyof PedFaceFeatures> = [
   'noseWidth',
   'nosePeakHigh',
   'nosePeakSize',
