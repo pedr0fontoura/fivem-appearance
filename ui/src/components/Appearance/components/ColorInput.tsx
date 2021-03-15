@@ -58,8 +58,6 @@ const Button = styled.button<ButtonProps>`
 const ColorInput: React.FC<ColorInputProps> = ({ title, colors = [], defaultValue, clientValue, onChange }) => {
   const [selected, setSelected] = useState(defaultValue);
 
-  const [currentValue] = useState(clientValue);
-
   const selectColor = useCallback(
     color => {
       setSelected(color);
@@ -72,7 +70,7 @@ const ColorInput: React.FC<ColorInputProps> = ({ title, colors = [], defaultValu
     <Container>
       <span>
         <small>{title}</small>
-        <small>{currentValue}</small>
+        <small>{clientValue}</small>
       </span>
       <div>
         {colors.map((color, index) => (

@@ -122,7 +122,6 @@ const Container = styled.div`
 
 const ListInput: React.FC<InputProps> = ({ title, items, defaultValue, clientValue, onChange }) => {
   const [value, setValue] = useState(0);
-  const [currentValue] = useState(clientValue);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -175,7 +174,7 @@ const ListInput: React.FC<InputProps> = ({ title, items, defaultValue, clientVal
     <Container onClick={handleContainerClick}>
       <span>
         <small>{title}</small>
-        <small>{currentValue}</small>
+        <small>{clientValue}</small>
       </span>
       <div>
         <button type="button" onClick={() => setSafeValue(value - 1)}>

@@ -194,9 +194,11 @@ export function getPlayerPedAppearance(model?: string): PedAppearance {
 }
 
 export function getAppearance(): PedAppearance {
-  return playerAppearance
-    ? { ...DEFAULT_APPEARANCE, ...playerAppearance }
-    : getPlayerPedAppearance();
+  if (!playerAppearance) {
+    playerAppearance = getPlayerPedAppearance();
+  }
+
+  return playerAppearance;
 }
 
 export function getAppearanceSettings(appearanceData: PedAppearance): AppearanceSettings {

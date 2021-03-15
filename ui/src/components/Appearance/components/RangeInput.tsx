@@ -69,7 +69,6 @@ const RangeInput: React.FC<RangeInputProps> = ({
   onChange,
 }) => {
   const [value, setValue] = useState(defaultValue ? defaultValue / factor : 0);
-  const [currentValue] = useState(clientValue);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -105,7 +104,7 @@ const RangeInput: React.FC<RangeInputProps> = ({
         <small>
           {title}: {fixedValue}
         </small>
-        <small>{currentValue}</small>
+        <small>{clientValue}</small>
       </span>
       <div>
         <small>{min * factor}</small>

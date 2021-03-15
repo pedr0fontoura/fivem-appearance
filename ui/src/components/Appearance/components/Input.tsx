@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
@@ -85,8 +85,6 @@ const Container = styled.div`
 `;
 
 const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, clientValue, onChange }) => {
-  const [currentValue] = useState(clientValue);
-
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleContainerClick = useCallback(() => {
@@ -114,6 +112,10 @@ const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, 
     (_value: any) => {
       let parsedValue;
 
+      if (!_value) return;
+
+      if (Number.isNaN(_value)) return;
+
       if (typeof _value === 'string') {
         parsedValue = parseInt(_value);
       } else {
@@ -131,7 +133,7 @@ const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, 
     <Container onClick={handleContainerClick}>
       <span>
         <small>{title}</small>
-        <small>{currentValue}</small>
+        <small>{clientValue}</small>
       </span>
       <div>
         <button type="button" onClick={() => handleChange(defaultValue - 1)}>
