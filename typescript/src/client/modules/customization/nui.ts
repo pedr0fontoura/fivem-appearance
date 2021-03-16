@@ -75,9 +75,7 @@ export function registerNuiCallbacks(): void {
       SetEntityInvincible(playerPed, true);
       TaskStandStill(playerPed, -1);
 
-      const appearanceData = getPlayerPedAppearance(model);
-      console.log('CHANGING MODEL');
-      console.log(appearanceData);
+      const appearanceData = getPlayerPedAppearance();
       const appearanceSettings = getAppearanceSettings();
 
       cb({ appearanceSettings, appearanceData });

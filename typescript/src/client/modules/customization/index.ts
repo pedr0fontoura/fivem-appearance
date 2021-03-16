@@ -44,6 +44,9 @@ const OFFSETS = {
 };
 
 const pedModels: string[] = JSON.parse(LoadResourceFile(GetCurrentResourceName(), 'peds.json'));
+const pedModelsByHash = pedModels.reduce((object, model) => {
+  return { ...object, [GetHashKey(model)]: model };
+}, {});
 
 let callback: (appearance?: PedAppearance) => void;
 
@@ -72,11 +75,11 @@ function getRgbColors(): { hair: number[][]; makeUp: number[][] } {
   return colors;
 }
 
-export function getPlayerPedAppearance(model?: string): PedAppearance {
+export function getPlayerPedAppearance(): PedAppearance {
   const playerPed = PlayerPedId();
 
   const playerPedAppearance = {
-    model: model ? model : 'mp_m_freemode_01',
+    model: pedModelsByHash[GetEntityModel(playerPed)] || 'mp_m_freemode_01',
     headBlend: getPedHeadBlendData(playerPed),
     faceFeatures: getPedFaceFeatures(playerPed),
     headOverlays: getPedHeadOverlays(playerPed),
