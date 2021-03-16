@@ -1,6 +1,15 @@
-import { DEFAULT_APPEARANCE, DEFAULT_SETTINGS } from '../../constants';
+import { PED_COMPONENTS_IDS, PED_PROPS_IDS, FACE_FEATURES, HEAD_OVERLAYS } from '../../constants';
+
 import { setPlayerAppearance } from '../../index';
-import { getPedHeadBlendData, getPedFaceFeatures, getPedHeadOverlays } from './ped';
+
+import {
+  getPedComponents,
+  getPedProps,
+  getPedHeadBlendData,
+  getPedFaceFeatures,
+  getPedHeadOverlays,
+  getPedHair,
+} from '../../utils';
 
 import { arrayToVector3 } from '../../utils/vector';
 
@@ -49,24 +58,6 @@ let reverseCamera: boolean;
 
 let isCameraInterpolating: boolean;
 
-function getComponent(components: PedComponent[], component_id: number) {
-  let component = components.find(c => c.component_id === component_id);
-
-  if (!component) {
-    [component] = components;
-  }
-  return component;
-}
-
-function getProp(props: PedProp[], prop_id: number) {
-  let prop = props.find(p => p.prop_id === prop_id);
-
-  if (!prop) {
-    [prop] = props;
-  }
-  return prop;
-}
-
 function getRgbColors(): { hair: number[][]; makeUp: number[][] } {
   const colors = {
     hair: [],
@@ -81,117 +72,18 @@ function getRgbColors(): { hair: number[][]; makeUp: number[][] } {
   return colors;
 }
 
-export function getComponentSettings(component: PedComponent): ComponentSettings {
-  const playerPed = PlayerPedId();
-
-  const settings = {
-    component_id: component.component_id,
-    drawable: {
-      min: 0,
-      max: GetNumberOfPedDrawableVariations(playerPed, component.component_id),
-    },
-    texture: {
-      min: 0,
-      max: GetNumberOfPedTextureVariations(playerPed, component.component_id, component.drawable),
-    },
-  };
-
-  return settings;
-}
-
-export function getComponentsSettings(components: PedComponent[]): ComponentSettings[] {
-  const playerPed = PlayerPedId();
-
-  const settings = DEFAULT_SETTINGS.components;
-
-  settings.forEach(componentSettings => {
-    const component = getComponent(components, componentSettings.component_id);
-
-    componentSettings.drawable.max = GetNumberOfPedDrawableVariations(
-      playerPed,
-      componentSettings.component_id,
-    );
-
-    componentSettings.texture.max = GetNumberOfPedTextureVariations(
-      playerPed,
-      component.component_id,
-      component.drawable,
-    );
-  });
-
-  return settings;
-}
-
-export function getPropSettings(prop: PedProp): PropSettings {
-  const playerPed = PlayerPedId();
-
-  const settings = {
-    prop_id: prop.prop_id,
-    drawable: {
-      min: -1,
-      max: GetNumberOfPedPropDrawableVariations(playerPed, prop.prop_id),
-    },
-    texture: {
-      min: -1,
-      max: GetNumberOfPedPropTextureVariations(playerPed, prop.prop_id, prop.drawable),
-    },
-  };
-
-  return settings;
-}
-
-export function getPropsSettings(props: PedProp[]): PropSettings[] {
-  const playerPed = PlayerPedId();
-
-  const settings = DEFAULT_SETTINGS.props;
-
-  settings.forEach(propSettings => {
-    const prop = getProp(props, propSettings.prop_id);
-
-    propSettings.drawable.max = GetNumberOfPedPropDrawableVariations(
-      playerPed,
-      propSettings.prop_id,
-    );
-
-    propSettings.texture.max = GetNumberOfPedPropTextureVariations(
-      playerPed,
-      propSettings.prop_id,
-      prop.drawable,
-    );
-  });
-
-  return settings;
-}
-
 export function getPlayerPedAppearance(model?: string): PedAppearance {
   const playerPed = PlayerPedId();
 
-  const playerPedAppearance = { ...DEFAULT_APPEARANCE };
-
-  if (model) {
-    playerPedAppearance.model = model;
-  }
-
-  playerPedAppearance.headBlend = getPedHeadBlendData(playerPed);
-
-  playerPedAppearance.faceFeatures = getPedFaceFeatures(playerPed);
-
-  playerPedAppearance.headOverlays = getPedHeadOverlays(playerPed);
-
-  playerPedAppearance.components.forEach(component => {
-    component.drawable = GetPedDrawableVariation(playerPed, component.component_id);
-    component.texture = GetPedTextureVariation(playerPed, component.component_id);
-  });
-
-  playerPedAppearance.props.forEach(prop => {
-    prop.drawable = GetPedPropIndex(playerPed, prop.prop_id);
-    prop.texture = GetPedPropTextureIndex(playerPed, prop.prop_id);
-  });
-
-  playerPedAppearance.hair = {
-    style: GetPedDrawableVariation(playerPed, 2),
-    color: GetPedHairColor(playerPed),
-    highlight: GetPedHairHighlightColor(playerPed),
+  const playerPedAppearance = {
+    model: model ? model : 'mp_m_freemode_01',
+    headBlend: getPedHeadBlendData(playerPed),
+    faceFeatures: getPedFaceFeatures(playerPed),
+    headOverlays: getPedHeadOverlays(playerPed),
+    components: getPedComponents(playerPed),
+    props: getPedProps(playerPed),
+    hair: getPedHair(playerPed),
+    eyeColor: GetPedEyeColor(playerPed),
   };
 
   return playerPedAppearance;
@@ -205,59 +97,153 @@ export function getAppearance(): PedAppearance {
   return playerAppearance;
 }
 
-export function getAppearanceSettings(appearanceData: PedAppearance): AppearanceSettings {
-  const pedSettings = DEFAULT_SETTINGS.ped;
+export function getComponentSettings(ped: number, componentId: number): ComponentSettings {
+  const drawableId = GetPedDrawableVariation(ped, componentId);
 
-  pedSettings.model.items = pedModels;
-
-  const componentsSettings = getComponentsSettings(appearanceData.components);
-
-  const propsSettings = getPropsSettings(appearanceData.props);
-
-  const headBlendSettings = DEFAULT_SETTINGS.headBlend;
-
-  const faceFeaturesSettings = DEFAULT_SETTINGS.faceFeatures;
-
-  const { hair: hairColors, makeUp: makeUpColors } = getRgbColors();
-
-  const headOverlaysSettings = DEFAULT_SETTINGS.headOverlays;
-
-  Object.keys(headOverlaysSettings).forEach((key: HeadOverlaysSettingsKey) => {
-    if (headOverlaysSettings[key].color) {
-      const colorMap = {
-        beard: hairColors,
-        eyebrows: hairColors,
-        chestHair: hairColors,
-        makeUp: makeUpColors,
-        blush: makeUpColors,
-        lipstick: makeUpColors,
-      };
-
-      headOverlaysSettings[key].color.items = colorMap[key];
-    }
-  });
-
-  const hairSettings = DEFAULT_SETTINGS.hair;
-
-  hairSettings.style.max = GetNumberOfPedDrawableVariations(PlayerPedId(), 2);
-
-  hairSettings.color.items = hairColors;
-  hairSettings.highlight.items = hairColors;
-
-  const eyeColorSettings = DEFAULT_SETTINGS.eyeColor;
-
-  const appearanceSettings = {
-    ped: pedSettings,
-    components: componentsSettings,
-    props: propsSettings,
-    headBlend: headBlendSettings,
-    faceFeatures: faceFeaturesSettings,
-    headOverlays: headOverlaysSettings,
-    hair: hairSettings,
-    eyeColor: eyeColorSettings,
+  const settings = {
+    component_id: componentId,
+    drawable: {
+      min: 0,
+      max: GetNumberOfPedDrawableVariations(ped, componentId) - 1,
+    },
+    texture: {
+      min: 0,
+      max: GetNumberOfPedTextureVariations(ped, componentId, drawableId) - 1,
+    },
   };
 
-  return appearanceSettings;
+  return settings;
+}
+
+export function getPropSettings(ped: number, propId: number): PropSettings {
+  const drawableId = GetPedPropIndex(ped, propId);
+
+  const settings = {
+    prop_id: propId,
+    drawable: {
+      min: -1,
+      max: GetNumberOfPedPropDrawableVariations(ped, propId) - 1,
+    },
+    texture: {
+      min: -1,
+      max: GetNumberOfPedPropTextureVariations(ped, propId, drawableId) - 1,
+    },
+  };
+
+  return settings;
+}
+
+export function getAppearanceSettings(): AppearanceSettings {
+  const playerPed = PlayerPedId();
+
+  const ped: PedSettings = {
+    model: {
+      items: pedModels,
+    },
+  };
+
+  const components: ComponentSettings[] = PED_COMPONENTS_IDS.map(componentId =>
+    getComponentSettings(playerPed, componentId),
+  );
+
+  const props: PropSettings[] = PED_PROPS_IDS.map(propId => getPropSettings(playerPed, propId));
+
+  const headBlend: HeadBlendSettings = {
+    shapeFirst: {
+      min: 0,
+      max: 45,
+    },
+    shapeSecond: {
+      min: 0,
+      max: 45,
+    },
+    skinFirst: {
+      min: 0,
+      max: 45,
+    },
+    skinSecond: {
+      min: 0,
+      max: 45,
+    },
+    shapeMix: {
+      min: 0,
+      max: 1,
+      factor: 0.1,
+    },
+    skinMix: {
+      min: 0,
+      max: 1,
+      factor: 0.1,
+    },
+  };
+
+  const faceFeatures: FaceFeaturesSettings = FACE_FEATURES.reduce((object, faceFeature) => {
+    return { ...object, [faceFeature]: { min: -1, max: 1, factor: 0.1 } };
+  }, {} as FaceFeaturesSettings);
+
+  const colors = getRgbColors();
+
+  const colorMap = {
+    beard: colors.hair,
+    eyebrows: colors.hair,
+    chestHair: colors.hair,
+    makeUp: colors.makeUp,
+    blush: colors.makeUp,
+    lipstick: colors.makeUp,
+  };
+
+  const headOverlays: HeadOverlaysSettings = HEAD_OVERLAYS.reduce((object, headOverlay, index) => {
+    const settings = {
+      style: {
+        min: 0,
+        max: GetPedHeadOverlayNum(index) - 1,
+      },
+      opacity: {
+        min: 0,
+        max: 1,
+        factor: 0.1,
+      },
+    };
+
+    if (colorMap[headOverlay]) {
+      Object.assign(settings, {
+        color: {
+          items: colorMap[headOverlay],
+        },
+      });
+    }
+
+    return { ...object, [headOverlay]: settings };
+  }, {} as HeadOverlaysSettings);
+
+  const hair: HairSettings = {
+    style: {
+      min: 0,
+      max: GetNumberOfPedDrawableVariations(playerPed, 2) - 1,
+    },
+    color: {
+      items: colors.hair,
+    },
+    highlight: {
+      items: colors.hair,
+    },
+  };
+
+  const eyeColor: EyeColorSettings = {
+    min: 0,
+    max: 30,
+  };
+
+  return {
+    ped,
+    components,
+    props,
+    headBlend,
+    faceFeatures,
+    headOverlays,
+    hair,
+    eyeColor,
+  };
 }
 
 export function setCamera(key: string): void {
@@ -420,29 +406,8 @@ export function pedTurnAround(ped: number): void {
   ClearSequenceTask(sequence);
 }
 
-function startPlayerCustomization(cb: (appearance?: PedAppearance) => void): void;
-function startPlayerCustomization(
-  appearance: PedAppearance,
-  cb: (appearance?: PedAppearance) => void,
-): void;
-
-function startPlayerCustomization(
-  paramOne: PedAppearance | ((appearance?: PedAppearance) => void),
-  paramTwo?: (appearance?: PedAppearance) => void,
-): void {
-  let appearance;
-  let cb;
-
-  if (paramTwo) {
-    appearance = paramOne;
-    cb = paramTwo;
-  } else {
-    cb = paramOne;
-  }
-
-  if (appearance) {
-    playerAppearance = appearance;
-  }
+function startPlayerCustomization(cb: (appearance?: PedAppearance) => void): void {
+  playerAppearance = getPlayerPedAppearance();
 
   callback = cb;
 
@@ -495,7 +460,6 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
   }
 
   if (callback) {
-    console.log('SAVING', appearance);
     callback(appearance);
   }
 

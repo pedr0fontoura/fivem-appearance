@@ -41,7 +41,7 @@ export function registerNuiCallbacks(): void {
 
   on('__cfx_nui:appearance_get_settings_and_data', (_: any, cb: (arg: any) => void): void => {
     const appearanceData = getAppearance();
-    const appearanceSettings = getAppearanceSettings(appearanceData);
+    const appearanceSettings = getAppearanceSettings();
     cb({ appearanceData, appearanceSettings });
   });
 
@@ -76,7 +76,9 @@ export function registerNuiCallbacks(): void {
       TaskStandStill(playerPed, -1);
 
       const appearanceData = getPlayerPedAppearance(model);
-      const appearanceSettings = getAppearanceSettings(appearanceData);
+      console.log('CHANGING MODEL');
+      console.log(appearanceData);
+      const appearanceSettings = getAppearanceSettings();
 
       cb({ appearanceSettings, appearanceData });
     },
@@ -85,14 +87,16 @@ export function registerNuiCallbacks(): void {
   on(
     '__cfx_nui:appearance_change_component',
     (component: PedComponent, cb: (arg: any) => void): void => {
-      setPedComponent(PlayerPedId(), component);
-      cb(getComponentSettings(component));
+      const playerPed = PlayerPedId();
+      setPedComponent(playerPed, component);
+      cb(getComponentSettings(playerPed, component.component_id));
     },
   );
 
   on('__cfx_nui:appearance_change_prop', (prop: PedProp, cb: (arg: any) => void): void => {
-    setPedProp(PlayerPedId(), prop);
-    cb(getPropSettings(prop));
+    const playerPed = PlayerPedId();
+    setPedProp(playerPed, prop);
+    cb(getPropSettings(playerPed, prop.prop_id));
   });
 
   on(
