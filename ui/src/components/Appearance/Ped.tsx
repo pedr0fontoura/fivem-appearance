@@ -1,6 +1,6 @@
 import Section from './components/Section';
 import Item from './components/Item';
-import ListInput from './components/ListInput';
+import SelectInput from './components/SelectInput';
 
 import { PedSettings } from './interfaces';
 
@@ -14,7 +14,7 @@ interface PedProps {
 const Ped: React.FC<PedProps> = ({ settings, storedData, data, handleModelChange }) => (
   <Section title="Ped">
     <Item>
-      <ListInput
+      <SelectInput
         title="Model"
         items={settings.model.items}
         defaultValue={data}
