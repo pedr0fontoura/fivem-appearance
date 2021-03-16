@@ -112,7 +112,7 @@ const Input: React.FC<InputProps> = ({ title, min = 0, max = 255, defaultValue, 
     (_value: any) => {
       let parsedValue;
 
-      if (!_value) return;
+      if (!_value && _value !== 0) return;
 
       if (Number.isNaN(_value)) return;
 

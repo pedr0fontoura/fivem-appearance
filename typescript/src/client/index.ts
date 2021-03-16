@@ -68,7 +68,13 @@ export function setPedHeadOverlays(ped: number, headOverlays: PedHeadOverlays): 
     if (headOverlay.color) {
       let colorType = 1;
 
-      if (key === ('blush' || 'lipstick')) {
+      const isMakeupColor = {
+        blush: true,
+        lipstick: true,
+        makeUp: true,
+      };
+
+      if (isMakeupColor[key]) {
         colorType = 2;
       }
 

@@ -67,8 +67,11 @@ function getRgbColors(): { hair: number[][]; makeUp: number[][] } {
     makeUp: [],
   };
 
-  for (let i = 0; i <= 63; i++) {
+  for (let i = 0; i < GetNumHairColors(); i++) {
     colors.hair.push(GetPedHairRgbColor(i));
+  }
+
+  for (let i = 0; i < GetNumMakeupColors(); i++) {
     colors.makeUp.push(GetMakeupRgbColor(i));
   }
 
