@@ -18,11 +18,11 @@ This is a development resource, if you don't use the exports the resource itself
 
 **Client Exports**
 
-| Export                   | Parameters                                              |
-| ------------------------ | ------------------------------------------------------- |
-| startPlayerCustomization | currentAppearance? (PedAppearance), callback (function) |
-| setPlayerAppearance      | appearance (PedAppearance)                              |
-| setPedAppearance         | ped (number), appearance (PedAppearance)                |
+| Export                   | Parameters                               |
+| ------------------------ | ---------------------------------------- |
+| startPlayerCustomization | callback (function)                      |
+| setPlayerAppearance      | appearance (PedAppearance)               |
+| setPedAppearance         | ped (number), appearance (PedAppearance) |
 
 **Examples**
 
