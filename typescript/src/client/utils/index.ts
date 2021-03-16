@@ -87,8 +87,10 @@ export function getPedHeadOverlays(ped: number): PedHeadOverlays {
       index,
     );
 
-    const safeValue = value === 255 ? 0 : value;
-    const normalizedOpacity = parseFloat(opacity.toFixed(1));
+    const hasOverlay = value !== 255;
+
+    const safeValue = hasOverlay ? value : 0;
+    const normalizedOpacity = hasOverlay ? parseFloat(opacity.toFixed(1)) : 0;
 
     return {
       ...object,
