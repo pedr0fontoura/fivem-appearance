@@ -22,13 +22,16 @@ This is a development resource, if you don't use the exports the resource itself
 
 1. Clone the repository into your `resources/[local]` folder.
 2. Install both client and ui dependencies.
+
    ```bash
    cd typescript
    yarn
    cd ../ui
    yarn
    ```
+
 3. Build client and ui
+
    ```bash
    cd .. # back to resource root
    cd typescript
@@ -36,11 +39,12 @@ This is a development resource, if you don't use the exports the resource itself
    cd ../ui
    yarn build
    ```
+
 4. Start development.
 
 ## ConVars
 
-Since this is client-script you need to use **setr** to set this convar.
+Since this is a client script, you will need to use **setr** to set this convar.
 
 - **cfx-appearance:customization**: 1 or 0, default **1**, toggle the built-in customization interface and customization exports.
 
@@ -79,7 +83,7 @@ ensure cfx-appearance
 
 ### Customization
 
-These exports are only available if **cfx-appearance:customization** is active
+This export is only available if **cfx-appearance:customization** is set to 1.
 
 | Export                   | Parameters                                                  | Return |
 | ------------------------ | ----------------------------------------------------------- | ------ |
