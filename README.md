@@ -2,31 +2,92 @@
 
 A flexible player customization script for FiveM.
 
-**Features**
+This resource was designed to manage all GTA V player/ped customization in only one place, with an opinionated way to handle the data.
 
-- Freemode ped full customization (head blend, face features, head overlays, components, props)
-- Default data structure for player / ped appearance
-- Camera control
+## Features
 
-**Usage**
+- Freemode ped full customization (Head blend, Face features, Head overlays, Components, Props).
+- exports API to get and set every part of player/ped appearance.
+- Built-in customization feature [Built-in customization feature](https://streamable.com/lzzy5z "Preview").
 
-1. Clone the repository into your `resources/[local]` folder.
-2. Install both client and interface dependencies, `cd typescript` / `cd ui`, `yarn` to install, then `yarn build`.
-3. Start development.
+## Installation
+
+**Download**
+
+Go to releases and get the latest version.
 
 This is a development resource, if you don't use the exports the resource itself will do nothing.
 
-**Client Exports**
+**Build yourself**
 
-| Export                   | Parameters                               |
-| ------------------------ | ---------------------------------------- |
-| startPlayerCustomization | callback (function)                      |
-| setPlayerAppearance      | appearance (PedAppearance)               |
-| setPedAppearance         | ped (number), appearance (PedAppearance) |
+1. Clone the repository into your `resources/[local]` folder.
+2. Install both client and ui dependencies.
+   ```bash
+   cd typescript
+   yarn
+   cd ../ui
+   yarn
+   ```
+3. Build client and ui
+   ```bash
+   cd .. # back to resource root
+   cd typescript
+   yarn build
+   cd ../ui
+   yarn build
+   ```
+4. Start development.
 
-**Examples**
+## ConVars
 
-Customization command (Lua)
+Since this is client-script you need to use **setr** to set this convar.
+
+- **cfx-appearance:customization**: 1 or 0, default **1**, toggle the built-in customization interface and customization exports.
+
+config.cfg example:
+
+```cfg
+setr cfx-appearance:customization 1
+ensure cfx-appearance
+```
+
+## Client Exports
+
+### Appearance
+
+| Export              | Parameters                                     | Return            |
+| ------------------- | ---------------------------------------------- | ----------------- |
+| getPedModel         | ped: _number_                                  | _string_          |
+| getPedComponents    | ped: _number_                                  | _PedComponent[]_  |
+| getPedProps         | ped: _number_                                  | _PedProp[]_       |
+| getPedHeadBlend     | ped: _number_                                  | _PedHeadBlend_    |
+| getPedFaceFeatures  | ped: _number_                                  | _PedFaceFeatures_ |
+| getPedHeadOverlays  | ped: _number_                                  | _PedHeadOverlays_ |
+| getPedHair          | ped: _number_                                  | _PedHair_         |
+| getPedAppearance    | ped: _number_                                  | _PedAppearance_   |
+| setPlayerModel      | model: _string_                                | _Promise\<void\>_ |
+| setPedComponent     | ped: _number_, component: _PedComponent_       | _void_            |
+| setPedComponents    | ped: _number_, components: _PedComponent[]_    | _void_            |
+| setPedProp          | ped: _number_, prop: _PedProp_                 | _void_            |
+| setPedProps         | ped: _number_, props: _PedProp[]_              | _void_            |
+| setPedFaceFeatures  | ped: _number_, faceFeatures: _PedFaceFeatures_ | _void_            |
+| setPedHeadOverlays  | ped: _number_, headOverlays: _PedHeadOverlays_ | _void_            |
+| setPedHair          | ped: _number_, hair: _PedHair_                 | _void_            |
+| setPedEyeColor      | ped: _number_, eyeColor: _number_              | _void_            |
+| setPlayerAppearance | appearance: _PedAppearance_                    | _void_            |
+| setPedAppearance    | ped: _number_, appearance: _PedAppearance_     | _void_            |
+
+### Customization
+
+These exports are only available if **cfx-appearance:customization** is active
+
+| Export                   | Parameters                                                  | Return |
+| ------------------------ | ----------------------------------------------------------- | ------ |
+| startPlayerCustomization | callback ((appearance: PedAppearance \| undefined) => void) | _void_ |
+
+## Examples
+
+**Customization command (Lua)**
 
 ```lua
 RegisterCommand('customization', function()
@@ -40,7 +101,7 @@ RegisterCommand('customization', function()
 end, false)
 ```
 
-Start player customization with callback (TypeScript)
+**Start player customization with callback (TypeScript)**
 
 ```typescript
 const exp = (global as any).exports;
@@ -55,7 +116,7 @@ exp["cfx-appearance"].startPlayerCustomization((appearance) => {
 });
 ```
 
-Set player appearance (TypeScript)
+**Set player appearance (TypeScript)**
 
 ```typescript
 const exp = (global as any).exports;
@@ -67,47 +128,12 @@ onNet("genericPlayerAppearanceLoadedServerEvent", (appearance) => {
 
 ## Data
 
-Snippets used to generate the resource's data files.
+Scripts used to generate some of the resource's data.
 
-**Peds**
-
-```javascript
-const puppeteer = require("puppeteer");
-const fs = require("fs");
-
-async function scrape() {
-  const browser = await puppeteer.launch();
-
-  const page = await browser.newPage();
-
-  await page.goto("https://docs.fivem.net/docs/game-references/ped-models/");
-
-  console.log("Searching for peds ...");
-
-  const result = await page.evaluate(() => {
-    const peds = [];
-
-    document.querySelectorAll("div.model > span > strong").forEach((ped) => {
-      peds.push(ped.innerHTML);
-    });
-
-    return peds;
-  });
-
-  browser.close();
-
-  return result;
-}
-
-scrape().then((peds) => {
-  fs.writeFile("peds.json", JSON.stringify(peds, null, 2), (err) => {
-    if (err) throw err;
-    console.log(`${peds.length} Peds saved`);
-  });
-});
-```
+[Peds](https://gist.github.com/snakewiz/b37a18e92cc0b112ce0fa57b1096b96b "Gist")
 
 ## Credits
 
-- root-cause for providing some of the customization data
-- xIAlexanderIx for the code style inspiration
+- [TomGrobbe](https://github.com/TomGrobbe) for the customization camera behavior inspiration
+- [root-cause](https://github.com/root-cause) for some of the game data
+- [xIAlexanderIx](https://github.com/xIAlexanderIx) for general inspiration
