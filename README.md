@@ -7,8 +7,8 @@ This resource was designed to manage all GTA V player/ped customization in only 
 ## Features
 
 - Freemode ped full customization (Head blend, Face features, Head overlays, Components, Props).
-- exports API to get and set every part of player/ped appearance.
-- Built-in customization feature [Built-in customization feature](https://streamable.com/lzzy5z "Preview").
+- Exports API to get and set every part of player/ped appearance.
+- [Built-in customization feature](https://streamable.com/lzzy5z "Preview").
 
 ## Installation
 
