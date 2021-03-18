@@ -5,6 +5,7 @@ import {
   PedHair,
   PedHeadOverlays,
   PedHeadOverlayValue,
+  Locales,
 } from './interfaces';
 
 import Section from './components/Section';
@@ -29,23 +30,25 @@ interface HeadOverlaysProps {
     headOverlays: PedHeadOverlays;
     eyeColor: number;
   };
+  locales: Locales;
   handleHairChange: (key: keyof PedHair, value: number) => void;
   handleHeadOverlayChange: (key: keyof PedHeadOverlays, option: keyof PedHeadOverlayValue, value: number) => void;
   handleEyeColorChange: (value: number) => void;
 }
 
-const HeadOverlays: React.FC<HeadOverlaysProps> = ({
+const HeadOverlays = ({
   settings,
   storedData,
   data,
+  locales,
   handleHairChange,
   handleHeadOverlayChange,
   handleEyeColorChange,
-}) => (
-  <Section title="Aparência">
-    <Item title="Cabelo">
+}: HeadOverlaysProps) => (
+  <Section title={locales.headOverlays.title}>
+    <Item title={locales.headOverlays.hair.title}>
       <Input
-        title="Estilo"
+        title={locales.headOverlays.hair.style}
         min={settings.hair.style.min}
         max={settings.hair.style.max}
         defaultValue={data.hair.style}
@@ -53,22 +56,22 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHairChange('style', value)}
       />
       <ColorInput
-        title="Cor"
+        title={locales.headOverlays.hair.color}
         colors={settings.hair.color.items}
         defaultValue={data.hair.color}
         clientValue={storedData.hair.color}
         onChange={value => handleHairChange('color', value)}
       />
       <ColorInput
-        title="Reflexo"
+        title={locales.headOverlays.hair.highlight}
         colors={settings.hair.highlight.items}
         defaultValue={data.hair.highlight}
         onChange={value => handleHairChange('highlight', value)}
       />
     </Item>
-    <Item title="Manchas">
+    <Item title={locales.headOverlays.blemishes}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.blemishes.opacity.min}
         max={settings.headOverlays.blemishes.opacity.max}
         factor={settings.headOverlays.blemishes.opacity.factor}
@@ -77,7 +80,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('blemishes', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.blemishes.style.min}
         max={settings.headOverlays.blemishes.style.max}
         defaultValue={data.headOverlays.blemishes.style}
@@ -85,9 +88,9 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('blemishes', 'style', value)}
       />
     </Item>
-    <Item title="Barba">
+    <Item title={locales.headOverlays.beard}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.beard.opacity.min}
         max={settings.headOverlays.beard.opacity.max}
         factor={settings.headOverlays.beard.opacity.factor}
@@ -96,7 +99,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('beard', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.beard.style.min}
         max={settings.headOverlays.beard.style.max}
         defaultValue={data.headOverlays.beard.style}
@@ -104,16 +107,16 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('beard', 'style', value)}
       />
       <ColorInput
-        title="Cor"
+        title={locales.headOverlays.color}
         colors={settings.headOverlays.beard.color?.items}
         defaultValue={data.headOverlays.beard.color}
         clientValue={storedData.headOverlays.beard.color}
         onChange={value => handleHeadOverlayChange('beard', 'color', value)}
       />
     </Item>
-    <Item title="Sobrancelha">
+    <Item title={locales.headOverlays.eyebrows}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.eyebrows.opacity.min}
         max={settings.headOverlays.eyebrows.opacity.max}
         factor={settings.headOverlays.eyebrows.opacity.factor}
@@ -122,7 +125,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('eyebrows', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.eyebrows.style.min}
         max={settings.headOverlays.eyebrows.style.max}
         defaultValue={data.headOverlays.eyebrows.style}
@@ -130,16 +133,16 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('eyebrows', 'style', value)}
       />
       <ColorInput
-        title="Cor"
+        title={locales.headOverlays.color}
         colors={settings.headOverlays.eyebrows.color?.items}
         defaultValue={data.headOverlays.eyebrows.color}
         clientValue={storedData.headOverlays.eyebrows.color}
         onChange={value => handleHeadOverlayChange('eyebrows', 'color', value)}
       />
     </Item>
-    <Item title="Envelhecimento">
+    <Item title={locales.headOverlays.ageing}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.ageing.opacity.min}
         max={settings.headOverlays.ageing.opacity.max}
         factor={settings.headOverlays.ageing.opacity.factor}
@@ -148,7 +151,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('ageing', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.ageing.style.min}
         max={settings.headOverlays.ageing.style.max}
         defaultValue={data.headOverlays.ageing.style}
@@ -156,9 +159,9 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('ageing', 'style', value)}
       />
     </Item>
-    <Item title="Maquiagem">
+    <Item title={locales.headOverlays.makeUp}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.makeUp.opacity.min}
         max={settings.headOverlays.makeUp.opacity.max}
         factor={settings.headOverlays.makeUp.opacity.factor}
@@ -167,7 +170,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('makeUp', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.makeUp.style.min}
         max={settings.headOverlays.makeUp.style.max}
         defaultValue={data.headOverlays.makeUp.style}
@@ -175,16 +178,16 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('makeUp', 'style', value)}
       />
       <ColorInput
-        title="Cor"
+        title={locales.headOverlays.color}
         colors={settings.headOverlays.makeUp.color?.items}
         defaultValue={data.headOverlays.makeUp.color}
         clientValue={storedData.headOverlays.makeUp.color}
         onChange={value => handleHeadOverlayChange('makeUp', 'color', value)}
       />
     </Item>
-    <Item title="Blush">
+    <Item title={locales.headOverlays.blush}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.blush.opacity.min}
         max={settings.headOverlays.blush.opacity.max}
         factor={settings.headOverlays.blush.opacity.factor}
@@ -193,7 +196,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('blush', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.blush.style.min}
         max={settings.headOverlays.blush.style.max}
         defaultValue={data.headOverlays.blush.style}
@@ -201,16 +204,16 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('blush', 'style', value)}
       />
       <ColorInput
-        title="Cor"
+        title={locales.headOverlays.color}
         colors={settings.headOverlays.blush.color?.items}
         defaultValue={data.headOverlays.blush.color}
         clientValue={storedData.headOverlays.blush.color}
         onChange={value => handleHeadOverlayChange('blush', 'color', value)}
       />
     </Item>
-    <Item title="Aspecto da pele">
+    <Item title={locales.headOverlays.complexion}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.complexion.opacity.min}
         max={settings.headOverlays.complexion.opacity.max}
         factor={settings.headOverlays.complexion.opacity.factor}
@@ -219,7 +222,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('complexion', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.complexion.style.min}
         max={settings.headOverlays.complexion.style.max}
         defaultValue={data.headOverlays.complexion.style}
@@ -227,9 +230,9 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('complexion', 'style', value)}
       />
     </Item>
-    <Item title="Dano solar">
+    <Item title={locales.headOverlays.sunDamage}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.sunDamage.opacity.min}
         max={settings.headOverlays.sunDamage.opacity.max}
         factor={settings.headOverlays.sunDamage.opacity.factor}
@@ -238,7 +241,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('sunDamage', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.sunDamage.style.min}
         max={settings.headOverlays.sunDamage.style.max}
         defaultValue={data.headOverlays.sunDamage.style}
@@ -246,9 +249,9 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('sunDamage', 'style', value)}
       />
     </Item>
-    <Item title="Batom">
+    <Item title={locales.headOverlays.lipstick}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.lipstick.opacity.min}
         max={settings.headOverlays.lipstick.opacity.max}
         factor={settings.headOverlays.lipstick.opacity.factor}
@@ -257,7 +260,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('lipstick', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.lipstick.style.min}
         max={settings.headOverlays.lipstick.style.max}
         defaultValue={data.headOverlays.lipstick.style}
@@ -265,16 +268,16 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('lipstick', 'style', value)}
       />
       <ColorInput
-        title="Cor"
+        title={locales.headOverlays.color}
         colors={settings.headOverlays.lipstick.color?.items}
         defaultValue={data.headOverlays.lipstick.color}
         clientValue={storedData.headOverlays.lipstick.color}
         onChange={value => handleHeadOverlayChange('lipstick', 'color', value)}
       />
     </Item>
-    <Item title="Pintas e sardas">
+    <Item title={locales.headOverlays.moleAndFreckles}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.moleAndFreckles.opacity.min}
         max={settings.headOverlays.moleAndFreckles.opacity.max}
         factor={settings.headOverlays.moleAndFreckles.opacity.factor}
@@ -283,7 +286,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('moleAndFreckles', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.moleAndFreckles.style.min}
         max={settings.headOverlays.moleAndFreckles.style.max}
         defaultValue={data.headOverlays.moleAndFreckles.style}
@@ -291,9 +294,9 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('moleAndFreckles', 'style', value)}
       />
     </Item>
-    <Item title="Cabelo do peito">
+    <Item title={locales.headOverlays.chestHair}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.chestHair.opacity.min}
         max={settings.headOverlays.chestHair.opacity.max}
         factor={settings.headOverlays.chestHair.opacity.factor}
@@ -302,7 +305,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('chestHair', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.chestHair.style.min}
         max={settings.headOverlays.chestHair.style.max}
         defaultValue={data.headOverlays.chestHair.style}
@@ -310,16 +313,16 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('chestHair', 'style', value)}
       />
       <ColorInput
-        title="Cor"
+        title={locales.headOverlays.color}
         colors={settings.headOverlays.chestHair.color?.items}
         defaultValue={data.headOverlays.chestHair.color}
         clientValue={storedData.headOverlays.chestHair.color}
         onChange={value => handleHeadOverlayChange('chestHair', 'color', value)}
       />
     </Item>
-    <Item title="Manchas Corporais">
+    <Item title={locales.headOverlays.bodyBlemishes}>
       <RangeInput
-        title="Opacidade"
+        title={locales.headOverlays.opacity}
         min={settings.headOverlays.bodyBlemishes.opacity.min}
         max={settings.headOverlays.bodyBlemishes.opacity.max}
         factor={settings.headOverlays.bodyBlemishes.opacity.factor}
@@ -328,7 +331,7 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('bodyBlemishes', 'opacity', value)}
       />
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.headOverlays.bodyBlemishes.style.min}
         max={settings.headOverlays.bodyBlemishes.style.max}
         defaultValue={data.headOverlays.bodyBlemishes.style}
@@ -336,9 +339,9 @@ const HeadOverlays: React.FC<HeadOverlaysProps> = ({
         onChange={value => handleHeadOverlayChange('bodyBlemishes', 'style', value)}
       />
     </Item>
-    <Item title="Cor dos olhos">
+    <Item title={locales.headOverlays.eyeColor}>
       <Input
-        title="Estilo"
+        title={locales.headOverlays.style}
         min={settings.eyeColor.min}
         max={settings.eyeColor.max}
         defaultValue={data.eyeColor}

@@ -18,5 +18,6 @@ if GetConvarInt('cfx-appearance:customization', 1) then
   files {
     'ui/build/index.html',
     'ui/build/static/js/*.js',
+    'locales/*.json',
   }
 end

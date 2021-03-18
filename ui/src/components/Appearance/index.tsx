@@ -13,6 +13,7 @@ import {
   PedHeadOverlayValue,
   PedHair,
   CameraState,
+  Locales,
 } from './interfaces';
 
 import {
@@ -60,11 +61,12 @@ if (process.env.REACT_APP_ENV !== 'production') {
   mock('appearance_change_prop', () => SETTINGS_INITIAL_STATE.props);
 }
 
-const Appearance: React.FC = () => {
+const Appearance = () => {
   const [data, setData] = useState<PedAppearance>();
   const [storedData, setStoredData] = useState<PedAppearance>();
 
   const [settings, setSettings] = useState<AppearanceSettings>();
+  const [locales, setLocales] = useState<Locales>();
 
   const [camera, setCamera] = useState(CAMERA_INITIAL_STATE);
   const [rotate, setRotate] = useState(ROTATE_INITIAL_STATE);
@@ -376,7 +378,8 @@ const Appearance: React.FC = () => {
   }, [data]);
 
   useEffect(() => {
-    Nui.onEvent('appearance_display', () => {
+    Nui.onEvent('appearance_display', (_locales: string) => {
+      setLocales(JSON.parse(_locales));
       setDisplay({ appearance: true });
     });
 
@@ -401,7 +404,7 @@ const Appearance: React.FC = () => {
     }
   }, [display.appearance]);
 
-  if (!display.appearance || !settings || !data || !storedData) {
+  if (!display.appearance || !settings || !data || !storedData || !locales) {
     return null;
   }
 
@@ -418,6 +421,7 @@ const Appearance: React.FC = () => {
                     storedData={storedData.model}
                     data={data.model}
                     handleModelChange={handleModelChange}
+                    locales={locales}
                   />
                   {isPedFreemodeModel && settings && (
                     <>
@@ -426,12 +430,14 @@ const Appearance: React.FC = () => {
                         storedData={storedData.headBlend}
                         data={data.headBlend}
                         handleHeadBlendChange={handleHeadBlendChange}
+                        locales={locales}
                       />
                       <FaceFeatures
                         settings={settings.faceFeatures}
                         storedData={storedData.faceFeatures}
                         data={data.faceFeatures}
                         handleFaceFeatureChange={handleFaceFeatureChange}
+                        locales={locales}
                       />
                       <HeadOverlays
                         settings={{
@@ -452,6 +458,7 @@ const Appearance: React.FC = () => {
                         handleHairChange={handleHairChange}
                         handleHeadOverlayChange={handleHeadOverlayChange}
                         handleEyeColorChange={handleEyeColorChange}
+                        locales={locales}
                       />
                     </>
                   )}
@@ -461,6 +468,7 @@ const Appearance: React.FC = () => {
                     storedData={storedData.components}
                     handleComponentDrawableChange={handleComponentDrawableChange}
                     handleComponentTextureChange={handleComponentTextureChange}
+                    locales={locales}
                   />
                   <Props
                     settings={settings.props}
@@ -468,6 +476,7 @@ const Appearance: React.FC = () => {
                     storedData={storedData.props}
                     handlePropDrawableChange={handlePropDrawableChange}
                     handlePropTextureChange={handlePropTextureChange}
+                    locales={locales}
                   />
                 </Container>
                 <Options
@@ -489,8 +498,10 @@ const Appearance: React.FC = () => {
           item && (
             <animated.div key={key} style={style}>
               <Modal
-                title="Salvar customização"
-                description="Você continua feio"
+                title={locales.modal.save.title}
+                description={locales.modal.save.description}
+                accept={locales.modal.accept}
+                decline={locales.modal.decline}
                 handleAccept={() => handleSave(true)}
                 handleDecline={() => handleSave(false)}
               />
@@ -502,8 +513,10 @@ const Appearance: React.FC = () => {
           item && (
             <animated.div key={key} style={style}>
               <Modal
-                title="Sair da customização"
-                description="Nenhuma alteração será salva"
+                title={locales.modal.exit.title}
+                description={locales.modal.exit.description}
+                accept={locales.modal.accept}
+                decline={locales.modal.decline}
                 handleAccept={() => handleExit(true)}
                 handleDecline={() => handleExit(false)}
               />

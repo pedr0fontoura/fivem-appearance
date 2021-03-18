@@ -1,4 +1,4 @@
-import { ComponentSettings, PedComponent } from './interfaces';
+import { ComponentSettings, PedComponent, Locales } from './interfaces';
 
 import Section from './components/Section';
 import Item from './components/Item';
@@ -9,6 +9,7 @@ interface ComponentsProps {
   settings: ComponentSettings[];
   data: PedComponent[];
   storedData: PedComponent[];
+  locales: Locales;
   handleComponentDrawableChange: (component_id: number, drawable: number) => void;
   handleComponentTextureChange: (component_id: number, texture: number) => void;
 }
@@ -17,13 +18,14 @@ interface DataById<T> {
   [key: number]: T;
 }
 
-const Components: React.FC<ComponentsProps> = ({
+const Components = ({
   settings,
   data,
   storedData,
+  locales,
   handleComponentDrawableChange,
   handleComponentTextureChange,
-}) => {
+}: ComponentsProps) => {
   const settingsById = settings.reduce((object, { component_id, drawable, texture }) => {
     return { ...object, [component_id]: { drawable, texture } };
   }, {} as DataById<Omit<ComponentSettings, 'component_id'>>);
@@ -37,11 +39,11 @@ const Components: React.FC<ComponentsProps> = ({
   }, {} as DataById<Omit<PedComponent, 'component_id'>>);
 
   return (
-    <Section title="Vestuário">
-      <Item title="Máscara">
+    <Section title={locales.components.title}>
+      <Item title={locales.components.mask}>
         <FlexWrapper>
           <Input
-            title="Modelo"
+            title={locales.components.drawable}
             min={settingsById[1].drawable.min}
             max={settingsById[1].drawable.max}
             defaultValue={componentsById[1].drawable}
@@ -49,7 +51,7 @@ const Components: React.FC<ComponentsProps> = ({
             onChange={value => handleComponentDrawableChange(1, value)}
           />
           <Input
-            title="Textura"
+            title={locales.components.texture}
             min={settingsById[1].texture.min}
             max={settingsById[1].texture.max}
             defaultValue={componentsById[1].texture}
@@ -58,10 +60,10 @@ const Components: React.FC<ComponentsProps> = ({
           />
         </FlexWrapper>
       </Item>
-      <Item title="Mãos">
+      <Item title={locales.components.upperBody}>
         <FlexWrapper>
           <Input
-            title="Modelo"
+            title={locales.components.drawable}
             min={settingsById[3].drawable.min}
             max={settingsById[3].drawable.max}
             defaultValue={componentsById[3].drawable}
@@ -69,7 +71,7 @@ const Components: React.FC<ComponentsProps> = ({
             onChange={value => handleComponentDrawableChange(3, value)}
           />
           <Input
-            title="Textura"
+            title={locales.components.texture}
             min={settingsById[3].texture.min}
             max={settingsById[3].texture.max}
             defaultValue={componentsById[3].texture}
@@ -78,10 +80,10 @@ const Components: React.FC<ComponentsProps> = ({
           />
         </FlexWrapper>
       </Item>
-      <Item title="Pernas">
+      <Item title={locales.components.lowerBody}>
         <FlexWrapper>
           <Input
-            title="Modelo"
+            title={locales.components.drawable}
             min={settingsById[4].drawable.min}
             max={settingsById[4].drawable.max}
             defaultValue={componentsById[4].drawable}
@@ -89,7 +91,7 @@ const Components: React.FC<ComponentsProps> = ({
             onChange={value => handleComponentDrawableChange(4, value)}
           />
           <Input
-            title="Textura"
+            title={locales.components.texture}
             min={settingsById[4].texture.min}
             max={settingsById[4].texture.max}
             defaultValue={componentsById[4].texture}
@@ -98,10 +100,10 @@ const Components: React.FC<ComponentsProps> = ({
           />
         </FlexWrapper>
       </Item>
-      <Item title="Mochila">
+      <Item title={locales.components.bags}>
         <FlexWrapper>
           <Input
-            title="Modelo"
+            title={locales.components.drawable}
             min={settingsById[5].drawable.min}
             max={settingsById[5].drawable.max}
             defaultValue={componentsById[5].drawable}
@@ -109,7 +111,7 @@ const Components: React.FC<ComponentsProps> = ({
             onChange={value => handleComponentDrawableChange(5, value)}
           />
           <Input
-            title="Textura"
+            title={locales.components.texture}
             min={settingsById[5].texture.min}
             max={settingsById[5].texture.max}
             defaultValue={componentsById[5].texture}
@@ -118,10 +120,10 @@ const Components: React.FC<ComponentsProps> = ({
           />
         </FlexWrapper>
       </Item>
-      <Item title="Calçados">
+      <Item title={locales.components.shoes}>
         <FlexWrapper>
           <Input
-            title="Modelo"
+            title={locales.components.drawable}
             min={settingsById[6].drawable.min}
             max={settingsById[6].drawable.max}
             defaultValue={componentsById[6].drawable}
@@ -129,7 +131,7 @@ const Components: React.FC<ComponentsProps> = ({
             onChange={value => handleComponentDrawableChange(6, value)}
           />
           <Input
-            title="Textura"
+            title={locales.components.texture}
             min={settingsById[6].texture.min}
             max={settingsById[6].texture.max}
             defaultValue={componentsById[6].texture}
@@ -138,10 +140,10 @@ const Components: React.FC<ComponentsProps> = ({
           />
         </FlexWrapper>
       </Item>
-      <Item title="Acessórios">
+      <Item title={locales.components.scarfAndChains}>
         <FlexWrapper>
           <Input
-            title="Modelo"
+            title={locales.components.drawable}
             min={settingsById[7].drawable.min}
             max={settingsById[7].drawable.max}
             defaultValue={componentsById[7].drawable}
@@ -149,7 +151,7 @@ const Components: React.FC<ComponentsProps> = ({
             onChange={value => handleComponentDrawableChange(7, value)}
           />
           <Input
-            title="Textura"
+            title={locales.components.texture}
             min={settingsById[7].texture.min}
             max={settingsById[7].texture.max}
             defaultValue={componentsById[7].texture}
@@ -158,10 +160,10 @@ const Components: React.FC<ComponentsProps> = ({
           />
         </FlexWrapper>
       </Item>
-      <Item title="Camisa">
+      <Item title={locales.components.shirt}>
         <FlexWrapper>
           <Input
-            title="Modelo"
+            title={locales.components.drawable}
             min={settingsById[8].drawable.min}
             max={settingsById[8].drawable.max}
             defaultValue={componentsById[8].drawable}
@@ -169,7 +171,7 @@ const Components: React.FC<ComponentsProps> = ({
             onChange={value => handleComponentDrawableChange(8, value)}
           />
           <Input
-            title="Textura"
+            title={locales.components.texture}
             min={settingsById[8].texture.min}
             max={settingsById[8].texture.max}
             defaultValue={componentsById[8].texture}
@@ -178,10 +180,10 @@ const Components: React.FC<ComponentsProps> = ({
           />
         </FlexWrapper>
       </Item>
-      <Item title="Coletes">
+      <Item title={locales.components.bodyArmor}>
         <FlexWrapper>
           <Input
-            title="Modelo"
+            title={locales.components.drawable}
             min={settingsById[9].drawable.min}
             max={settingsById[9].drawable.max}
             defaultValue={componentsById[9].drawable}
@@ -189,7 +191,7 @@ const Components: React.FC<ComponentsProps> = ({
             onChange={value => handleComponentDrawableChange(9, value)}
           />
           <Input
-            title="Textura"
+            title={locales.components.texture}
             min={settingsById[9].texture.min}
             max={settingsById[9].texture.max}
             defaultValue={componentsById[9].texture}
@@ -198,10 +200,10 @@ const Components: React.FC<ComponentsProps> = ({
           />
         </FlexWrapper>
       </Item>
-      <Item title="Emblemas">
+      <Item title={locales.components.decals}>
         <FlexWrapper>
           <Input
-            title="Modelo"
+            title={locales.components.drawable}
             min={settingsById[10].drawable.min}
             max={settingsById[10].drawable.max}
             defaultValue={componentsById[10].drawable}
@@ -209,7 +211,7 @@ const Components: React.FC<ComponentsProps> = ({
             onChange={value => handleComponentDrawableChange(10, value)}
           />
           <Input
-            title="Textura"
+            title={locales.components.texture}
             min={settingsById[10].texture.min}
             max={settingsById[10].texture.max}
             defaultValue={componentsById[10].texture}
@@ -218,10 +220,10 @@ const Components: React.FC<ComponentsProps> = ({
           />
         </FlexWrapper>
       </Item>
-      <Item title="Jaquetas">
+      <Item title={locales.components.jackets}>
         <FlexWrapper>
           <Input
-            title="Modelo"
+            title={locales.components.drawable}
             min={settingsById[11].drawable.min}
             max={settingsById[11].drawable.max}
             defaultValue={componentsById[11].drawable}
@@ -229,7 +231,7 @@ const Components: React.FC<ComponentsProps> = ({
             onChange={value => handleComponentDrawableChange(11, value)}
           />
           <Input
-            title="Textura"
+            title={locales.components.texture}
             min={settingsById[11].texture.min}
             max={settingsById[11].texture.max}
             defaultValue={componentsById[11].texture}

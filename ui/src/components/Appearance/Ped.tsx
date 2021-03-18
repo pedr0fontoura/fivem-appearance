@@ -2,20 +2,21 @@ import Section from './components/Section';
 import Item from './components/Item';
 import SelectInput from './components/SelectInput';
 
-import { PedSettings } from './interfaces';
+import { PedSettings, Locales } from './interfaces';
 
 interface PedProps {
   settings: PedSettings;
   storedData: string;
   data: string;
+  locales: Locales;
   handleModelChange: (value: string) => void;
 }
 
-const Ped: React.FC<PedProps> = ({ settings, storedData, data, handleModelChange }) => (
-  <Section title="Ped">
+const Ped = ({ settings, storedData, data, locales, handleModelChange }: PedProps) => (
+  <Section title={locales.ped.title}>
     <Item>
       <SelectInput
-        title="Model"
+        title={locales.ped.model}
         items={settings.model.items}
         defaultValue={data}
         clientValue={storedData}

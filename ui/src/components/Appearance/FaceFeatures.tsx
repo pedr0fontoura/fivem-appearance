@@ -1,4 +1,4 @@
-import { PedFaceFeatures, FaceFeaturesSettings } from './interfaces';
+import { PedFaceFeatures, FaceFeaturesSettings, Locales } from './interfaces';
 
 import Section from './components/Section';
 import Item from './components/Item';
@@ -8,14 +8,15 @@ interface FaceFeaturesProps {
   settings: FaceFeaturesSettings;
   storedData: PedFaceFeatures;
   data: PedFaceFeatures;
+  locales: Locales;
   handleFaceFeatureChange: (key: keyof PedFaceFeatures, value: number) => void;
 }
 
-const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data, handleFaceFeatureChange }) => (
-  <Section title="Características faciais">
-    <Item title="Nariz">
+const FaceFeatures = ({ settings, storedData, data, locales, handleFaceFeatureChange }: FaceFeaturesProps) => (
+  <Section title={locales.faceFeatures.title}>
+    <Item title={locales.faceFeatures.nose.title}>
       <RangeInput
-        title="Largura"
+        title={locales.faceFeatures.nose.width}
         min={settings.noseWidth.min}
         max={settings.noseWidth.max}
         factor={settings.noseWidth.factor}
@@ -24,7 +25,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('noseWidth', value)}
       />
       <RangeInput
-        title="Altura"
+        title={locales.faceFeatures.nose.height}
         min={settings.nosePeakHigh.min}
         max={settings.nosePeakHigh.max}
         factor={settings.nosePeakHigh.factor}
@@ -33,7 +34,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('nosePeakHigh', value)}
       />
       <RangeInput
-        title="Tamanho"
+        title={locales.faceFeatures.nose.size}
         min={settings.nosePeakSize.min}
         max={settings.nosePeakSize.max}
         factor={settings.nosePeakSize.factor}
@@ -42,7 +43,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('nosePeakSize', value)}
       />
       <RangeInput
-        title="Altura do osso"
+        title={locales.faceFeatures.nose.boneHeight}
         min={settings.noseBoneHigh.min}
         max={settings.noseBoneHigh.max}
         factor={settings.noseBoneHigh.factor}
@@ -51,7 +52,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('noseBoneHigh', value)}
       />
       <RangeInput
-        title="Altura da ponta"
+        title={locales.faceFeatures.nose.peakHeight}
         min={settings.nosePeakLowering.min}
         max={settings.nosePeakLowering.max}
         factor={settings.nosePeakLowering.factor}
@@ -60,7 +61,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('nosePeakLowering', value)}
       />
       <RangeInput
-        title="Deslocamento"
+        title={locales.faceFeatures.nose.boneTwist}
         min={settings.noseBoneTwist.min}
         max={settings.noseBoneTwist.max}
         factor={settings.noseBoneTwist.factor}
@@ -69,9 +70,9 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('noseBoneTwist', value)}
       />
     </Item>
-    <Item title="Sobrancelha">
+    <Item title={locales.faceFeatures.eyebrows.title}>
       <RangeInput
-        title="Altura"
+        title={locales.faceFeatures.eyebrows.height}
         min={settings.eyeBrownHigh.min}
         max={settings.eyeBrownHigh.max}
         factor={settings.eyeBrownHigh.factor}
@@ -80,7 +81,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('eyeBrownHigh', value)}
       />
       <RangeInput
-        title="Profundidade"
+        title={locales.faceFeatures.eyebrows.depth}
         min={settings.eyeBrownForward.min}
         max={settings.eyeBrownForward.max}
         factor={settings.eyeBrownForward.factor}
@@ -89,9 +90,9 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('eyeBrownForward', value)}
       />
     </Item>
-    <Item title="Bochecha">
+    <Item title={locales.faceFeatures.cheeks.title}>
       <RangeInput
-        title="Altura da maçã do rosto"
+        title={locales.faceFeatures.cheeks.boneHeight}
         min={settings.cheeksBoneHigh.min}
         max={settings.cheeksBoneHigh.max}
         factor={settings.cheeksBoneHigh.factor}
@@ -100,7 +101,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('cheeksBoneHigh', value)}
       />
       <RangeInput
-        title="Largura da maçã do rosto"
+        title={locales.faceFeatures.cheeks.boneWidth}
         min={settings.cheeksBoneWidth.min}
         max={settings.cheeksBoneWidth.max}
         factor={settings.cheeksBoneWidth.factor}
@@ -109,7 +110,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('cheeksBoneWidth', value)}
       />
       <RangeInput
-        title="Largura"
+        title={locales.faceFeatures.cheeks.width}
         min={settings.cheeksWidth.min}
         max={settings.cheeksWidth.max}
         factor={settings.cheeksWidth.factor}
@@ -118,9 +119,9 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('cheeksWidth', value)}
       />
     </Item>
-    <Item title="Olhos e boca">
+    <Item title={locales.faceFeatures.eyesAndMouth.title}>
       <RangeInput
-        title="Abertura dos olhos"
+        title={locales.faceFeatures.eyesAndMouth.eyesOpening}
         min={settings.eyesOpening.min}
         max={settings.eyesOpening.max}
         factor={settings.eyesOpening.factor}
@@ -129,7 +130,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('eyesOpening', value)}
       />
       <RangeInput
-        title="Espessura dos lábios"
+        title={locales.faceFeatures.eyesAndMouth.lipsThickness}
         min={settings.lipsThickness.min}
         max={settings.lipsThickness.max}
         factor={settings.lipsThickness.factor}
@@ -138,9 +139,9 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('lipsThickness', value)}
       />
     </Item>
-    <Item title="Mandíbula">
+    <Item title={locales.faceFeatures.jaw.title}>
       <RangeInput
-        title="Largura"
+        title={locales.faceFeatures.jaw.width}
         min={settings.jawBoneWidth.min}
         max={settings.jawBoneWidth.max}
         factor={settings.jawBoneWidth.factor}
@@ -149,7 +150,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('jawBoneWidth', value)}
       />
       <RangeInput
-        title="Tamanho"
+        title={locales.faceFeatures.jaw.size}
         min={settings.jawBoneBackSize.min}
         max={settings.jawBoneBackSize.max}
         factor={settings.jawBoneBackSize.factor}
@@ -158,9 +159,9 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('jawBoneBackSize', value)}
       />
     </Item>
-    <Item title="Queixo">
+    <Item title={locales.faceFeatures.chin.title}>
       <RangeInput
-        title="Altura"
+        title={locales.faceFeatures.chin.lowering}
         min={settings.chinBoneLowering.min}
         max={settings.chinBoneLowering.max}
         factor={settings.chinBoneLowering.factor}
@@ -169,7 +170,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('chinBoneLowering', value)}
       />
       <RangeInput
-        title="Tamanho"
+        title={locales.faceFeatures.chin.length}
         min={settings.chinBoneLenght.min}
         max={settings.chinBoneLenght.max}
         factor={settings.chinBoneLenght.factor}
@@ -178,7 +179,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('chinBoneLenght', value)}
       />
       <RangeInput
-        title="Largura"
+        title={locales.faceFeatures.chin.size}
         min={settings.chinBoneSize.min}
         max={settings.chinBoneSize.max}
         factor={settings.chinBoneSize.factor}
@@ -187,7 +188,7 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('chinBoneSize', value)}
       />
       <RangeInput
-        title="Tamanho do furo"
+        title={locales.faceFeatures.chin.hole}
         min={settings.chinHole.min}
         max={settings.chinHole.max}
         factor={settings.chinHole.factor}
@@ -196,9 +197,9 @@ const FaceFeatures: React.FC<FaceFeaturesProps> = ({ settings, storedData, data,
         onChange={value => handleFaceFeatureChange('chinHole', value)}
       />
     </Item>
-    <Item title="Pescoço">
+    <Item title={locales.faceFeatures.neck.thickness}>
       <RangeInput
-        title="Espessura"
+        title={locales.faceFeatures.neck.title}
         min={settings.neckThickness.min}
         max={settings.neckThickness.max}
         factor={settings.neckThickness.factor}

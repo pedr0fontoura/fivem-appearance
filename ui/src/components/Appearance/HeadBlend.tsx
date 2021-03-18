@@ -1,4 +1,4 @@
-import { PedHeadBlend, HeadBlendSettings } from './interfaces';
+import { PedHeadBlend, HeadBlendSettings, Locales } from './interfaces';
 
 import Section from './components/Section';
 import Item from './components/Item';
@@ -9,14 +9,15 @@ interface HeadBlendProps {
   settings: HeadBlendSettings;
   storedData: PedHeadBlend;
   data: PedHeadBlend;
+  locales: Locales;
   handleHeadBlendChange: (key: keyof PedHeadBlend, value: number) => void;
 }
 
-const HeadBlend: React.FC<HeadBlendProps> = ({ settings, storedData, data, handleHeadBlendChange }) => (
-  <Section title="Herança">
-    <Item title="Face">
+const HeadBlend = ({ settings, storedData, data, locales, handleHeadBlendChange }: HeadBlendProps) => (
+  <Section title={locales.headBlend.title}>
+    <Item title={locales.headBlend.shape.title}>
       <Input
-        title="Opção A"
+        title={locales.headBlend.shape.firstOption}
         min={settings.shapeFirst.min}
         max={settings.shapeFirst.max}
         defaultValue={data.shapeFirst}
@@ -24,7 +25,7 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, storedData, data, handl
         onChange={value => handleHeadBlendChange('shapeFirst', value)}
       />
       <Input
-        title="Opção B"
+        title={locales.headBlend.shape.secondOption}
         min={settings.shapeSecond.min}
         max={settings.shapeSecond.max}
         defaultValue={data.shapeSecond}
@@ -32,7 +33,7 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, storedData, data, handl
         onChange={value => handleHeadBlendChange('shapeSecond', value)}
       />
       <RangeInput
-        title="Mistura"
+        title={locales.headBlend.shape.mix}
         min={settings.shapeMix.min}
         max={settings.shapeMix.max}
         factor={settings.shapeMix.factor}
@@ -41,9 +42,9 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, storedData, data, handl
         onChange={value => handleHeadBlendChange('shapeMix', value)}
       />
     </Item>
-    <Item title="Pele">
+    <Item title={locales.headBlend.skin.title}>
       <Input
-        title="Opção A"
+        title={locales.headBlend.skin.firstOption}
         min={settings.skinFirst.min}
         max={settings.skinFirst.max}
         defaultValue={data.skinFirst}
@@ -51,7 +52,7 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, storedData, data, handl
         onChange={value => handleHeadBlendChange('skinFirst', value)}
       />
       <Input
-        title="Opção B"
+        title={locales.headBlend.skin.secondOption}
         min={settings.skinSecond.min}
         max={settings.skinSecond.max}
         defaultValue={data.skinSecond}
@@ -59,7 +60,7 @@ const HeadBlend: React.FC<HeadBlendProps> = ({ settings, storedData, data, handl
         onChange={value => handleHeadBlendChange('skinSecond', value)}
       />
       <RangeInput
-        title="Mistura"
+        title={locales.headBlend.skin.mix}
         min={settings.skinMix.min}
         max={settings.skinMix.max}
         factor={settings.skinMix.factor}
