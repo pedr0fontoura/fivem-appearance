@@ -16,11 +16,15 @@ export const pedModels: string[] = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'peds.json'),
 );
 
-export const pedModelsByHash = pedModels.reduce((object, model) => {
+const pedModelsByHash = pedModels.reduce((object, model) => {
   return { ...object, [GetHashKey(model)]: model };
 }, {});
 
-export const getPedComponents = (ped: number): PedComponent[] => {
+function getPedModel(ped: number): string {
+  return pedModelsByHash[GetEntityModel(ped)];
+}
+
+function getPedComponents(ped: number): PedComponent[] {
   const components = [];
 
   PED_COMPONENTS_IDS.forEach(componentId => {
@@ -32,9 +36,9 @@ export const getPedComponents = (ped: number): PedComponent[] => {
   });
 
   return components;
-};
+}
 
-export const getPedProps = (ped: number): PedProp[] => {
+function getPedProps(ped: number): PedProp[] {
   const props = [];
 
   PED_PROPS_IDS.forEach(propId => {
@@ -46,9 +50,9 @@ export const getPedProps = (ped: number): PedProp[] => {
   });
 
   return props;
-};
+}
 
-export function getPedHeadBlendData(ped: number): PedHeadBlend {
+function getPedHeadBlend(ped: number): PedHeadBlend {
   // int, int, int, int, int, int, float, float, float, bool
   const buffer = new ArrayBuffer(80);
 
@@ -81,7 +85,7 @@ export function getPedHeadBlendData(ped: number): PedHeadBlend {
   };
 }
 
-export function getPedFaceFeatures(ped: number): PedFaceFeatures {
+function getPedFaceFeatures(ped: number): PedFaceFeatures {
   const faceFeatures = FACE_FEATURES.reduce((object, feature, index) => {
     const normalizedValue = parseFloat(GetPedFaceFeature(ped, index).toFixed(1));
 
@@ -91,7 +95,7 @@ export function getPedFaceFeatures(ped: number): PedFaceFeatures {
   return faceFeatures;
 }
 
-export function getPedHeadOverlays(ped: number): PedHeadOverlays {
+function getPedHeadOverlays(ped: number): PedHeadOverlays {
   const headOverlays = HEAD_OVERLAYS.reduce((object, overlay, index) => {
     // success, value, colorType, firstColor, secondColor, opacity
     const [, value, , firstColor, , opacity] = GetPedHeadOverlayData(ped, index);
@@ -110,7 +114,7 @@ export function getPedHeadOverlays(ped: number): PedHeadOverlays {
   return headOverlays;
 }
 
-export function getPedHair(ped: number): PedHair {
+function getPedHair(ped: number): PedHair {
   return {
     style: GetPedDrawableVariation(ped, 2),
     color: GetPedHairColor(ped),
@@ -118,7 +122,7 @@ export function getPedHair(ped: number): PedHair {
   };
 }
 
-const getPedHairDecorationType = (ped: number): 'male' | 'female' => {
+function getPedHairDecorationType(ped: number): 'male' | 'female' {
   const pedModel = GetEntityModel(ped);
 
   let hairDecorationType: 'male' | 'female';
@@ -130,9 +134,9 @@ const getPedHairDecorationType = (ped: number): 'male' | 'female' => {
   }
 
   return hairDecorationType;
-};
+}
 
-export const getPedHairDecoration = (ped: number, hairStyle: number): HairDecoration => {
+function getPedHairDecoration(ped: number, hairStyle: number): HairDecoration {
   const hairDecorationType = getPedHairDecorationType(ped);
 
   if (!hairDecorationType) return;
@@ -142,7 +146,20 @@ export const getPedHairDecoration = (ped: number, hairStyle: number): HairDecora
   );
 
   return hairDecoration;
-};
+}
+
+export function getPedAppearance(ped: number): PedAppearance {
+  return {
+    model: getPedModel(ped) || 'mp_m_freemode_01',
+    headBlend: getPedHeadBlend(ped),
+    faceFeatures: getPedFaceFeatures(ped),
+    headOverlays: getPedHeadOverlays(ped),
+    components: getPedComponents(ped),
+    props: getPedProps(ped),
+    hair: getPedHair(ped),
+    eyeColor: GetPedEyeColor(ped),
+  };
+}
 
 export async function setPlayerModel(model: string): Promise<void> {
   if (!model) return;
@@ -365,6 +382,31 @@ function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>)
 
 function init(): void {
   Customization.loadModule();
+
+  // Getters
+  exports('getPedModel', getPedModel);
+  exports('getPedComponents', getPedComponents);
+  exports('getPedProps', getPedProps);
+  exports('getPedHeadBlend', getPedHeadBlend);
+  exports('getPedFaceFeatures', getPedFaceFeatures);
+  exports('getPedHeadOverlays', getPedHeadOverlays);
+  exports('getPedHair', getPedHair);
+
+  exports('getPedAppearance', getPedAppearance);
+
+  // Setters
+  exports('setPlayerModel', setPlayerModel);
+  exports('setPedHeadBlend', setPedHeadBlend);
+  exports('setPedFaceFeatures', setPedFaceFeatures);
+  exports('setPedHeadOverlays', setPedHeadOverlays);
+  exports('setPedHair', setPedHair);
+  exports('setPedEyeColor', setPedEyeColor);
+
+  exports('setPedComponent', setPedComponent);
+  exports('setPedComponents', setPedComponents);
+
+  exports('setPedProp', setPedProp);
+  exports('setPedProps', setPedProps);
 
   exports('setPlayerAppearance', setPlayerAppearance);
   exports('setPedAppearance', setPedAppearance);

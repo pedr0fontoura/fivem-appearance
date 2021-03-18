@@ -1,16 +1,6 @@
 import { PED_COMPONENTS_IDS, PED_PROPS_IDS, FACE_FEATURES, HEAD_OVERLAYS } from '../../constants';
 
-import {
-  pedModels,
-  pedModelsByHash,
-  getPedComponents,
-  getPedProps,
-  getPedHeadBlendData,
-  getPedFaceFeatures,
-  getPedHeadOverlays,
-  getPedHair,
-  setPlayerAppearance,
-} from '../../index';
+import { pedModels, getPedAppearance, setPlayerAppearance } from '../../index';
 
 import { arrayToVector3 } from '../../utils';
 
@@ -74,26 +64,9 @@ function getRgbColors(): { hair: number[][]; makeUp: number[][] } {
   return colors;
 }
 
-export function getPlayerPedAppearance(): PedAppearance {
-  const playerPed = PlayerPedId();
-
-  const playerPedAppearance = {
-    model: pedModelsByHash[GetEntityModel(playerPed)] || 'mp_m_freemode_01',
-    headBlend: getPedHeadBlendData(playerPed),
-    faceFeatures: getPedFaceFeatures(playerPed),
-    headOverlays: getPedHeadOverlays(playerPed),
-    components: getPedComponents(playerPed),
-    props: getPedProps(playerPed),
-    hair: getPedHair(playerPed),
-    eyeColor: GetPedEyeColor(playerPed),
-  };
-
-  return playerPedAppearance;
-}
-
 export function getAppearance(): PedAppearance {
   if (!playerAppearance) {
-    playerAppearance = getPlayerPedAppearance();
+    playerAppearance = getPedAppearance(PlayerPedId());
   }
 
   return playerAppearance;
@@ -409,11 +382,11 @@ export function pedTurnAround(ped: number): void {
 }
 
 function startPlayerCustomization(cb: (appearance?: PedAppearance) => void): void {
-  playerAppearance = getPlayerPedAppearance();
+  const playerPed = PlayerPedId();
+
+  playerAppearance = getPedAppearance(playerPed);
 
   callback = cb;
-
-  const playerPed = PlayerPedId();
 
   playerCoords = arrayToVector3(GetEntityCoords(playerPed, true));
   playerHeading = GetEntityHeading(playerPed);

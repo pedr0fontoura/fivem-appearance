@@ -6,12 +6,12 @@ import {
   pedTurnAround,
   setCamera,
   rotateCamera,
-  getPlayerPedAppearance,
   exitPlayerCustomization,
   playerHeading,
 } from './index';
 
 import {
+  getPedAppearance,
   setPlayerModel,
   setPedHeadBlend,
   setPedFaceFeatures,
@@ -75,7 +75,7 @@ export function registerNuiCallbacks(): void {
       SetEntityInvincible(playerPed, true);
       TaskStandStill(playerPed, -1);
 
-      const appearanceData = getPlayerPedAppearance();
+      const appearanceData = getPedAppearance(playerPed);
       const appearanceSettings = getAppearanceSettings();
 
       cb({ appearanceSettings, appearanceData });
