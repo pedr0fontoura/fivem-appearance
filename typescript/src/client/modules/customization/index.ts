@@ -1,17 +1,18 @@
 import { PED_COMPONENTS_IDS, PED_PROPS_IDS, FACE_FEATURES, HEAD_OVERLAYS } from '../../constants';
 
-import { setPlayerAppearance } from '../../index';
-
 import {
+  pedModels,
+  pedModelsByHash,
   getPedComponents,
   getPedProps,
   getPedHeadBlendData,
   getPedFaceFeatures,
   getPedHeadOverlays,
   getPedHair,
-} from '../../utils';
+  setPlayerAppearance,
+} from '../../index';
 
-import { arrayToVector3 } from '../../utils/vector';
+import { arrayToVector3 } from '../../utils';
 
 import { registerNuiCallbacks } from './nui';
 
@@ -42,11 +43,6 @@ const OFFSETS = {
   body: { x: 1.2, y: -0.45 },
   bottom: { x: 0.7, y: -0.45 },
 };
-
-const pedModels: string[] = JSON.parse(LoadResourceFile(GetCurrentResourceName(), 'peds.json'));
-const pedModelsByHash = pedModels.reduce((object, model) => {
-  return { ...object, [GetHashKey(model)]: model };
-}, {});
 
 let callback: (appearance?: PedAppearance) => void;
 

@@ -1,5 +1,3 @@
-declare function Delay(ms: number): Promise<void>;
-
 interface Vector3 {
   x: number;
   y: number;
