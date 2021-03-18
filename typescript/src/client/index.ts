@@ -381,7 +381,9 @@ function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>)
 }
 
 function init(): void {
-  Customization.loadModule();
+  if (GetConvarInt('cfx-appearance:customization', 1)) {
+    Customization.loadModule();
+  }
 
   // Getters
   exports('getPedModel', getPedModel);
@@ -413,12 +415,3 @@ function init(): void {
 }
 
 init();
-
-addEventListener('onResourceStop', (resource: string) => {
-  if (resource !== GetCurrentResourceName()) {
-    return;
-  }
-
-  SetNuiFocus(false, false);
-  SetNuiFocusKeepInput(false);
-});

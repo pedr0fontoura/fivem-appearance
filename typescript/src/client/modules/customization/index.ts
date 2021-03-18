@@ -451,8 +451,19 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
   isCameraInterpolating = null;
 }
 
+function onResourceStop(resource: string) {
+  if (resource !== GetCurrentResourceName()) {
+    return;
+  }
+
+  SetNuiFocus(false, false);
+  SetNuiFocusKeepInput(false);
+}
+
 export function loadModule(): void {
   registerNuiCallbacks();
+
+  on('onResourceStop', onResourceStop);
 
   exports('startPlayerCustomization', startPlayerCustomization);
 }
