@@ -205,7 +205,7 @@ export function setPedHeadOverlays(ped: number, headOverlays: PedHeadOverlays): 
 
     SetPedHeadOverlay(ped, index, headOverlay.style, headOverlay.opacity);
 
-    if (headOverlay.color) {
+    if (headOverlay.color || headOverlay.color === 0) {
       let colorType = 1;
 
       const isMakeupColor = {
