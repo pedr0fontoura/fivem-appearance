@@ -469,7 +469,7 @@ export function loadModule(): void {
 
   locales = LoadResourceFile(
     GetCurrentResourceName(),
-    `locales/${GetConvar('cfx-appearance:locale', 'en')}.json`,
+    `locales/${GetConvar('fivem-appearance:locale', 'en')}.json`,
   );
 
   on('onResourceStop', onResourceStop);

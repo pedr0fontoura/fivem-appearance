@@ -1,4 +1,4 @@
-# cfx-appearance
+# fivem-appearance
 
 A flexible player customization script for FiveM.
 
@@ -35,15 +35,15 @@ This is a development resource, if you don't use the exports the resource itself
 
 Since this is a client script, you will need to use **setr** to set these convars.
 
-- **cfx-appearance:customization**: 1 or 0, default **1**, toggle the built-in customization interface and customization exports.
-- **cfx-appearance:locale**: the name of one file inside `locales/`, default **en**, choose the locale file for the customization interface.
+- **fivem-appearance:customization**: 1 or 0, default **1**, toggle the built-in customization interface and customization exports.
+- **fivem-appearance:locale**: the name of one file inside `locales/`, default **en**, choose the locale file for the customization interface.
 
 config.cfg example:
 
 ```cfg
-setr cfx-appearance:customization 1
-setr cfx-appearance:locale "en"
-ensure cfx-appearance
+setr fivem-appearance:customization 1
+setr fivem-appearance:locale "en"
+ensure fivem-appearance
 ```
 
 ## Client Exports
@@ -74,7 +74,7 @@ ensure cfx-appearance
 
 ### Customization
 
-This export is only available if **cfx-appearance:customization** is set to 1.
+This export is only available if **fivem-appearance:customization** is set to 1.
 
 | Export                   | Parameters                                                  | Return |
 | ------------------------ | ----------------------------------------------------------- | ------ |
@@ -86,7 +86,7 @@ This export is only available if **cfx-appearance:customization** is set to 1.
 
 ```lua
 RegisterCommand('customization', function()
-  exports['cfx-appearance']:startPlayerCustomization(function (appearance)
+  exports['fivem-appearance']:startPlayerCustomization(function (appearance)
     if (appearance) then
       print('Saved')
     else
@@ -101,7 +101,7 @@ end, false)
 ```typescript
 const exp = (global as any).exports;
 
-exp["cfx-appearance"].startPlayerCustomization((appearance) => {
+exp["fivem-appearance"].startPlayerCustomization((appearance) => {
   if (appearance) {
     console.log("Customization saved");
     emitNet("genericSaveAppearanceDataServerEvent", JSON.stringify(appearance));
@@ -117,7 +117,7 @@ exp["cfx-appearance"].startPlayerCustomization((appearance) => {
 const exp = (global as any).exports;
 
 onNet("genericPlayerAppearanceLoadedServerEvent", (appearance) => {
-  exp["cfx-appearance"].setPlayerAppearance(appearance);
+  exp["fivem-appearance"].setPlayerAppearance(appearance);
 });
 ```
 

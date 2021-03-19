@@ -383,7 +383,7 @@ function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>)
 }
 
 function init(): void {
-  if (GetConvarInt('cfx-appearance:customization', 1)) {
+  if (GetConvarInt('fivem-appearance:customization', 1)) {
     Customization.loadModule();
   }
 
