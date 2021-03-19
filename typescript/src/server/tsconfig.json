@@ -7,7 +7,7 @@
     "rootDir": "./",
     "outDir": "./",
     "noImplicitAny": false,
-    "module": "es6",
+    "module": "commonjs",
     "target": "es6",
     "allowJs": false,
     "emitDecoratorMetadata": true,
@@ -17,5 +17,5 @@
     "moduleResolution": "node"
   },
   "include": ["./**/*"],
-  "exclude": []
+  "exclude": ["**/node_modules", "**/__tests__/*"]
 }

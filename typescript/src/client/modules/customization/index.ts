@@ -8,6 +8,8 @@ import { registerNuiCallbacks } from './nui';
 
 declare function OpenSequenceTask(id: number): [any, number];
 
+const exp = (<any>global).exports;
+
 const CAMERAS = {
   default: {
     coords: { x: 0, y: 2.2, z: 0.2 },
@@ -472,7 +474,7 @@ export function loadModule(): void {
 
   on('onResourceStop', onResourceStop);
 
-  exports('startPlayerCustomization', startPlayerCustomization);
+  exp('startPlayerCustomization', startPlayerCustomization);
 }
 
 export default { loadModule };

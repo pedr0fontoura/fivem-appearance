@@ -1,0 +1,12 @@
+{
+  "name": "cfx-appearance",
+  "version": "1.0.0",
+  "repository": "git@github.com:snakewiz/cfx-appearance.git",
+  "author": "SnakeWiz",
+  "license": "MIT",
+  "scripts": {
+    "build:game": "cd typescript && yarn && yarn build",
+    "build:ui": "cd ui && yarn && yarn build",
+    "build": "yarn build:game && yarn build:ui"
+  }
+}

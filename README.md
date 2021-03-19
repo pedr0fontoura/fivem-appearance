@@ -16,31 +16,20 @@ This resource was designed to manage all GTA V player/ped customization in only 
 
 Go to releases and get the latest version.
 
-This is a development resource, if you don't use the exports the resource itself will do nothing.
-
 **Build yourself**
 
 1. Clone the repository into your `resources/[local]` folder.
-2. Install both client and ui dependencies.
+2. Execute the build script.
 
    ```bash
-   cd typescript
-   yarn
-   cd ../ui
-   yarn
-   ```
-
-3. Build client and ui
-
-   ```bash
-   cd .. # back to resource root
-   cd typescript
-   yarn build
-   cd ../ui
    yarn build
    ```
 
-4. Start development.
+3. Start development.
+
+**Disclaimer**
+
+This is a development resource, if you don't use the exports the resource itself will do nothing.
 
 ## ConVars
 
@@ -140,6 +129,6 @@ Scripts used to generate some of the resource's data.
 
 ## Credits
 
-- [TomGrobbe](https://github.com/TomGrobbe) for the customization camera behavior inspiration
+- [TomGrobbe](https://github.com/TomGrobbe) for the customization camera behavior
 - [root-cause](https://github.com/root-cause) for some of the game data
 - [xIAlexanderIx](https://github.com/xIAlexanderIx) for general inspiration

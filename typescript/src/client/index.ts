@@ -10,6 +10,8 @@ import {
 
 import Customization from './modules/customization';
 
+const exp = (<any>global).exports;
+
 const GET_PED_HEAD_BLEND_DATA = '0x2746bd9d88c5c5d0';
 
 export const pedModels: string[] = JSON.parse(
@@ -386,32 +388,32 @@ function init(): void {
   }
 
   // Getters
-  exports('getPedModel', getPedModel);
-  exports('getPedComponents', getPedComponents);
-  exports('getPedProps', getPedProps);
-  exports('getPedHeadBlend', getPedHeadBlend);
-  exports('getPedFaceFeatures', getPedFaceFeatures);
-  exports('getPedHeadOverlays', getPedHeadOverlays);
-  exports('getPedHair', getPedHair);
+  exp('getPedModel', getPedModel);
+  exp('getPedComponents', getPedComponents);
+  exp('getPedProps', getPedProps);
+  exp('getPedHeadBlend', getPedHeadBlend);
+  exp('getPedFaceFeatures', getPedFaceFeatures);
+  exp('getPedHeadOverlays', getPedHeadOverlays);
+  exp('getPedHair', getPedHair);
 
-  exports('getPedAppearance', getPedAppearance);
+  exp('getPedAppearance', getPedAppearance);
 
   // Setters
-  exports('setPlayerModel', setPlayerModel);
-  exports('setPedHeadBlend', setPedHeadBlend);
-  exports('setPedFaceFeatures', setPedFaceFeatures);
-  exports('setPedHeadOverlays', setPedHeadOverlays);
-  exports('setPedHair', setPedHair);
-  exports('setPedEyeColor', setPedEyeColor);
+  exp('setPlayerModel', setPlayerModel);
+  exp('setPedHeadBlend', setPedHeadBlend);
+  exp('setPedFaceFeatures', setPedFaceFeatures);
+  exp('setPedHeadOverlays', setPedHeadOverlays);
+  exp('setPedHair', setPedHair);
+  exp('setPedEyeColor', setPedEyeColor);
 
-  exports('setPedComponent', setPedComponent);
-  exports('setPedComponents', setPedComponents);
+  exp('setPedComponent', setPedComponent);
+  exp('setPedComponents', setPedComponents);
 
-  exports('setPedProp', setPedProp);
-  exports('setPedProps', setPedProps);
+  exp('setPedProp', setPedProp);
+  exp('setPedProps', setPedProps);
 
-  exports('setPlayerAppearance', setPlayerAppearance);
-  exports('setPedAppearance', setPedAppearance);
+  exp('setPlayerAppearance', setPlayerAppearance);
+  exp('setPedAppearance', setPedAppearance);
 }
 
 init();
