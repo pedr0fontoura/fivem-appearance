@@ -8,7 +8,7 @@ This resource was designed to manage all GTA V player/ped customization in only 
 
 - Freemode ped full customization (Head blend, Face features, Head overlays, Components, Props).
 - Exports API to get and set every part of player/ped appearance.
-- [Built-in customization feature](https://streamable.com/lzzy5z "Preview").
+- [Built-in customization feature](https://streamable.com/t59gdt "Preview").
 
 ## Installation
 
@@ -44,14 +44,16 @@ This is a development resource, if you don't use the exports the resource itself
 
 ## ConVars
 
-Since this is a client script, you will need to use **setr** to set this convar.
+Since this is a client script, you will need to use **setr** to set these convars.
 
 - **cfx-appearance:customization**: 1 or 0, default **1**, toggle the built-in customization interface and customization exports.
+- **cfx-appearance:locale**: the name of one file inside `locales/`, default **en**, choose the locale file for the customization interface.
 
 config.cfg example:
 
 ```cfg
 setr cfx-appearance:customization 1
+setr cfx-appearance:locale "en"
 ensure cfx-appearance
 ```
 
