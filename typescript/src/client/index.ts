@@ -416,4 +416,9 @@ function init(): void {
   exp('setPedAppearance', setPedAppearance);
 }
 
-init();
+on('onClientResourceStart', resourceName => {
+  if (GetCurrentResourceName() != resourceName) {
+    return;
+  }
+  init();
+});

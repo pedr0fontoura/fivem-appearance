@@ -13,7 +13,6 @@ import {
   PedHeadOverlayValue,
   PedHair,
   CameraState,
-  Locales,
 } from './interfaces';
 
 import {
@@ -66,7 +65,6 @@ const Appearance = () => {
   const [storedData, setStoredData] = useState<PedAppearance>();
 
   const [settings, setSettings] = useState<AppearanceSettings>();
-  const [locales, setLocales] = useState<Locales>();
 
   const [camera, setCamera] = useState(CAMERA_INITIAL_STATE);
   const [rotate, setRotate] = useState(ROTATE_INITIAL_STATE);
@@ -74,7 +72,7 @@ const Appearance = () => {
   const [saveModal, setSaveModal] = useState(false);
   const [exitModal, setExitModal] = useState(false);
 
-  const { display, setDisplay } = useNuiState();
+  const { display, setDisplay, locales, setLocales } = useNuiState();
 
   const wrapperTransition = useTransition(display.appearance, null, {
     from: { transform: 'translateX(-50px)', opacity: 0 },
@@ -378,8 +376,9 @@ const Appearance = () => {
   }, [data]);
 
   useEffect(() => {
-    Nui.onEvent('appearance_display', (_locales: string) => {
-      setLocales(JSON.parse(_locales));
+    Nui.post('appearance_get_locales').then(result => setLocales(JSON.parse(result)));
+
+    Nui.onEvent('appearance_display', () => {
       setDisplay({ appearance: true });
     });
 
@@ -391,7 +390,7 @@ const Appearance = () => {
       setCamera(CAMERA_INITIAL_STATE);
       setRotate(ROTATE_INITIAL_STATE);
     });
-  }, [setDisplay, setData, setStoredData, setSettings, setCamera, setRotate]);
+  }, []);
 
   useEffect(() => {
     if (display.appearance) {
@@ -421,7 +420,6 @@ const Appearance = () => {
                     storedData={storedData.model}
                     data={data.model}
                     handleModelChange={handleModelChange}
-                    locales={locales}
                   />
                   {isPedFreemodeModel && settings && (
                     <>
@@ -430,14 +428,12 @@ const Appearance = () => {
                         storedData={storedData.headBlend}
                         data={data.headBlend}
                         handleHeadBlendChange={handleHeadBlendChange}
-                        locales={locales}
                       />
                       <FaceFeatures
                         settings={settings.faceFeatures}
                         storedData={storedData.faceFeatures}
                         data={data.faceFeatures}
                         handleFaceFeatureChange={handleFaceFeatureChange}
-                        locales={locales}
                       />
                       <HeadOverlays
                         settings={{
@@ -458,7 +454,6 @@ const Appearance = () => {
                         handleHairChange={handleHairChange}
                         handleHeadOverlayChange={handleHeadOverlayChange}
                         handleEyeColorChange={handleEyeColorChange}
-                        locales={locales}
                       />
                     </>
                   )}
@@ -468,7 +463,6 @@ const Appearance = () => {
                     storedData={storedData.components}
                     handleComponentDrawableChange={handleComponentDrawableChange}
                     handleComponentTextureChange={handleComponentTextureChange}
-                    locales={locales}
                   />
                   <Props
                     settings={settings.props}
@@ -476,7 +470,6 @@ const Appearance = () => {
                     storedData={storedData.props}
                     handlePropDrawableChange={handlePropDrawableChange}
                     handlePropTextureChange={handlePropTextureChange}
-                    locales={locales}
                   />
                 </Container>
                 <Options

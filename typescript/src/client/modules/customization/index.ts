@@ -36,8 +36,6 @@ const OFFSETS = {
   bottom: { x: 0.7, y: -0.45 },
 };
 
-let locales;
-
 let callback: (appearance?: PedAppearance) => void;
 
 let playerAppearance: PedAppearance;
@@ -410,7 +408,7 @@ function startPlayerCustomization(cb: (appearance?: PedAppearance) => void): voi
 
   const nuiMessage = {
     type: 'appearance_display',
-    payload: locales,
+    payload: {},
   };
 
   SendNuiMessage(JSON.stringify(nuiMessage));
@@ -466,11 +464,6 @@ function onResourceStop(resource: string) {
 
 export function loadModule(): void {
   registerNuiCallbacks();
-
-  locales = LoadResourceFile(
-    GetCurrentResourceName(),
-    `locales/${GetConvar('fivem-appearance:locale', 'en')}.json`,
-  );
 
   on('onResourceStop', onResourceStop);
 

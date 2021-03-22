@@ -1,4 +1,5 @@
 import { createContext, useState, useCallback, useContext } from 'react';
+import Locales from '../shared/interfaces/locales';
 
 interface Display {
   appearance: boolean;
@@ -6,11 +7,14 @@ interface Display {
 
 interface NuiState {
   display: Display;
+  locales?: Locales;
 }
 
 interface NuiContextData {
   display: Display;
   setDisplay(value: Display): void;
+  locales?: Locales;
+  setLocales(value: Locales): void;
 }
 
 const INITIAL_STATE: NuiState = {
@@ -36,7 +40,24 @@ const NuiStateProvider: React.FC = ({ children }) => {
     [setData],
   );
 
-  return <NuiContext.Provider value={{ display: data.display, setDisplay }}>{children}</NuiContext.Provider>;
+  const setLocales = useCallback(
+    (value: Locales) => {
+      setData(state => ({
+        ...state,
+        locales: value,
+      }));
+    },
+    [setData],
+  );
+
+  const contextValue = {
+    display: data.display,
+    setDisplay,
+    locales: data.locales,
+    setLocales,
+  };
+
+  return <NuiContext.Provider value={contextValue}>{children}</NuiContext.Provider>;
 };
 
 function useNuiState(): NuiContextData {

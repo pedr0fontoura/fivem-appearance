@@ -11,12 +11,6 @@
     "accept": "Yes",
     "decline": "No"
   },
-  "saveTitle": "Save customization",
-  "saveDescription": "You will remain ugly",
-  "exitTitle": "Exit customization",
-  "exitDescription": "No changes will be saved",
-  "accept": "Yes",
-  "decline": "No",
   "ped": {
     "title": "Ped",
     "model": "Model"

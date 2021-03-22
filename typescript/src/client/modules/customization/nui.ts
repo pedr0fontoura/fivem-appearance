@@ -23,6 +23,7 @@ import {
 } from '../../index';
 
 export function registerNuiCallbacks(): void {
+  RegisterNuiCallbackType('appearance_get_locales');
   RegisterNuiCallbackType('appearance_get_settings_and_data');
   RegisterNuiCallbackType('appearance_set_camera');
   RegisterNuiCallbackType('appearance_turn_around');
@@ -38,6 +39,15 @@ export function registerNuiCallbacks(): void {
 
   RegisterNuiCallbackType('appearance_save');
   RegisterNuiCallbackType('appearance_exit');
+
+  on('__cfx_nui:appearance_get_locales', (_: any, cb: (arg: any) => void): void => {
+    const locales = LoadResourceFile(
+      GetCurrentResourceName(),
+      `locales/${GetConvar('fivem-appearance:locale', 'en')}.json`,
+    );
+
+    cb(locales);
+  });
 
   on('__cfx_nui:appearance_get_settings_and_data', (_: any, cb: (arg: any) => void): void => {
     const appearanceData = getAppearance();

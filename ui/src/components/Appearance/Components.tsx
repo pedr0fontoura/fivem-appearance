@@ -1,15 +1,16 @@
-import { ComponentSettings, PedComponent, Locales } from './interfaces';
+import { useNuiState } from '../../hooks/nuiState';
 
 import Section from './components/Section';
 import Item from './components/Item';
 import { FlexWrapper } from './styles';
 import Input from './components/Input';
 
+import { ComponentSettings, PedComponent } from './interfaces';
+
 interface ComponentsProps {
   settings: ComponentSettings[];
   data: PedComponent[];
   storedData: PedComponent[];
-  locales: Locales;
   handleComponentDrawableChange: (component_id: number, drawable: number) => void;
   handleComponentTextureChange: (component_id: number, texture: number) => void;
 }
@@ -22,10 +23,11 @@ const Components = ({
   settings,
   data,
   storedData,
-  locales,
   handleComponentDrawableChange,
   handleComponentTextureChange,
 }: ComponentsProps) => {
+  const { locales } = useNuiState();
+
   const settingsById = settings.reduce((object, { component_id, drawable, texture }) => {
     return { ...object, [component_id]: { drawable, texture } };
   }, {} as DataById<Omit<ComponentSettings, 'component_id'>>);
@@ -37,6 +39,10 @@ const Components = ({
   const storedComponentsById: any = storedData.reduce((object, { component_id, drawable, texture }) => {
     return { ...object, [component_id]: { drawable, texture } };
   }, {} as DataById<Omit<PedComponent, 'component_id'>>);
+
+  if (!locales) {
+    return null;
+  }
 
   return (
     <Section title={locales.components.title}>

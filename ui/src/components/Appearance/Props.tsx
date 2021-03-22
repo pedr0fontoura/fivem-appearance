@@ -1,15 +1,16 @@
-import { PropSettings, PedProp, Locales } from './interfaces';
+import { useNuiState } from '../../hooks/nuiState';
 
 import Section from './components/Section';
 import Item from './components/Item';
 import { FlexWrapper } from './styles';
 import Input from './components/Input';
 
+import { PropSettings, PedProp } from './interfaces';
+
 interface PropsProps {
   settings: PropSettings[];
   data: PedProp[];
   storedData: PedProp[];
-  locales: Locales;
   handlePropDrawableChange: (prop_id: number, drawable: number) => void;
   handlePropTextureChange: (prop_id: number, texture: number) => void;
 }
@@ -18,14 +19,9 @@ interface DataById<T> {
   [key: number]: T;
 }
 
-const Props = ({
-  settings,
-  data,
-  storedData,
-  locales,
-  handlePropDrawableChange,
-  handlePropTextureChange,
-}: PropsProps) => {
+const Props = ({ settings, data, storedData, handlePropDrawableChange, handlePropTextureChange }: PropsProps) => {
+  const { locales } = useNuiState();
+
   const settingsById = settings.reduce((object, { prop_id, drawable, texture }) => {
     return { ...object, [prop_id]: { drawable, texture } };
   }, {} as DataById<Omit<PropSettings, 'prop_id'>>);
@@ -37,6 +33,10 @@ const Props = ({
   const storedPropsById: any = storedData.reduce((object, { prop_id, drawable, texture }) => {
     return { ...object, [prop_id]: { drawable, texture } };
   }, {} as DataById<Omit<PedProp, 'prop_id'>>);
+
+  if (!locales) {
+    return null;
+  }
 
   return (
     <Section title={locales.props.title}>
