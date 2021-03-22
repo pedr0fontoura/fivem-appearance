@@ -10,6 +10,11 @@ This resource was designed to manage all GTA V player/ped customization in only 
 - Exports API to get and set every part of player/ped appearance.
 - [Built-in customization feature](https://streamable.com/t59gdt "Preview").
 
+## Preview
+![Customization Preview](https://imgur.com/VgNAvgC.png "Customization Preview")
+![Customization Preview](https://i.imgur.com/wzY7XNu.png "Customization Preview")
+![Customization Preview](https://imgur.com/B0m6g6q.png "Customization Preview")
+
 ## Installation
 
 **Download**
