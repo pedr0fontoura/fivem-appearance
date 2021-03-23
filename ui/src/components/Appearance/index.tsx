@@ -5,6 +5,7 @@ import Nui from '../../Nui';
 import mock from '../../mock';
 
 import {
+  CustomizationConfig,
   PedAppearance,
   AppearanceSettings,
   PedHeadBlend,
@@ -61,10 +62,11 @@ if (process.env.REACT_APP_ENV !== 'production') {
 }
 
 const Appearance = () => {
+  const [config, setConfig] = useState<CustomizationConfig>();
+
   const [data, setData] = useState<PedAppearance>();
   const [storedData, setStoredData] = useState<PedAppearance>();
-
-  const [settings, setSettings] = useState<AppearanceSettings>();
+  const [appearanceSettings, setAppearanceSettings] = useState<AppearanceSettings>();
 
   const [camera, setCamera] = useState(CAMERA_INITIAL_STATE);
   const [rotate, setRotate] = useState(ROTATE_INITIAL_STATE);
@@ -164,12 +166,15 @@ const Appearance = () => {
 
   const handleModelChange = useCallback(
     async (value: string) => {
-      const { appearanceSettings, appearanceData } = await Nui.post('appearance_change_model', value);
+      const { appearanceSettings: _appearanceSettings, appearanceData } = await Nui.post(
+        'appearance_change_model',
+        value,
+      );
 
-      setSettings(appearanceSettings);
+      setAppearanceSettings(_appearanceSettings);
       setData(appearanceData);
     },
-    [setData, setSettings],
+    [setData, setAppearanceSettings],
   );
 
   const handleHeadBlendChange = useCallback(
@@ -247,7 +252,7 @@ const Appearance = () => {
 
   const handleComponentDrawableChange = useCallback(
     async (component_id: number, drawable: number) => {
-      if (!data || !settings) return;
+      if (!data || !appearanceSettings) return;
 
       const component = data.components.find(c => c.component_id === component_id);
 
@@ -265,20 +270,20 @@ const Appearance = () => {
 
       const updatedComponentSettings = await Nui.post('appearance_change_component', updatedComponent);
 
-      const filteredComponentsSettings = settings.components.filter(c => c.component_id !== component_id);
+      const filteredComponentsSettings = appearanceSettings.components.filter(c => c.component_id !== component_id);
 
       const updatedComponentsSettings = [...filteredComponentsSettings, updatedComponentSettings];
 
-      const updatedSettings = { ...settings, components: updatedComponentsSettings };
+      const updatedSettings = { ...appearanceSettings, components: updatedComponentsSettings };
 
-      setSettings(updatedSettings);
+      setAppearanceSettings(updatedSettings);
     },
-    [data, setData, settings, setSettings],
+    [data, setData, appearanceSettings, setAppearanceSettings],
   );
 
   const handleComponentTextureChange = useCallback(
     async (component_id: number, texture: number) => {
-      if (!data || !settings) return;
+      if (!data || !appearanceSettings) return;
 
       const component = data.components.find(c => c.component_id === component_id);
 
@@ -296,20 +301,20 @@ const Appearance = () => {
 
       const updatedComponentSettings = await Nui.post('appearance_change_component', updatedComponent);
 
-      const filteredComponentsSettings = settings.components.filter(c => c.component_id !== component_id);
+      const filteredComponentsSettings = appearanceSettings.components.filter(c => c.component_id !== component_id);
 
       const updatedComponentsSettings = [...filteredComponentsSettings, updatedComponentSettings];
 
-      const updatedSettings = { ...settings, components: updatedComponentsSettings };
+      const updatedSettings = { ...appearanceSettings, components: updatedComponentsSettings };
 
-      setSettings(updatedSettings);
+      setAppearanceSettings(updatedSettings);
     },
-    [data, setData, settings, setSettings],
+    [data, setData, appearanceSettings, setAppearanceSettings],
   );
 
   const handlePropDrawableChange = useCallback(
     async (prop_id: number, drawable: number) => {
-      if (!data || !settings) return;
+      if (!data || !appearanceSettings) return;
 
       const prop = data.props.find(p => p.prop_id === prop_id);
 
@@ -327,20 +332,20 @@ const Appearance = () => {
 
       const updatedPropSettings = await Nui.post('appearance_change_prop', updatedProp);
 
-      const filteredPropsSettings = settings.props.filter(c => c.prop_id !== prop_id);
+      const filteredPropsSettings = appearanceSettings.props.filter(c => c.prop_id !== prop_id);
 
       const updatedPropsSettings = [...filteredPropsSettings, updatedPropSettings];
 
-      const updatedSettings = { ...settings, props: updatedPropsSettings };
+      const updatedSettings = { ...appearanceSettings, props: updatedPropsSettings };
 
-      setSettings(updatedSettings);
+      setAppearanceSettings(updatedSettings);
     },
-    [data, setData, settings, setSettings],
+    [data, setData, appearanceSettings, setAppearanceSettings],
   );
 
   const handlePropTextureChange = useCallback(
     async (prop_id: number, texture: number) => {
-      if (!data || !settings) return;
+      if (!data || !appearanceSettings) return;
 
       const prop = data.props.find(p => p.prop_id === prop_id);
 
@@ -358,15 +363,15 @@ const Appearance = () => {
 
       const updatedPropSettings = await Nui.post('appearance_change_prop', updatedProp);
 
-      const filteredPropsSettings = settings.props.filter(c => c.prop_id !== prop_id);
+      const filteredPropsSettings = appearanceSettings.props.filter(c => c.prop_id !== prop_id);
 
       const updatedPropsSettings = [...filteredPropsSettings, updatedPropSettings];
 
-      const updatedSettings = { ...settings, props: updatedPropsSettings };
+      const updatedSettings = { ...appearanceSettings, props: updatedPropsSettings };
 
-      setSettings(updatedSettings);
+      setAppearanceSettings(updatedSettings);
     },
-    [data, setData, settings, setSettings],
+    [data, setData, appearanceSettings, setAppearanceSettings],
   );
 
   const isPedFreemodeModel = useMemo(() => {
@@ -386,7 +391,7 @@ const Appearance = () => {
       setDisplay({ appearance: false });
       setData(APPEARANCE_INITIAL_STATE);
       setStoredData(APPEARANCE_INITIAL_STATE);
-      setSettings(SETTINGS_INITIAL_STATE);
+      setAppearanceSettings(SETTINGS_INITIAL_STATE);
       setCamera(CAMERA_INITIAL_STATE);
       setRotate(ROTATE_INITIAL_STATE);
     });
@@ -395,15 +400,18 @@ const Appearance = () => {
   useEffect(() => {
     if (display.appearance) {
       (async () => {
-        const { appearanceSettings, appearanceData } = await Nui.post('appearance_get_settings_and_data');
-        setSettings(appearanceSettings);
+        const { config: _config, appearanceSettings: settings, appearanceData } = await Nui.post(
+          'appearance_get_settings_and_data',
+        );
+        setConfig(_config);
+        setAppearanceSettings(settings);
         setStoredData(appearanceData);
         setData(appearanceData);
       })();
     }
   }, [display.appearance]);
 
-  if (!display.appearance || !settings || !data || !storedData || !locales) {
+  if (!display.appearance || !config || !appearanceSettings || !data || !storedData || !locales) {
     return null;
   }
 
@@ -415,62 +423,74 @@ const Appearance = () => {
             <animated.div key={key} style={style}>
               <Wrapper>
                 <Container>
-                  <Ped
-                    settings={settings.ped}
-                    storedData={storedData.model}
-                    data={data.model}
-                    handleModelChange={handleModelChange}
-                  />
-                  {isPedFreemodeModel && settings && (
+                  {config.ped && (
+                    <Ped
+                      settings={appearanceSettings.ped}
+                      storedData={storedData.model}
+                      data={data.model}
+                      handleModelChange={handleModelChange}
+                    />
+                  )}
+                  {isPedFreemodeModel && appearanceSettings && (
                     <>
-                      <HeadBlend
-                        settings={settings.headBlend}
-                        storedData={storedData.headBlend}
-                        data={data.headBlend}
-                        handleHeadBlendChange={handleHeadBlendChange}
-                      />
-                      <FaceFeatures
-                        settings={settings.faceFeatures}
-                        storedData={storedData.faceFeatures}
-                        data={data.faceFeatures}
-                        handleFaceFeatureChange={handleFaceFeatureChange}
-                      />
-                      <HeadOverlays
-                        settings={{
-                          hair: settings.hair,
-                          headOverlays: settings.headOverlays,
-                          eyeColor: settings.eyeColor,
-                        }}
-                        storedData={{
-                          hair: storedData.hair,
-                          headOverlays: storedData.headOverlays,
-                          eyeColor: storedData.eyeColor,
-                        }}
-                        data={{
-                          hair: data.hair,
-                          headOverlays: data.headOverlays,
-                          eyeColor: data.eyeColor,
-                        }}
-                        handleHairChange={handleHairChange}
-                        handleHeadOverlayChange={handleHeadOverlayChange}
-                        handleEyeColorChange={handleEyeColorChange}
-                      />
+                      {config.headBlend && (
+                        <HeadBlend
+                          settings={appearanceSettings.headBlend}
+                          storedData={storedData.headBlend}
+                          data={data.headBlend}
+                          handleHeadBlendChange={handleHeadBlendChange}
+                        />
+                      )}
+                      {config.faceFeatures && (
+                        <FaceFeatures
+                          settings={appearanceSettings.faceFeatures}
+                          storedData={storedData.faceFeatures}
+                          data={data.faceFeatures}
+                          handleFaceFeatureChange={handleFaceFeatureChange}
+                        />
+                      )}
+                      {config.headOverlays && (
+                        <HeadOverlays
+                          settings={{
+                            hair: appearanceSettings.hair,
+                            headOverlays: appearanceSettings.headOverlays,
+                            eyeColor: appearanceSettings.eyeColor,
+                          }}
+                          storedData={{
+                            hair: storedData.hair,
+                            headOverlays: storedData.headOverlays,
+                            eyeColor: storedData.eyeColor,
+                          }}
+                          data={{
+                            hair: data.hair,
+                            headOverlays: data.headOverlays,
+                            eyeColor: data.eyeColor,
+                          }}
+                          handleHairChange={handleHairChange}
+                          handleHeadOverlayChange={handleHeadOverlayChange}
+                          handleEyeColorChange={handleEyeColorChange}
+                        />
+                      )}
                     </>
                   )}
-                  <Components
-                    settings={settings.components}
-                    data={data.components}
-                    storedData={storedData.components}
-                    handleComponentDrawableChange={handleComponentDrawableChange}
-                    handleComponentTextureChange={handleComponentTextureChange}
-                  />
-                  <Props
-                    settings={settings.props}
-                    data={data.props}
-                    storedData={storedData.props}
-                    handlePropDrawableChange={handlePropDrawableChange}
-                    handlePropTextureChange={handlePropTextureChange}
-                  />
+                  {config.components && (
+                    <Components
+                      settings={appearanceSettings.components}
+                      data={data.components}
+                      storedData={storedData.components}
+                      handleComponentDrawableChange={handleComponentDrawableChange}
+                      handleComponentTextureChange={handleComponentTextureChange}
+                    />
+                  )}
+                  {config.props && (
+                    <Props
+                      settings={appearanceSettings.props}
+                      data={data.props}
+                      storedData={storedData.props}
+                      handlePropDrawableChange={handlePropDrawableChange}
+                      handlePropTextureChange={handlePropTextureChange}
+                    />
+                  )}
                 </Container>
                 <Options
                   camera={camera}

@@ -160,3 +160,12 @@ export const HAIR_DECORATIONS: HairDecorations = {
     { id: 77, collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_F_001_F' },
   ],
 };
+
+export const DEFAULT_CUSTOMIZATION_CONFIG: CustomizationConfig = {
+  ped: true,
+  headBlend: true,
+  faceFeatures: true,
+  headOverlays: true,
+  components: true,
+  props: true,
+};

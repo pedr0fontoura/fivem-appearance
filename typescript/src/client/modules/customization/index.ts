@@ -1,4 +1,10 @@
-import { PED_COMPONENTS_IDS, PED_PROPS_IDS, FACE_FEATURES, HEAD_OVERLAYS } from '../../constants';
+import {
+  PED_COMPONENTS_IDS,
+  PED_PROPS_IDS,
+  FACE_FEATURES,
+  HEAD_OVERLAYS,
+  DEFAULT_CUSTOMIZATION_CONFIG,
+} from '../../constants';
 
 import { pedModels, getPedAppearance, setPlayerAppearance } from '../../index';
 
@@ -37,6 +43,7 @@ const OFFSETS = {
 };
 
 let callback: (appearance?: PedAppearance) => void;
+let config: CustomizationConfig;
 
 let playerAppearance: PedAppearance;
 
@@ -223,6 +230,10 @@ export function getAppearanceSettings(): AppearanceSettings {
   };
 }
 
+export function getConfig(): CustomizationConfig {
+  return config;
+}
+
 export function setCamera(key: string): void {
   if (isCameraInterpolating) {
     return;
@@ -383,12 +394,16 @@ export function pedTurnAround(ped: number): void {
   ClearSequenceTask(sequence);
 }
 
-function startPlayerCustomization(cb: (appearance?: PedAppearance) => void): void {
+function startPlayerCustomization(
+  cb: (appearance?: PedAppearance) => void,
+  _config = DEFAULT_CUSTOMIZATION_CONFIG,
+): void {
   const playerPed = PlayerPedId();
 
   playerAppearance = getPedAppearance(playerPed);
 
   callback = cb;
+  config = _config;
 
   playerCoords = arrayToVector3(GetEntityCoords(playerPed, true));
   playerHeading = GetEntityHeading(playerPed);
@@ -441,6 +456,7 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
   }
 
   callback = null;
+  config = null;
 
   playerAppearance = null;
 

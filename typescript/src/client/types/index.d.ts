@@ -210,6 +210,15 @@ interface AppearanceSettings {
   eyeColor: EyeColorSettings;
 }
 
+interface CustomizationConfig {
+  ped: boolean;
+  headBlend: boolean;
+  faceFeatures: boolean;
+  headOverlays: boolean;
+  components: boolean;
+  props: boolean;
+}
+
 interface CameraState {
   head: boolean;
   body: boolean;

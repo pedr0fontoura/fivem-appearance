@@ -11,6 +11,7 @@ This resource was designed to manage all GTA V player/ped customization in only 
 - [Built-in customization feature](https://streamable.com/t59gdt "Preview").
 
 ## Preview
+
 ![Customization Preview](https://imgur.com/VgNAvgC.png "Customization Preview")
 ![Customization Preview](https://i.imgur.com/wzY7XNu.png "Customization Preview")
 ![Customization Preview](https://imgur.com/B0m6g6q.png "Customization Preview")
@@ -81,9 +82,9 @@ ensure fivem-appearance
 
 This export is only available if **fivem-appearance:customization** is set to 1.
 
-| Export                   | Parameters                                                  | Return |
-| ------------------------ | ----------------------------------------------------------- | ------ |
-| startPlayerCustomization | callback ((appearance: PedAppearance \| undefined) => void) | _void_ |
+| Export                   | Parameters                                                                                    | Return |
+| ------------------------ | --------------------------------------------------------------------------------------------- | ------ |
+| startPlayerCustomization | callback: _((appearance: PedAppearance \| undefined) => void)_, config? _CustomizationConfig_ | _void_ |
 
 ## Examples
 
@@ -91,13 +92,22 @@ This export is only available if **fivem-appearance:customization** is set to 1.
 
 ```lua
 RegisterCommand('customization', function()
+  local config = {
+    ped = true,
+    headBlend = true,
+    faceFeatures = true,
+    headOverlays = true,
+    components = true,
+    props = true,
+  }
+
   exports['fivem-appearance']:startPlayerCustomization(function (appearance)
     if (appearance) then
       print('Saved')
     else
       print('Canceled')
     end
-  end)
+  end, config)
 end, false)
 ```
 

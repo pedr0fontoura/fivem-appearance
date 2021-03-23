@@ -1,6 +1,7 @@
 import {
   getAppearance,
   getAppearanceSettings,
+  getConfig,
   getComponentSettings,
   getPropSettings,
   pedTurnAround,
@@ -50,9 +51,10 @@ export function registerNuiCallbacks(): void {
   });
 
   on('__cfx_nui:appearance_get_settings_and_data', (_: any, cb: (arg: any) => void): void => {
+    const config = getConfig();
     const appearanceData = getAppearance();
     const appearanceSettings = getAppearanceSettings();
-    cb({ appearanceData, appearanceSettings });
+    cb({ config, appearanceData, appearanceSettings });
   });
 
   on('__cfx_nui:appearance_set_camera', (camera: string, cb: (arg: any) => void): void => {

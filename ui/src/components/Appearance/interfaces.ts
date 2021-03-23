@@ -193,6 +193,15 @@ export interface AppearanceSettings {
   eyeColor: EyeColorSettings;
 }
 
+export interface CustomizationConfig {
+  ped: boolean;
+  headBlend: boolean;
+  faceFeatures: boolean;
+  headOverlays: boolean;
+  components: boolean;
+  props: boolean;
+}
+
 export interface CameraState {
   head: boolean;
   body: boolean;
