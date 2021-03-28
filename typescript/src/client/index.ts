@@ -8,6 +8,7 @@ import {
   PED_PROPS_IDS,
 } from './constants';
 
+import { applyHairOverlayToPed, fillTattooMaps } from './hairoverlays';
 import Customization from './modules/customization';
 
 const exp = (<any>global).exports;
@@ -251,7 +252,7 @@ export function setPedHair(ped: number, hair: PedHair): void {
 
   SetPedHairColor(ped, color, highlight);
 
-  const hairDecoration = getPedHairDecoration(ped, style);
+  /* const hairDecoration = getPedHairDecoration(ped, style);
 
   ClearPedDecorations(ped);
 
@@ -259,7 +260,9 @@ export function setPedHair(ped: number, hair: PedHair): void {
     const { collection, overlay } = hairDecoration;
 
     AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(overlay));
-  }
+  } */
+
+  applyHairOverlayToPed(ped, style);
 }
 
 export function setPedEyeColor(ped: number, eyeColor: number): void {
@@ -386,6 +389,8 @@ function init(): void {
   if (GetConvarInt('fivem-appearance:customization', 1)) {
     Customization.loadModule();
   }
+
+  fillTattooMaps();
 
   // Getters
   exp('getPedModel', getPedModel);
