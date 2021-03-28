@@ -51,7 +51,7 @@ const HeadOverlays = ({
   }
 
   return (
-    <Section title={locales.headOverlays.title}>
+    <Section title={locales.headOverlays.title} deps={[settings]}>
       <Item title={locales.headOverlays.hair.title}>
         <Input
           title={locales.headOverlays.hair.style}

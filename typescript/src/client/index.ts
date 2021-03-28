@@ -6,6 +6,7 @@ import {
   HAIR_DECORATIONS,
   PED_COMPONENTS_IDS,
   PED_PROPS_IDS,
+  EYE_COLORS,
 } from './constants';
 
 import Customization from './modules/customization';
@@ -151,6 +152,8 @@ function getPedHairDecoration(ped: number, hairStyle: number): HairDecoration {
 }
 
 export function getPedAppearance(ped: number): PedAppearance {
+  const eyeColor = GetPedEyeColor(ped);
+
   return {
     model: getPedModel(ped) || 'mp_m_freemode_01',
     headBlend: getPedHeadBlend(ped),
@@ -159,7 +162,7 @@ export function getPedAppearance(ped: number): PedAppearance {
     components: getPedComponents(ped),
     props: getPedProps(ped),
     hair: getPedHair(ped),
-    eyeColor: GetPedEyeColor(ped),
+    eyeColor: eyeColor < EYE_COLORS.length ? eyeColor : 0,
   };
 }
 

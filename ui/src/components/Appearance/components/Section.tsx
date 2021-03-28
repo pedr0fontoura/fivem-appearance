@@ -5,6 +5,7 @@ import { useSpring, animated } from 'react-spring';
 
 interface SectionProps {
   title: string;
+  deps?: any[];
 }
 
 interface HeaderProps {
@@ -61,7 +62,7 @@ const Items = styled.div`
   overflow: hidden;
 `;
 
-const Section: React.FC<SectionProps> = ({ children, title }) => {
+const Section: React.FC<SectionProps> = ({ children, title, deps = [] }) => {
   const [active, setActive] = useState(false);
 
   const [height, setHeight] = useState(0);
@@ -77,6 +78,12 @@ const Section: React.FC<SectionProps> = ({ children, title }) => {
       setHeight(ref.current.offsetHeight);
     }
   }, [ref, setHeight]);
+
+  useEffect(() => {
+    if (ref.current) {
+      setHeight(ref.current.offsetHeight);
+    }
+  }, [ref, setHeight, ...deps]);
 
   return (
     <Container>
