@@ -2,7 +2,7 @@ import { Wrapper, Buttons } from './styles';
 
 interface ModalProps {
   title: string;
-  description?: string;
+  description: string;
   accept: string;
   decline: string;
   handleAccept: () => Promise<void> | void;
