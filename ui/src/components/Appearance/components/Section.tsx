@@ -74,7 +74,7 @@ const Section: React.FC<SectionProps> = ({ children, title }) => {
 
   useEffect(() => {
     if (ref.current) {
-      setHeight(ref.current.scrollHeight);
+      setHeight(ref.current.scrollHeight * 0.02);
     }
   }, [ref, setHeight]);
 
