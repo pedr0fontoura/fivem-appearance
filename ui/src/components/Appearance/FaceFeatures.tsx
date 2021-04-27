@@ -205,9 +205,9 @@ const FaceFeatures = ({ settings, storedData, data, handleFaceFeatureChange }: F
           onChange={value => handleFaceFeatureChange('chinHole', value)}
         />
       </Item>
-      <Item title={locales.faceFeatures.neck.thickness}>
+      <Item title={locales.faceFeatures.neck.title}>
         <RangeInput
-          title={locales.faceFeatures.neck.title}
+          title={locales.faceFeatures.neck.thickness}
           min={settings.neckThickness.min}
           max={settings.neckThickness.max}
           factor={settings.neckThickness.factor}
