@@ -7,6 +7,7 @@
   "scripts": {
     "build:game": "cd typescript && yarn && yarn build",
     "build:ui": "cd ui && yarn && yarn build",
-    "build": "yarn build:game && yarn build:ui"
+    "build": "yarn build:game && yarn build:ui",
+    "release": "yarn build && node release.js"
   }
 }
