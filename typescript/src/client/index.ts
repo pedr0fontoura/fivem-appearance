@@ -194,19 +194,21 @@ export function setPedHeadBlend(ped: number, headBlend: PedHeadBlend): void {
 
   const { shapeFirst, shapeSecond, shapeMix, skinFirst, skinSecond, skinMix } = headBlend;
 
-  SetPedHeadBlendData(
-    ped,
-    shapeFirst,
-    shapeSecond,
-    0,
-    skinFirst,
-    skinSecond,
-    0,
-    shapeMix,
-    skinMix,
-    0,
-    false,
-  );
+  if (isPedFreemodeModel(ped)) {
+    SetPedHeadBlendData(
+      ped,
+      shapeFirst,
+      shapeSecond,
+      0,
+      skinFirst,
+      skinSecond,
+      0,
+      shapeMix,
+      skinMix,
+      0,
+      false,
+    );
+  }
 }
 
 export function setPedFaceFeatures(ped: number, faceFeatures: PedFaceFeatures): void {
