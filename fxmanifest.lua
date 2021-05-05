@@ -12,7 +12,7 @@ files {
   'peds.json'
 }
 
-if GetConvarInt('fivem-appearance:customization', 1) then
+if GetConvarInt('fivem-appearance:customization', 1) == 1 then
   ui_page 'ui/build/index.html'
 
   files {
