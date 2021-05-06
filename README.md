@@ -41,7 +41,6 @@ This is a development resource, if you don't use the exports the resource itself
 
 Since this is a client script, you will need to use **setr** to set these convars.
 
-- **fivem-appearance:customization**: 1 or 0, default **1**, toggle the built-in customization interface and customization exports.
 - **fivem-appearance:locale**: the name of one file inside `locales/`, default **en**, choose the locale file for the customization interface.
 
 config.cfg example:

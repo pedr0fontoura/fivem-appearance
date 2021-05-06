@@ -388,9 +388,7 @@ function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>)
 }
 
 function init(): void {
-  if (GetConvarInt('fivem-appearance:customization', 1)) {
-    Customization.loadModule();
-  }
+  Customization.loadModule();
 
   // Getters
   exp('getPedModel', getPedModel);
