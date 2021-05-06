@@ -46,7 +46,6 @@ Since this is a client script, you will need to use **setr** to set these convar
 config.cfg example:
 
 ```cfg
-setr fivem-appearance:customization 1
 setr fivem-appearance:locale "en"
 ensure fivem-appearance
 ```
