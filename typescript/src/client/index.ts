@@ -387,41 +387,32 @@ function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>)
   }
 }
 
-function init(): void {
-  Customization.loadModule();
+Customization.loadModule();
 
-  // Getters
-  exp('getPedModel', getPedModel);
-  exp('getPedComponents', getPedComponents);
-  exp('getPedProps', getPedProps);
-  exp('getPedHeadBlend', getPedHeadBlend);
-  exp('getPedFaceFeatures', getPedFaceFeatures);
-  exp('getPedHeadOverlays', getPedHeadOverlays);
-  exp('getPedHair', getPedHair);
+// Getters
+exp('getPedModel', getPedModel);
+exp('getPedComponents', getPedComponents);
+exp('getPedProps', getPedProps);
+exp('getPedHeadBlend', getPedHeadBlend);
+exp('getPedFaceFeatures', getPedFaceFeatures);
+exp('getPedHeadOverlays', getPedHeadOverlays);
+exp('getPedHair', getPedHair);
 
-  exp('getPedAppearance', getPedAppearance);
+exp('getPedAppearance', getPedAppearance);
 
-  // Setters
-  exp('setPlayerModel', setPlayerModel);
-  exp('setPedHeadBlend', setPedHeadBlend);
-  exp('setPedFaceFeatures', setPedFaceFeatures);
-  exp('setPedHeadOverlays', setPedHeadOverlays);
-  exp('setPedHair', setPedHair);
-  exp('setPedEyeColor', setPedEyeColor);
+// Setters
+exp('setPlayerModel', setPlayerModel);
+exp('setPedHeadBlend', setPedHeadBlend);
+exp('setPedFaceFeatures', setPedFaceFeatures);
+exp('setPedHeadOverlays', setPedHeadOverlays);
+exp('setPedHair', setPedHair);
+exp('setPedEyeColor', setPedEyeColor);
 
-  exp('setPedComponent', setPedComponent);
-  exp('setPedComponents', setPedComponents);
+exp('setPedComponent', setPedComponent);
+exp('setPedComponents', setPedComponents);
 
-  exp('setPedProp', setPedProp);
-  exp('setPedProps', setPedProps);
+exp('setPedProp', setPedProp);
+exp('setPedProps', setPedProps);
 
-  exp('setPlayerAppearance', setPlayerAppearance);
-  exp('setPedAppearance', setPedAppearance);
-}
-
-on('onClientResourceStart', resourceName => {
-  if (GetCurrentResourceName() != resourceName) {
-    return;
-  }
-  init();
-});
+exp('setPlayerAppearance', setPlayerAppearance);
+exp('setPedAppearance', setPedAppearance);
