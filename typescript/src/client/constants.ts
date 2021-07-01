@@ -116,6 +116,7 @@ export const HAIR_DECORATIONS: HairDecorations = {
     { id: 36, collection: 'mpbiker_overlays', overlay: 'MP_Biker_Hair_005_M' },
     { id: 72, collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_M_000_M' },
     { id: 73, collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_M_001_M' },
+    { id: 74, collection: 'mpVinewood_overlays', overlay: 'MP_Vinewood_Hair_M_000_M'},
   ],
   female: [
     { id: 0, collection: 'mpbeach_overlays', overlay: 'FM_Hair_Fuzz' },
@@ -158,6 +159,7 @@ export const HAIR_DECORATIONS: HairDecorations = {
     { id: 38, collection: 'mpbiker_overlays', overlay: 'MP_Biker_Hair_004_F' },
     { id: 76, collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_F_000_F' },
     { id: 77, collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_F_001_F' },
+    { id: 78, collection: 'mpVinewood_overlays', overlay: 'MP_Vinewood_Hair_F_000_F' },
   ],
 };
 
