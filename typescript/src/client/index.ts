@@ -11,7 +11,7 @@ import {
 
 import Customization from './modules/customization';
 
-const exp = (<any>global).exports;
+const exp = (global as any).exports;
 
 const GET_PED_HEAD_BLEND_DATA = '0x2746bd9d88c5c5d0';
 
@@ -317,16 +317,8 @@ export function setPedProps(ped: number, props: PedProp[]): void {
 export async function setPlayerAppearance(appearance: PedAppearance): Promise<void> {
   if (!appearance) return;
 
-  const {
-    model,
-    components,
-    props,
-    headBlend,
-    faceFeatures,
-    headOverlays,
-    hair,
-    eyeColor,
-  } = appearance;
+  const { model, components, props, headBlend, faceFeatures, headOverlays, hair, eyeColor } =
+    appearance;
 
   await setPlayerModel(model);
 
@@ -387,32 +379,30 @@ function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>)
   }
 }
 
-Customization.loadModule();
+function init(): void {
+  Customization.loadModule();
 
-// Getters
-exp('getPedModel', getPedModel);
-exp('getPedComponents', getPedComponents);
-exp('getPedProps', getPedProps);
-exp('getPedHeadBlend', getPedHeadBlend);
-exp('getPedFaceFeatures', getPedFaceFeatures);
-exp('getPedHeadOverlays', getPedHeadOverlays);
-exp('getPedHair', getPedHair);
+  exp('getPedModel', getPedModel);
+  exp('getPedComponents', getPedComponents);
+  exp('getPedProps', getPedProps);
+  exp('getPedHeadBlend', getPedHeadBlend);
+  exp('getPedFaceFeatures', getPedFaceFeatures);
+  exp('getPedHeadOverlays', getPedHeadOverlays);
+  exp('getPedHair', getPedHair);
+  exp('getPedAppearance', getPedAppearance);
 
-exp('getPedAppearance', getPedAppearance);
+  exp('setPlayerModel', setPlayerModel);
+  exp('setPedHeadBlend', setPedHeadBlend);
+  exp('setPedFaceFeatures', setPedFaceFeatures);
+  exp('setPedHeadOverlays', setPedHeadOverlays);
+  exp('setPedHair', setPedHair);
+  exp('setPedEyeColor', setPedEyeColor);
+  exp('setPedComponent', setPedComponent);
+  exp('setPedComponents', setPedComponents);
+  exp('setPedProp', setPedProp);
+  exp('setPedProps', setPedProps);
+  exp('setPlayerAppearance', setPlayerAppearance);
+  exp('setPedAppearance', setPedAppearance);
+}
 
-// Setters
-exp('setPlayerModel', setPlayerModel);
-exp('setPedHeadBlend', setPedHeadBlend);
-exp('setPedFaceFeatures', setPedFaceFeatures);
-exp('setPedHeadOverlays', setPedHeadOverlays);
-exp('setPedHair', setPedHair);
-exp('setPedEyeColor', setPedEyeColor);
-
-exp('setPedComponent', setPedComponent);
-exp('setPedComponents', setPedComponents);
-
-exp('setPedProp', setPedProp);
-exp('setPedProps', setPedProps);
-
-exp('setPlayerAppearance', setPlayerAppearance);
-exp('setPedAppearance', setPedAppearance);
+init();

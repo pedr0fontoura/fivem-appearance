@@ -12,9 +12,7 @@ import { arrayToVector3 } from '../../utils';
 
 import { registerNuiCallbacks } from './nui';
 
-declare function OpenSequenceTask(id: number): [any, number];
-
-const exp = (<any>global).exports;
+const exp = (global as any).exports;
 
 const CAMERAS = {
   default: {
@@ -375,7 +373,9 @@ export async function rotateCamera(direction: 'left' | 'right'): Promise<void> {
 export function pedTurnAround(ped: number): void {
   reverseCamera = !reverseCamera;
 
-  const [, sequence] = OpenSequenceTask(0);
+  const sequenceTaskId = 0;
+
+  OpenSequenceTask(sequenceTaskId);
   TaskGoStraightToCoord(
     0,
     playerCoords.x,
@@ -387,11 +387,11 @@ export function pedTurnAround(ped: number): void {
     0.1,
   );
   TaskStandStill(0, -1);
-  CloseSequenceTask(sequence);
+  CloseSequenceTask(sequenceTaskId);
 
   ClearPedTasks(ped);
-  TaskPerformSequence(ped, sequence);
-  ClearSequenceTask(sequence);
+  TaskPerformSequence(ped, sequenceTaskId);
+  ClearSequenceTask(sequenceTaskId);
 }
 
 function startPlayerCustomization(
