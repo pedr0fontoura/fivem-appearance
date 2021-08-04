@@ -372,26 +372,16 @@ export async function rotateCamera(direction: 'left' | 'right'): Promise<void> {
 
 export function pedTurnAround(ped: number): void {
   reverseCamera = !reverseCamera;
-
-  const sequenceTaskId = 0;
-
-  OpenSequenceTask(sequenceTaskId);
   TaskGoStraightToCoord(
-    0,
+    ped,
     playerCoords.x,
     playerCoords.y,
     playerCoords.z,
     8.0,
     -1,
-    GetEntityHeading(ped) - 180.0,
+    GetEntityHeading(ped) - 180,
     0.1,
   );
-  TaskStandStill(0, -1);
-  CloseSequenceTask(sequenceTaskId);
-
-  ClearPedTasks(ped);
-  TaskPerformSequence(ped, sequenceTaskId);
-  ClearSequenceTask(sequenceTaskId);
 }
 
 function startPlayerCustomization(
