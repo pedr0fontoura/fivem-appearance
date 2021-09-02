@@ -1,8 +1,8 @@
 {
   "name": "fivem-appearance",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "repository": "git@github.com:pedr0fontoura/fivem-appearance.git",
-  "author": "snakeWiz",
+  "author": "snakewiz",
   "license": "MIT",
   "scripts": {
     "build:game": "cd game && yarn && yarn build",
