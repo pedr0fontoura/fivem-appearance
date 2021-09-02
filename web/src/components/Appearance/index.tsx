@@ -400,9 +400,12 @@ const Appearance = () => {
   useEffect(() => {
     if (display.appearance) {
       (async () => {
-        const { config: _config, appearanceSettings: settings, appearanceData } = await Nui.post(
-          'appearance_get_settings_and_data',
-        );
+        const {
+          config: _config,
+          appearanceSettings: settings,
+          appearanceData,
+        } = await Nui.post('appearance_get_settings_and_data');
+
         setConfig(_config);
         setAppearanceSettings(settings);
         setStoredData(appearanceData);

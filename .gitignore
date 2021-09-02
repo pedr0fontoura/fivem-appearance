@@ -1,10 +1,9 @@
 release/
 
-typescript/node_modules/
-typescript/build/
-typescript/yarn.lock
+game/node_modules/
+game/build/
+game/yarn.lock
 
-ui/node_modules/
-ui/build/
-ui/yarn.lock
-.idea/
+web/node_modules/
+web/build/
+web/yarn.lock
