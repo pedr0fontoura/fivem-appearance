@@ -1,18 +1,18 @@
 fx_version "cerulean"
 game { "gta5" }
 
-author 'Snake'
+author 'snakewiz'
 description 'A flexible player customization script for FiveM.'
-repository 'https://github.com/snakewiz/fivem-appearance'
-version '1.2.0'
+repository 'https://github.com/pedr0fontoura/fivem-appearance'
+version '1.2.2'
 
-client_script 'typescript/build/client.js'
+client_script 'game/build/client.js'
 
 files {
-  'ui/build/index.html',
-  'ui/build/static/js/*.js',
+  'web/build/index.html',
+  'web/build/static/js/*.js',
   'locales/*.json',
   'peds.json'
 }
 
-ui_page 'ui/build/index.html'
+ui_page 'web/build/index.html'

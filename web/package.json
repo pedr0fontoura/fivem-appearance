@@ -1,7 +1,7 @@
 {
-  "name": "fivem-appearance-ui",
-  "version": "1.1.0",
-  "author": "https://github.com/snakewiz",
+  "name": "web",
+  "version": "1.2.2",
+  "author": "https://github.com/pedr0fontoura",
   "private": true,
   "homepage": "nui://",
   "dependencies": {

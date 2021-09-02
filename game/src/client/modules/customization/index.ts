@@ -12,6 +12,9 @@ import { arrayToVector3 } from '../../utils';
 
 import { registerNuiCallbacks } from './nui';
 
+// Override native typing
+declare function OpenSequenceTask(): number;
+
 const exp = (global as any).exports;
 
 const CAMERAS = {
@@ -373,9 +376,8 @@ export async function rotateCamera(direction: 'left' | 'right'): Promise<void> {
 export function pedTurnAround(ped: number): void {
   reverseCamera = !reverseCamera;
 
-  const sequenceTaskId = 0;
+  const sequenceTaskId = OpenSequenceTask();
 
-  OpenSequenceTask(sequenceTaskId);
   TaskGoStraightToCoord(
     0,
     playerCoords.x,
@@ -387,6 +389,7 @@ export function pedTurnAround(ped: number): void {
     0.1,
   );
   TaskStandStill(0, -1);
+
   CloseSequenceTask(sequenceTaskId);
 
   ClearPedTasks(ped);
