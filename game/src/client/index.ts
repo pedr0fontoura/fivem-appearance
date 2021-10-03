@@ -3,11 +3,12 @@ import { Delay, isPedFreemodeModel } from './utils';
 import {
   FACE_FEATURES,
   HEAD_OVERLAYS,
-  HAIR_DECORATIONS,
   PED_COMPONENTS_IDS,
   PED_PROPS_IDS,
   EYE_COLORS,
 } from './constants';
+
+import { fillDecorationsMaps, setPedHairDecoration } from './hairDecorations';
 
 import Customization from './modules/customization';
 
@@ -125,32 +126,6 @@ function getPedHair(ped: number): PedHair {
   };
 }
 
-function getPedHairDecorationType(ped: number): 'male' | 'female' {
-  const pedModel = GetEntityModel(ped);
-
-  let hairDecorationType: 'male' | 'female';
-
-  if (pedModel === GetHashKey('mp_m_freemode_01')) {
-    hairDecorationType = 'male';
-  } else if (pedModel === GetHashKey('mp_f_freemode_01')) {
-    hairDecorationType = 'female';
-  }
-
-  return hairDecorationType;
-}
-
-function getPedHairDecoration(ped: number, hairStyle: number): HairDecoration {
-  const hairDecorationType = getPedHairDecorationType(ped);
-
-  if (!hairDecorationType) return;
-
-  const hairDecoration = HAIR_DECORATIONS[hairDecorationType].find(
-    decoration => decoration.id === hairStyle,
-  );
-
-  return hairDecoration;
-}
-
 export function getPedAppearance(ped: number): PedAppearance {
   const eyeColor = GetPedEyeColor(ped);
 
@@ -183,7 +158,9 @@ export async function setPlayerModel(model: string): Promise<void> {
 
   const playerPed = PlayerPedId();
 
-  if (isPedFreemodeModel(playerPed)) {
+  const pedModel = GetEntityModel(playerPed);
+
+  if (isPedFreemodeModel(pedModel)) {
     SetPedDefaultComponentVariation(playerPed);
     SetPedHeadBlendData(playerPed, 0, 0, 0, 0, 0, 0, 0, 0, 0, false);
   }
@@ -194,7 +171,9 @@ export function setPedHeadBlend(ped: number, headBlend: PedHeadBlend): void {
 
   const { shapeFirst, shapeSecond, shapeMix, skinFirst, skinSecond, skinMix } = headBlend;
 
-  if (isPedFreemodeModel(ped)) {
+  const pedModel = GetEntityModel(ped);
+
+  if (isPedFreemodeModel(pedModel)) {
     SetPedHeadBlendData(
       ped,
       shapeFirst,
@@ -256,15 +235,7 @@ export function setPedHair(ped: number, hair: PedHair): void {
 
   SetPedHairColor(ped, color, highlight);
 
-  const hairDecoration = getPedHairDecoration(ped, style);
-
-  ClearPedDecorations(ped);
-
-  if (hairDecoration) {
-    const { collection, overlay } = hairDecoration;
-
-    AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(overlay));
-  }
+  setPedHairDecoration(ped, style);
 }
 
 export function setPedEyeColor(ped: number, eyeColor: number): void {
@@ -283,7 +254,9 @@ export function setPedComponent(ped: number, component: PedComponent): void {
     2: true,
   };
 
-  if (excludedFromFreemodeModels[component_id] && isPedFreemodeModel(ped)) {
+  const pedModel = GetEntityModel(ped);
+
+  if (excludedFromFreemodeModels[component_id] && isPedFreemodeModel(pedModel)) {
     return;
   }
 
@@ -380,6 +353,8 @@ function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>)
 }
 
 function init(): void {
+  fillDecorationsMaps();
+
   Customization.loadModule();
 
   exp('getPedModel', getPedModel);

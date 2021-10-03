@@ -4,15 +4,24 @@ interface Vector3 {
   z: number;
 }
 
-interface HairDecoration {
-  id: number;
+interface HardcodedHairDecoration {
   collection: string;
   overlay: string;
 }
 
-interface HairDecorations {
-  male: HairDecoration[];
-  female: HairDecoration[];
+interface HairDecoration {
+  collection: number;
+  overlay: number;
+}
+
+interface TattoCollectionData {
+  lockHash: number;
+  id: number;
+  collection: number;
+  overlay: number;
+  cost: number;
+  eFacing: number;
+  updateGroup: number;
 }
 
 interface PedHeadBlend {

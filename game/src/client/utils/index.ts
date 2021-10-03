@@ -1,12 +1,18 @@
+export const MP_FREEMODE_MALE = GetHashKey('mp_m_freemode_01');
+export const MP_FREEMODE_FEMALE = GetHashKey('mp_f_freemode_01');
+
 export const Delay = (ms: number): Promise<void> => new Promise(res => setTimeout(res, ms));
 
-export const isPedFreemodeModel = (ped: number): boolean => {
-  const entityModel = GetEntityModel(ped);
+export const isPedFreemodeModel = (pedModel: number): boolean => {
+  return pedModel === MP_FREEMODE_MALE || pedModel === MP_FREEMODE_FEMALE;
+};
 
-  const freemodeMale = GetHashKey('mp_m_freemode_01');
-  const freemodeFemale = GetHashKey('mp_f_freemode_01');
+export const isHardcodedHairDecoration = (
+  variableToCheck: any,
+): variableToCheck is HardcodedHairDecoration => {
+  const { collection, overlay } = variableToCheck as HardcodedHairDecoration;
 
-  return entityModel === freemodeMale || entityModel === freemodeFemale;
+  return typeof collection === 'string' && typeof overlay === 'string';
 };
 
 export function arrayToVector3(coords: number[]): Vector3 {
