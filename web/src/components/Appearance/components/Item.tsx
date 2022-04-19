@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+import { ReactNode } from 'react';
 
 interface ItemProps {
   title?: string;
+  children?: ReactNode;
 }
 
 const Container = styled.div`
