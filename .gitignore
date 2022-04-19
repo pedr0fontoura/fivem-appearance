@@ -1,4 +1,6 @@
 release/
+node_modules/
+yarn.lock
 
 game/node_modules/
 game/build/

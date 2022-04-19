@@ -16,3 +16,16 @@ export function arrayToVector3(coords: number[]): Vector3 {
     z: coords[2],
   };
 }
+
+export const getPedStats = (ped: number): Array<number> => {
+  const health = GetEntityHealth(ped);
+  const armor = GetPedArmour(ped);
+
+  return [health, armor];
+};
+
+export const setPedStats = (health: number, armor: number): void => {
+  const playerPed = PlayerPedId();
+  SetEntityHealth(playerPed, health);
+  SetPedArmour(playerPed, armor);
+};
