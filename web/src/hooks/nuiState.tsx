@@ -1,4 +1,4 @@
-import React, { createContext, useState, useCallback, useContext, ReactNode } from 'react';
+import { createContext, useState, useCallback, useContext } from 'react';
 import Locales from '../shared/interfaces/locales';
 
 interface Display {
@@ -25,7 +25,7 @@ const INITIAL_STATE: NuiState = {
 
 const NuiContext = createContext<NuiContextData>({} as NuiContextData);
 
-const NuiStateProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+const NuiStateProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<NuiState>(INITIAL_STATE);
 
   const setDisplay = useCallback(

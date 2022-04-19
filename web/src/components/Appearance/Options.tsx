@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, ReactElement, useCallback, ReactNode } from 'react';
+import { useState, useRef, useEffect, ReactElement, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { FaVideo, FaStreetView, FaUndo, FaRedo, FaSmile, FaMale, FaShoePrints, FaSave, FaTimes } from 'react-icons/fa';
 
@@ -11,7 +11,6 @@ interface ToggleButtonProps {
 interface ToggleOptionProps {
   active: boolean;
   onClick: () => void;
-  children?: ReactNode;
 }
 
 interface ExtendendContainerProps {
@@ -20,7 +19,6 @@ interface ExtendendContainerProps {
 
 interface ExtendendOptionProps {
   icon: ReactElement;
-  children?: ReactNode;
 }
 
 interface OptionsProps {

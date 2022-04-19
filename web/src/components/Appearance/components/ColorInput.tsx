@@ -57,7 +57,7 @@ const Button = styled.button<ButtonProps>`
 
 const ColorInput: React.FC<ColorInputProps> = ({ title, colors = [], defaultValue, clientValue, onChange }) => {
   const selectColor = useCallback(
-    (color: number) => {
+    color => {
       onChange(color);
     },
     [onChange],

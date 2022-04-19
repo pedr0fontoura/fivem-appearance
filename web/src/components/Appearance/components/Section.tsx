@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, ReactNode } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { useSpring, animated } from 'react-spring';
@@ -6,7 +6,6 @@ import { useSpring, animated } from 'react-spring';
 interface SectionProps {
   title: string;
   deps?: any[];
-  children?: ReactNode;
 }
 
 interface HeaderProps {
