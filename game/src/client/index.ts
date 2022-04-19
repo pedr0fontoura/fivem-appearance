@@ -177,11 +177,12 @@ export async function setPlayerModel(model: string): Promise<void> {
     await Delay(0);
   }
 
-  const playerPed = PlayerPedId();
-  const [currentHealth, currentArmour] = getPedStats(playerPed);
+  const [currentHealth, currentArmour] = getPedStats();
 
   SetPlayerModel(PlayerId(), model);
   SetModelAsNoLongerNeeded(model);
+
+  const playerPed = PlayerPedId();
 
   if (isPedFreemodeModel(playerPed)) {
     SetPedDefaultComponentVariation(playerPed);
