@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useTransition, animated } from 'react-spring';
+import { useTransition as useTransitionAnimation, animated } from 'react-spring';
 import { useNuiState } from '../../hooks/nuiState';
 import Nui from '../../Nui';
 import mock from '../../mock';
@@ -76,19 +76,19 @@ const Appearance = () => {
 
   const { display, setDisplay, locales, setLocales } = useNuiState();
 
-  const wrapperTransition = useTransition(display.appearance, null, {
+  const wrapperTransition = useTransitionAnimation(display.appearance, null, {
     from: { transform: 'translateX(-50px)', opacity: 0 },
     enter: { transform: 'translateY(0)', opacity: 1 },
     leave: { transform: 'translateX(-50px)', opacity: 0 },
   });
 
-  const saveModalTransition = useTransition(saveModal, null, {
+  const saveModalTransition = useTransitionAnimation(saveModal, null, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
   });
 
-  const exitModalTransition = useTransition(exitModal, null, {
+  const exitModalTransition = useTransitionAnimation(exitModal, null, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
