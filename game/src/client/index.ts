@@ -15,6 +15,10 @@ const exp = (global as any).exports;
 
 const GET_PED_HEAD_BLEND_DATA = '0x2746bd9d88c5c5d0';
 
+export const tattoos: TattooList = JSON.parse(
+  LoadResourceFile(GetCurrentResourceName(), 'tattoos.json'),
+);
+
 export const pedModels: string[] = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'peds.json'),
 );
