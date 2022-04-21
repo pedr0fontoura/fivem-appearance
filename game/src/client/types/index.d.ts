@@ -95,6 +95,7 @@ interface PedAppearance {
   headOverlays: PedHeadOverlays;
   hair: PedHair;
   eyeColor: number;
+  tattoos: TattooList;
 }
 
 interface PedSettings {
@@ -208,6 +209,7 @@ interface AppearanceSettings {
   headOverlays: HeadOverlaysSettings;
   hair: HairSettings;
   eyeColor: EyeColorSettings;
+  tattoos: TattoosSettings;
 }
 
 interface CustomizationConfig {
@@ -242,4 +244,8 @@ interface Tattoo {
 
 interface TattooList {
   [key: string]: Tattoo[];
+}
+
+interface TattoosSettings {
+  items: TattooList;
 }
