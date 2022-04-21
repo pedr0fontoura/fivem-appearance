@@ -123,5 +123,16 @@
     "ear": "Brincos",
     "watches": "Relógios",
     "bracelets": "Braceletes"
+  },
+  "tattoos": {
+    "title": "Tatuagens",
+    "items": {
+      "ZONE_TORSO": "Tronco",
+      "ZONE_HEAD": "Cabeça",
+      "ZONE_LEFT_ARM": "Braço esquerdo",
+      "ZONE_RIGHT_ARM": "Braço direito",
+      "ZONE_LEFT_LEG": "Perna esquerda",
+      "ZONE_RIGHT_LEG": "Perna direita"
+    }
   }
 }

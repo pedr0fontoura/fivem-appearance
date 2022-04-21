@@ -123,5 +123,16 @@
     "ear": "Ear",
     "watches": "Watches",
     "bracelets": "Bracelets"
+  }, 
+  "tattoos": {
+    "title": "Tattoos",
+    "items": {
+      "ZONE_TORSO": "Torso",
+      "ZONE_HEAD": "Head",
+      "ZONE_LEFT_ARM": "Left arm",
+      "ZONE_RIGHT_ARM": "Right arm",
+      "ZONE_LEFT_LEG": "Left leg",
+      "ZONE_RIGHT_LEG": "Right leg"
+    }
   }
 }
