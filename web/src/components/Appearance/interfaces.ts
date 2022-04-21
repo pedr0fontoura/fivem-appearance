@@ -212,3 +212,16 @@ export interface RotateState {
   left: boolean;
   right: boolean;
 }
+
+interface Tattoo {
+  name: string;
+  label: string;
+  hashMale: string;
+  hashFemale: string;
+  zone: string;
+  collection: string;
+}
+
+interface TattooList {
+  [key: string]: Tattoo[];
+}
