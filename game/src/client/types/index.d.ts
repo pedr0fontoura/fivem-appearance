@@ -217,6 +217,7 @@ interface CustomizationConfig {
   headOverlays: boolean;
   components: boolean;
   props: boolean;
+  tattoos: boolean;
 }
 
 interface CameraState {
@@ -231,11 +232,11 @@ interface RotateState {
 }
 
 interface Tattoo {
-  name: string; 
-  label: string; 
-  hashMale: string; 
+  name: string;
+  label: string;
+  hashMale: string;
   hashFemale: string;
-  zone: string; 
+  zone: string;
   collection: string;
 }
 

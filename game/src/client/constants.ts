@@ -116,7 +116,7 @@ export const HAIR_DECORATIONS: HairDecorations = {
     { id: 36, collection: 'mpbiker_overlays', overlay: 'MP_Biker_Hair_005_M' },
     { id: 72, collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_M_000_M' },
     { id: 73, collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_M_001_M' },
-    { id: 74, collection: 'mpVinewood_overlays', overlay: 'MP_Vinewood_Hair_M_000_M'},
+    { id: 74, collection: 'mpVinewood_overlays', overlay: 'MP_Vinewood_Hair_M_000_M' },
   ],
   female: [
     { id: 0, collection: 'mpbeach_overlays', overlay: 'FM_Hair_Fuzz' },
@@ -170,4 +170,5 @@ export const DEFAULT_CUSTOMIZATION_CONFIG: CustomizationConfig = {
   headOverlays: true,
   components: true,
   props: true,
+  tattoos: true,
 };
