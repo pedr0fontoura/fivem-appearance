@@ -78,6 +78,7 @@ export interface PedAppearance {
   headOverlays: PedHeadOverlays;
   hair: PedHair;
   eyeColor: number;
+  tattoos: TattooList;
 }
 
 export interface PedSettings {
@@ -191,6 +192,7 @@ export interface AppearanceSettings {
   headOverlays: HeadOverlaysSettings;
   hair: HairSettings;
   eyeColor: EyeColorSettings;
+  tattoos: TattoosSettings;
 }
 
 export interface CustomizationConfig {
@@ -200,6 +202,7 @@ export interface CustomizationConfig {
   headOverlays: boolean;
   components: boolean;
   props: boolean;
+  tattoos: boolean;
 }
 
 export interface CameraState {
@@ -224,4 +227,8 @@ interface Tattoo {
 
 interface TattooList {
   [key: string]: Tattoo[];
+}
+
+interface TattoosSettings {
+  items: TattooList;
 }
