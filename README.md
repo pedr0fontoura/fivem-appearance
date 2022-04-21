@@ -63,6 +63,7 @@ ensure fivem-appearance
 | getPedFaceFeatures  | ped: _number_                                  | _PedFaceFeatures_ |
 | getPedHeadOverlays  | ped: _number_                                  | _PedHeadOverlays_ |
 | getPedHair          | ped: _number_                                  | _PedHair_         |
+| getPedTattoos       |                                                | _TattooList_      |
 | getPedAppearance    | ped: _number_                                  | _PedAppearance_   |
 | setPlayerModel      | model: _string_                                | _Promise\<void\>_ |
 | setPedComponent     | ped: _number_, component: _PedComponent_       | _void_            |
@@ -73,6 +74,7 @@ ensure fivem-appearance
 | setPedHeadOverlays  | ped: _number_, headOverlays: _PedHeadOverlays_ | _void_            |
 | setPedHair          | ped: _number_, hair: _PedHair_                 | _void_            |
 | setPedEyeColor      | ped: _number_, eyeColor: _number_              | _void_            |
+| setPedTattoos       | ped: _number_, tattoos: _TattooList_           | _void_            |
 | setPlayerAppearance | appearance: _PedAppearance_                    | _void_            |
 | setPedAppearance    | ped: _number_, appearance: _PedAppearance_     | _void_            |
 
