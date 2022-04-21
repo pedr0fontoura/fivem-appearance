@@ -9,6 +9,13 @@ export const isPedFreemodeModel = (ped: number): boolean => {
   return entityModel === freemodeMale || entityModel === freemodeFemale;
 };
 
+export const isPedMale = (ped: number): boolean => {
+  const entityModel = GetEntityModel(ped); 
+  const freemodeMale = GetHashKey('mp_m_freemode_01');
+
+  return entityModel === freemodeMale
+}
+
 export function arrayToVector3(coords: number[]): Vector3 {
   return {
     x: coords[0],
