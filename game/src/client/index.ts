@@ -415,6 +415,7 @@ function init(): void {
   exp('getPedFaceFeatures', getPedFaceFeatures);
   exp('getPedHeadOverlays', getPedHeadOverlays);
   exp('getPedHair', getPedHair);
+  exp('getPedTattoos', getPedTattoos);
   exp('getPedAppearance', getPedAppearance);
 
   exp('setPlayerModel', setPlayerModel);
@@ -427,6 +428,7 @@ function init(): void {
   exp('setPedComponents', setPedComponents);
   exp('setPedProp', setPedProp);
   exp('setPedProps', setPedProps);
+  exp('setPedTattoos', setPedTattoos);
   exp('setPlayerAppearance', setPlayerAppearance);
   exp('setPedAppearance', setPedAppearance);
 }
