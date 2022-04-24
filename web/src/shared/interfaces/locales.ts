@@ -129,5 +129,6 @@ export default interface Locales {
     items: {
       [key: string]: string;
     };
+    apply: string;
   };
 }
