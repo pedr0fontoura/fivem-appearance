@@ -411,6 +411,7 @@ export const getPedTattoos = (): TattooList => {
 export const setPedTattoos = (ped: number, tattoos: TattooList): void => {
   PED_TATTOOS = tattoos;
   const isMale = isPedMale(ped);
+  ClearPedDecorations(ped);
   for (const zone in tattoos) {
     for (let i = 0; i < tattoos[zone].length; i++) {
       const { collection, hashFemale, hashMale } = tattoos[zone][i];
@@ -459,7 +460,7 @@ export const removeAllPedTattoos = (ped: number): TattooList => {
   return PED_TATTOOS;
 };
 
-export const previewTattoo = (tattoo: Tattoo, ped: number): void => {
+export const previewTattoo = (ped: number, tattoo: Tattoo): void => {
   const isMale = isPedMale(ped);
   ClearPedDecorations(ped);
   const { collection, hashFemale, hashMale } = tattoo;
