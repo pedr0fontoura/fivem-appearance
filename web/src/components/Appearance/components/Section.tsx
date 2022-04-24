@@ -84,7 +84,7 @@ const Section: React.FC<SectionProps> = ({ children, title, deps = [] }) => {
     if (ref.current) {
       setHeight(ref.current.offsetHeight);
     }
-  }, [ref, setHeight, ...deps]);
+  }, [ref, setHeight, deps]);
 
   return (
     <Container>
