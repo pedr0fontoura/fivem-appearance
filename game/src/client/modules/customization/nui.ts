@@ -9,6 +9,8 @@ import {
   rotateCamera,
   exitPlayerCustomization,
   playerHeading,
+  addPedTattoo,
+  previewTattoo,
 } from './index';
 
 import {
@@ -37,6 +39,8 @@ export function registerNuiCallbacks(): void {
   RegisterNuiCallbackType('appearance_change_eye_color');
   RegisterNuiCallbackType('appearance_change_component');
   RegisterNuiCallbackType('appearance_change_prop');
+  RegisterNuiCallbackType('appearance_apply_tattoo');
+  RegisterNuiCallbackType('appearance_preview_tattoo');
 
   RegisterNuiCallbackType('appearance_save');
   RegisterNuiCallbackType('appearance_exit');
@@ -141,6 +145,16 @@ export function registerNuiCallbacks(): void {
   on('__cfx_nui:appearance_change_eye_color', (eyeColor: number, cb: (arg: any) => void): void => {
     cb({});
     setPedEyeColor(PlayerPedId(), eyeColor);
+  });
+
+  on('__cfx_nui:appearance_apply_tattoo', (tattoo: Tattoo, cb: (arg: any) => void): void => {
+    const tattoos = addPedTattoo(PlayerPedId(), tattoo);
+    cb(tattoos);
+  });
+
+  on('__cfx_nui:appearance_preview_tattoo', (tattoo: Tattoo, cb: (arg: any) => void): void => {
+    cb({});
+    previewTattoo(PlayerPedId(), tattoo);
   });
 
   on('__cfx_nui:appearance_save', (appearance: PedAppearance, cb: (arg: any) => void): void => {

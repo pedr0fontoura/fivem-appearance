@@ -14,6 +14,8 @@ import {
   PedHeadOverlayValue,
   PedHair,
   CameraState,
+  Tattoo,
+  TattooList,
 } from './interfaces';
 
 import {
@@ -31,6 +33,7 @@ import Components from './Components';
 import Props from './Props';
 import Options from './Options';
 import Modal from '../Modal';
+import Tattoos from './Tattoos';
 
 import { Wrapper, Container } from './styles';
 
@@ -380,6 +383,20 @@ const Appearance = () => {
     return data.model === 'mp_m_freemode_01' || data.model === 'mp_f_freemode_01';
   }, [data]);
 
+  const handleApplyTattoo = useCallback(
+    async (tattoo: Tattoo) => {
+      if (!data) return;
+      const updatedTattoos: TattooList = await Nui.post('appearance_apply_tattoo', tattoo);
+      const updatedData = { ...data, tattoos: updatedTattoos };
+      setData(updatedData);
+    },
+    [data, setData],
+  );
+
+  const handlePreviewTattoo = useCallback((tattoo: Tattoo) => {
+    Nui.post('appearance_preview_tattoo', tattoo);
+  }, []);
+
   useEffect(() => {
     Nui.post('appearance_get_locales').then(result => setLocales(JSON.parse(result)));
 
@@ -492,6 +509,15 @@ const Appearance = () => {
                       storedData={storedData.props}
                       handlePropDrawableChange={handlePropDrawableChange}
                       handlePropTextureChange={handlePropTextureChange}
+                    />
+                  )}
+                  {isPedFreemodeModel && config.tattoos && (
+                    <Tattoos
+                      settings={appearanceSettings.tattoos}
+                      data={{}}
+                      storedData={{}}
+                      handleApplyTattoo={handleApplyTattoo}
+                      handlePreviewTattoo={handlePreviewTattoo}
                     />
                   )}
                 </Container>
