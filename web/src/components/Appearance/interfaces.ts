@@ -216,7 +216,7 @@ export interface RotateState {
   right: boolean;
 }
 
-interface Tattoo {
+export interface Tattoo {
   name: string;
   label: string;
   hashMale: string;
@@ -225,10 +225,10 @@ interface Tattoo {
   collection: string;
 }
 
-interface TattooList {
+export interface TattooList {
   [key: string]: Tattoo[];
 }
 
-interface TattoosSettings {
+export interface TattoosSettings {
   items: TattooList;
 }
