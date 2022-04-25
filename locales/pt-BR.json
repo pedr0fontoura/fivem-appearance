@@ -134,6 +134,7 @@
       "ZONE_LEFT_LEG": "Perna esquerda",
       "ZONE_RIGHT_LEG": "Perna direita"
     }, 
-    "apply": "Aplicar"
+    "apply": "Aplicar",
+    "delete": "Apagar"
   }
 }
