@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import { useNuiState } from '../../../hooks/nuiState';
@@ -7,8 +7,10 @@ import { Tattoo } from '../interfaces';
 
 interface SelectTattooProps {
   items: Tattoo[];
+  tattoosApplied: Tattoo[] | null;
   handleApplyTattoo: (value: Tattoo) => void;
   handlePreviewTattoo: (value: Tattoo) => void;
+  handleDeleteTattoo: (value: Tattoo) => void;
 }
 
 const Container = styled.div`
@@ -101,7 +103,13 @@ const customStyles: any = {
   }),
 };
 
-const SelectTattoo = ({ items, handleApplyTattoo, handlePreviewTattoo }: SelectTattooProps) => {
+const SelectTattoo = ({
+  items,
+  tattoosApplied,
+  handleApplyTattoo,
+  handlePreviewTattoo,
+  handleDeleteTattoo,
+}: SelectTattooProps) => {
   const selectRef = useRef<any>(null);
   const [currentTattoo, setCurrentTattoo] = useState<Tattoo>(items[0]);
   const { label } = currentTattoo;
@@ -113,6 +121,18 @@ const SelectTattoo = ({ items, handleApplyTattoo, handlePreviewTattoo }: SelectT
       setCurrentTattoo(event.value);
     }
   };
+
+  const isTattooApplied = useCallback(() => {
+    if (!tattoosApplied) return false;
+    const { name } = currentTattoo;
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < tattoosApplied.length; i++) {
+      const { name: nameApplied } = tattoosApplied[i];
+      if (nameApplied === name) return true;
+    }
+
+    return false;
+  }, [tattoosApplied, currentTattoo])();
 
   if (!locales) {
     return null;
@@ -129,7 +149,11 @@ const SelectTattoo = ({ items, handleApplyTattoo, handlePreviewTattoo }: SelectT
         menuPortalTarget={document.body}
       />
       <section>
-        <Button onClick={() => handleApplyTattoo(currentTattoo)}>{locales.tattoos.apply}</Button>
+        {isTattooApplied ? (
+          <Button onClick={() => handleDeleteTattoo(currentTattoo)}>{locales.tattoos.delete}</Button>
+        ) : (
+          <Button onClick={() => handleApplyTattoo(currentTattoo)}>{locales.tattoos.apply}</Button>
+        )}
       </section>
     </Container>
   );

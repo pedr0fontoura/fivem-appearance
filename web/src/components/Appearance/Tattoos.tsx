@@ -9,12 +9,12 @@ import { TattoosSettings, TattooList, Tattoo } from './interfaces';
 interface TattoosProps {
   settings: TattoosSettings;
   data: TattooList;
-  storedData: TattooList;
   handleApplyTattoo: (value: Tattoo) => void;
   handlePreviewTattoo: (value: Tattoo) => void;
+  handleDeleteTattoo: (value: Tattoo) => void;
 }
 
-const Tattoos = ({ settings, data, storedData, handleApplyTattoo, handlePreviewTattoo }: TattoosProps) => {
+const Tattoos = ({ settings, data, handleApplyTattoo, handlePreviewTattoo, handleDeleteTattoo }: TattoosProps) => {
   const { locales } = useNuiState();
 
   const { items } = settings;
@@ -32,7 +32,9 @@ const Tattoos = ({ settings, data, storedData, handleApplyTattoo, handlePreviewT
             <SelectTattoo
               handlePreviewTattoo={handlePreviewTattoo}
               handleApplyTattoo={handleApplyTattoo}
+              handleDeleteTattoo={handleDeleteTattoo}
               items={items[key]}
+              tattoosApplied={data[key] ?? null}
             />
           </FlexWrapper>
         </Item>

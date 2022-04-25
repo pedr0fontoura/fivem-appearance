@@ -386,16 +386,37 @@ const Appearance = () => {
   const handleApplyTattoo = useCallback(
     async (tattoo: Tattoo) => {
       if (!data) return;
-      const updatedTattoos: TattooList = await Nui.post('appearance_apply_tattoo', tattoo);
-      const updatedData = { ...data, tattoos: updatedTattoos };
-      setData(updatedData);
+      const { tattoos } = data;
+      const updatedTattoos = { ...tattoos };
+      if (!updatedTattoos[tattoo.zone]) updatedTattoos[tattoo.zone] = [];
+      updatedTattoos[tattoo.zone].push(tattoo);
+      await Nui.post('appearance_apply_tattoo', updatedTattoos);
+      setData({ ...data, tattoos: updatedTattoos });
     },
     [data, setData],
   );
 
-  const handlePreviewTattoo = useCallback((tattoo: Tattoo) => {
-    Nui.post('appearance_preview_tattoo', tattoo);
-  }, []);
+  const handlePreviewTattoo = useCallback(
+    (tattoo: Tattoo) => {
+      if (!data) return;
+      const { tattoos } = data;
+      Nui.post('appearance_preview_tattoo', { data: tattoos, tattoo });
+    },
+    [data],
+  );
+
+  const handleDeleteTattoo = useCallback(
+    async (tattoo: Tattoo) => {
+      if (!data) return;
+      const { tattoos } = data;
+      const updatedTattoos = tattoos;
+      // eslint-disable-next-line prettier/prettier
+      updatedTattoos[tattoo.zone] = updatedTattoos[tattoo.zone].filter(tattooDelete => tattooDelete.name !== tattoo.name);
+      await Nui.post('appearance_delete_tattoo', updatedTattoos);
+      setData({ ...data, tattoos: updatedTattoos });
+    },
+    [data, setData],
+  );
 
   useEffect(() => {
     Nui.post('appearance_get_locales').then(result => setLocales(JSON.parse(result)));
@@ -514,10 +535,10 @@ const Appearance = () => {
                   {isPedFreemodeModel && config.tattoos && (
                     <Tattoos
                       settings={appearanceSettings.tattoos}
-                      data={{}}
-                      storedData={{}}
+                      data={data.tattoos}
                       handleApplyTattoo={handleApplyTattoo}
                       handlePreviewTattoo={handlePreviewTattoo}
+                      handleDeleteTattoo={handleDeleteTattoo}
                     />
                   )}
                 </Container>
