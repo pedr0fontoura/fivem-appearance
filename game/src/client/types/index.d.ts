@@ -249,3 +249,8 @@ interface TattooList {
 interface TattoosSettings {
   items: TattooList;
 }
+
+interface PreviewTattoo {
+  data: TattooList;
+  tattoo: Tattoo;
+}
