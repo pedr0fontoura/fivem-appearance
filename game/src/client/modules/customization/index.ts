@@ -421,57 +421,43 @@ export const setPedTattoos = (ped: number, tattoos: TattooList): void => {
   }
 };
 
-export const addPedTattoo = (ped: number, tattoo: Tattoo): TattooList => {
-  if (!PED_TATTOOS[tattoo.zone]) {
-    PED_TATTOOS[tattoo.zone] = [];
-  }
-  PED_TATTOOS[tattoo.zone].push(tattoo);
-
-  const { collection, hashFemale, hashMale } = tattoo;
+export const addPedTattoo = (ped: number, tattoos: TattooList): void => {
   const isMale = isPedMale(ped);
-  const tattooGender = isMale ? hashMale : hashFemale;
-  AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
-
-  return PED_TATTOOS;
-};
-
-export const removePedTattoo = (ped: number, tattooToRemove: Tattoo): TattooList => {
-  // eslint-disable-next-line prettier/prettier
-  PED_TATTOOS[tattooToRemove.zone] = PED_TATTOOS[tattooToRemove.zone].filter(tattoo => tattoo.name !== tattooToRemove.name);
-
   ClearPedDecorations(ped);
-  const isMale = isPedMale(ped);
-  for (const zone in PED_TATTOOS) {
-    for (let i = 0; i < PED_TATTOOS[zone].length; i++) {
-      const { collection, hashFemale, hashMale } = PED_TATTOOS[zone][i];
+  for (const zone in tattoos) {
+    for (let i = 0; i < tattoos[zone].length; i++) {
+      const { collection, hashFemale, hashMale } = tattoos[zone][i];
       const tattooGender = isMale ? hashMale : hashFemale;
       AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
     }
   }
-
-  return PED_TATTOOS;
 };
 
-export const removeAllPedTattoos = (ped: number): TattooList => {
-  PED_TATTOOS = {};
-
-  ClearPedDecorations(ped);
-
-  return PED_TATTOOS;
-};
-
-export const previewTattoo = (ped: number, tattoo: Tattoo): void => {
+export const removePedTattoo = (ped: number, tattoos: TattooList): void => {
   const isMale = isPedMale(ped);
   ClearPedDecorations(ped);
-  const { collection, hashFemale, hashMale } = tattoo;
-  const tattooGender = isMale ? hashMale : hashFemale;
-  AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
-
-  for (const zone in PED_TATTOOS) {
-    for (let i = 0; i < PED_TATTOOS[zone].length; i++) {
-      const { collection, hashFemale, hashMale } = PED_TATTOOS[zone][i];
+  for (const zone in tattoos) {
+    for (let i = 0; i < tattoos[zone].length; i++) {
+      const { collection, hashFemale, hashMale } = tattoos[zone][i];
       const tattooGender = isMale ? hashMale : hashFemale;
       AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
+    }
+  }
+};
+
+export const setPreviewTattoo = (ped: number, data: TattooList, tattoo: Tattoo): void => {
+  const isMale = isPedMale(ped);
+  const { collection, hashFemale, hashMale } = tattoo;
+  const tattooGender = isMale ? hashMale : hashFemale;
+  ClearPedDecorations(ped);
+  AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
+  for (const zone in data) {
+    for (let i = 0; i < data[zone].length; i++) {
+      const { name, collection, hashFemale, hashMale } = data[zone][i];
+      if (tattoo.name !== name) {
+        const tattooGender = isMale ? hashMale : hashFemale;
+        AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
+      }
     }
   }
 };
@@ -531,6 +517,9 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
 
   if (!appearance) {
     setPlayerAppearance(getAppearance());
+  } else {
+    const { tattoos } = appearance;
+    setPedTattoos(playerPed, tattoos);
   }
 
   if (callback) {
