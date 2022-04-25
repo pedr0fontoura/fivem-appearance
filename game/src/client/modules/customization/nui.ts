@@ -10,7 +10,8 @@ import {
   exitPlayerCustomization,
   playerHeading,
   addPedTattoo,
-  previewTattoo,
+  setPreviewTattoo,
+  removePedTattoo,
 } from './index';
 
 import {
@@ -41,6 +42,7 @@ export function registerNuiCallbacks(): void {
   RegisterNuiCallbackType('appearance_change_prop');
   RegisterNuiCallbackType('appearance_apply_tattoo');
   RegisterNuiCallbackType('appearance_preview_tattoo');
+  RegisterNuiCallbackType('appearance_delete_tattoo');
 
   RegisterNuiCallbackType('appearance_save');
   RegisterNuiCallbackType('appearance_exit');
@@ -147,14 +149,23 @@ export function registerNuiCallbacks(): void {
     setPedEyeColor(PlayerPedId(), eyeColor);
   });
 
-  on('__cfx_nui:appearance_apply_tattoo', (tattoo: Tattoo, cb: (arg: any) => void): void => {
-    const tattoos = addPedTattoo(PlayerPedId(), tattoo);
-    cb(tattoos);
+  on('__cfx_nui:appearance_apply_tattoo', (data: TattooList, cb: (arg: any) => void): void => {
+    cb({});
+    addPedTattoo(PlayerPedId(), data);
   });
 
-  on('__cfx_nui:appearance_preview_tattoo', (tattoo: Tattoo, cb: (arg: any) => void): void => {
+  on(
+    '__cfx_nui:appearance_preview_tattoo',
+    (previewTattoo: PreviewTattoo, cb: (arg: any) => void): void => {
+      cb({});
+      const { data, tattoo } = previewTattoo;
+      setPreviewTattoo(PlayerPedId(), data, tattoo);
+    },
+  );
+
+  on('__cfx_nui:appearance_delete_tattoo', (data: TattooList, cb: (arg: any) => void): void => {
     cb({});
-    previewTattoo(PlayerPedId(), tattoo);
+    removePedTattoo(PlayerPedId(), data);
   });
 
   on('__cfx_nui:appearance_save', (appearance: PedAppearance, cb: (arg: any) => void): void => {
