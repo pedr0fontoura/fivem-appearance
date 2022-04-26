@@ -211,6 +211,12 @@ export interface CameraState {
   bottom: boolean;
 }
 
+export interface ClothesState {
+  head: boolean;
+  body: boolean;
+  bottom: boolean;
+}
+
 export interface RotateState {
   left: boolean;
   right: boolean;
