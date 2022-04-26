@@ -14,6 +14,7 @@ import {
   FaHatCowboy,
   FaSocks,
 } from 'react-icons/fa';
+import { GiClothes } from 'react-icons/gi';
 
 import { CameraState, ClothesState, RotateState } from './interfaces';
 
@@ -247,7 +248,7 @@ const Options: React.FC<OptionsProps> = ({
           <FaShoePrints size={20} />
         </ToggleOption>
       </ExtendedOption>
-      <ExtendedOption icon={<FaTshirt size={20} />}>
+      <ExtendedOption icon={<GiClothes size={20} />}>
         <ToggleOption active={clothes.head} onClick={() => handleSetClothes('head')}>
           <FaHatCowboy size={20} />
         </ToggleOption>
