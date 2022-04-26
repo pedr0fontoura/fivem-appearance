@@ -4,11 +4,12 @@ import {
   FACE_FEATURES,
   HEAD_OVERLAYS,
   DEFAULT_CUSTOMIZATION_CONFIG,
+  DATA_CLOTHES,
 } from '../../constants';
 
 import { pedModels, getPedAppearance, setPlayerAppearance, totalTattoos } from '../../index';
 
-import { arrayToVector3, isPedMale } from '../../utils';
+import { arrayToVector3, isPedMale, Delay } from '../../utils';
 
 import { registerNuiCallbacks } from './nui';
 
@@ -402,6 +403,69 @@ export function pedTurnAround(ped: number): void {
   ClearPedTasks(ped);
   TaskPerformSequence(ped, sequenceTaskId);
   ClearSequenceTask(sequenceTaskId);
+}
+
+export async function wearClothes(data: PedAppearance, typeClothes: string): Promise<void> {
+  const { animations, props } = DATA_CLOTHES[typeClothes];
+  const { dict, anim, move, duration } = animations.on;
+  const { male, female } = props;
+  const { components } = data;
+  const playerPed = PlayerPedId();
+  const isMale = isPedMale(playerPed);
+
+  RequestAnimDict(dict);
+  while (!HasAnimDictLoaded(dict)) {
+    await Delay(0);
+  }
+
+  if (isMale) {
+    for (let i = 0; i < male.length; i++) {
+      const [componentId] = male[i];
+      for (let j = 0; j < components.length; j++) {
+        console.log(components[j]);
+        const { component_id, drawable, texture } = components[j];
+        // eslint-disable-next-line prettier/prettier
+        if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
+      }
+    }
+  } else {
+    for (let i = 0; i < female.length; i++) {
+      const [componentId] = female[i];
+      for (let j = 0; j < components.length; j++) {
+        const { component_id, drawable, texture } = components[j];
+        // eslint-disable-next-line prettier/prettier
+        if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
+      }
+    }
+  }
+
+  TaskPlayAnim(playerPed, dict, anim, 3.0, 3.0, duration, move, 0, false, false, false);
+}
+
+export async function removeClothes(typeClothes: string): Promise<void> {
+  const { animations, props } = DATA_CLOTHES[typeClothes];
+  const { dict, anim, move, duration } = animations.off;
+  const { male, female } = props;
+  const playerPed = PlayerPedId();
+  const isMale = isPedMale(playerPed);
+
+  RequestAnimDict(dict);
+  while (!HasAnimDictLoaded(dict)) {
+    await Delay(0);
+  }
+
+  if (isMale) {
+    for (let i = 0; i < male.length; i++) {
+      const [componentId, drawableId] = male[i];
+      SetPedComponentVariation(playerPed, componentId, drawableId, 0, 2);
+    }
+  } else {
+    for (let i = 0; i < female.length; i++) {
+      const [componentId, drawableId] = female[i];
+      SetPedComponentVariation(playerPed, componentId, drawableId, 0, 2);
+    }
+  }
+  TaskPlayAnim(playerPed, dict, anim, 3.0, 3.0, duration, move, 0, false, false, false);
 }
 
 export const getPedTattoos = (): TattooList => {
