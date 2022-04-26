@@ -12,6 +12,8 @@ import {
   addPedTattoo,
   setPreviewTattoo,
   removePedTattoo,
+  wearClothes,
+  removeClothes,
 } from './index';
 
 import {
@@ -170,12 +172,18 @@ export function registerNuiCallbacks(): void {
     removePedTattoo(PlayerPedId(), data);
   });
 
-  on('__cfx_nui:appearance_wear_clothes', (clothes: string, cb: (arg: any) => void): void => {
-    cb({});
-  });
+  on(
+    '__cfx_nui:appearance_wear_clothes',
+    (dataWearClothes: WearClothes, cb: (arg: any) => void): void => {
+      cb({});
+      const { data, key } = dataWearClothes;
+      wearClothes(data, key);
+    },
+  );
 
   on('__cfx_nui:appearance_remove_clothes', (clothes: string, cb: (arg: any) => void): void => {
     cb({});
+    removeClothes(clothes);
   });
 
   on('__cfx_nui:appearance_save', (appearance: PedAppearance, cb: (arg: any) => void): void => {
