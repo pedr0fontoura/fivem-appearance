@@ -281,3 +281,8 @@ interface DataClothes {
   body: ClothesGroup;
   bottom: ClothesGroup;
 }
+
+interface WearClothes {
+  data: PedAppearance;
+  key: string;
+}
