@@ -43,6 +43,8 @@ export function registerNuiCallbacks(): void {
   RegisterNuiCallbackType('appearance_apply_tattoo');
   RegisterNuiCallbackType('appearance_preview_tattoo');
   RegisterNuiCallbackType('appearance_delete_tattoo');
+  RegisterNuiCallbackType('appearance_wear_clothes');
+  RegisterNuiCallbackType('appearance_remove_clothes');
 
   RegisterNuiCallbackType('appearance_save');
   RegisterNuiCallbackType('appearance_exit');
@@ -166,6 +168,14 @@ export function registerNuiCallbacks(): void {
   on('__cfx_nui:appearance_delete_tattoo', (data: TattooList, cb: (arg: any) => void): void => {
     cb({});
     removePedTattoo(PlayerPedId(), data);
+  });
+
+  on('__cfx_nui:appearance_wear_clothes', (clothes: string, cb: (arg: any) => void): void => {
+    cb({});
+  });
+
+  on('__cfx_nui:appearance_remove_clothes', (clothes: string, cb: (arg: any) => void): void => {
+    cb({});
   });
 
   on('__cfx_nui:appearance_save', (appearance: PedAppearance, cb: (arg: any) => void): void => {
