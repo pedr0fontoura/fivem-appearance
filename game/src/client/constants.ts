@@ -172,3 +172,82 @@ export const DEFAULT_CUSTOMIZATION_CONFIG: CustomizationConfig = {
   props: true,
   tattoos: true,
 };
+
+export const DATA_CLOTHES: DataClothes = {
+  head: {
+    animations: {
+      on: {
+        dict: 'mp_masks@standard_car@ds@',
+        anim: 'put_on_mask',
+        move: 51,
+        duration: 600,
+      },
+      off: {
+        dict: 'missheist_agency2ahelmet',
+        anim: 'take_off_helmet_stand',
+        move: 51,
+        duration: 1200,
+      },
+    },
+    props: {
+      male: [[1, 0]],
+      female: [[1, 0]],
+    },
+  },
+  body: {
+    animations: {
+      on: {
+        dict: 'clothingtie',
+        anim: 'try_tie_negative_a',
+        move: 51,
+        duration: 1200,
+      },
+      off: {
+        dict: 'clothingtie',
+        anim: 'try_tie_negative_a',
+        move: 51,
+        duration: 1200,
+      },
+    },
+    props: {
+      male: [
+        [11, 252],
+        [8, 15],
+        [10, 0],
+        [5, 0],
+      ],
+      female: [
+        [11, 15],
+        [8, 15],
+        [10, 0],
+        [5, 0],
+      ],
+    },
+  },
+  bottom: {
+    animations: {
+      on: {
+        dict: 're@construction',
+        anim: 'out_of_breath',
+        move: 51,
+        duration: 1300,
+      },
+      off: {
+        dict: 're@construction',
+        anim: 'out_of_breath',
+        move: 51,
+        duration: 1300,
+      },
+    },
+    props: {
+      male: [
+        [4, 61],
+        [6, 34],
+      ],
+      female: [
+        [4, 15],
+        [6, 35],
+      ],
+    },
+  },
+};
