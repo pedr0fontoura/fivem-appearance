@@ -14,8 +14,8 @@ import {
   PedHeadOverlayValue,
   PedHair,
   CameraState,
+  ClothesState,
   Tattoo,
-  TattooList,
 } from './interfaces';
 
 import {
@@ -23,6 +23,7 @@ import {
   SETTINGS_INITIAL_STATE,
   CAMERA_INITIAL_STATE,
   ROTATE_INITIAL_STATE,
+  CLOTHES_INITIAL_STATE,
 } from './settings';
 
 import Ped from './Ped';
@@ -73,6 +74,7 @@ const Appearance = () => {
 
   const [camera, setCamera] = useState(CAMERA_INITIAL_STATE);
   const [rotate, setRotate] = useState(ROTATE_INITIAL_STATE);
+  const [clothes, setClothes] = useState(CLOTHES_INITIAL_STATE);
 
   const [saveModal, setSaveModal] = useState(false);
   const [exitModal, setExitModal] = useState(false);
@@ -100,6 +102,18 @@ const Appearance = () => {
   const handleTurnAround = useCallback(() => {
     Nui.post('appearance_turn_around');
   }, []);
+
+  const handleSetClothes = useCallback(
+    (key: keyof ClothesState) => {
+      setClothes({ ...CLOTHES_INITIAL_STATE, [key]: !clothes[key] });
+      if (!clothes[key]) {
+        Nui.post('appearance_remove_clothes', key);
+      } else {
+        Nui.post('appearance_wear_clothes', key);
+      }
+    },
+    [clothes, setClothes],
+  );
 
   const handleSetCamera = useCallback(
     (key: keyof CameraState) => {
@@ -545,6 +559,8 @@ const Appearance = () => {
                 <Options
                   camera={camera}
                   rotate={rotate}
+                  clothes={clothes}
+                  handleSetClothes={handleSetClothes}
                   handleSetCamera={handleSetCamera}
                   handleTurnAround={handleTurnAround}
                   handleRotateLeft={handleRotateLeft}
