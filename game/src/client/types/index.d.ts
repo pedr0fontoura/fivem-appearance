@@ -254,3 +254,30 @@ interface PreviewTattoo {
   data: TattooList;
   tattoo: Tattoo;
 }
+
+interface Animation {
+  dict: string;
+  anim: string;
+  move: number;
+  duration: number;
+}
+
+interface AnimationsGroup {
+  on: Animation;
+  off: Animation;
+}
+
+interface PropsGroup {
+  male: Array<number[]>;
+  female: Array<number[]>;
+}
+interface ClothesGroup {
+  animations: AnimationsGroup;
+  props: PropsGroup;
+}
+
+interface DataClothes {
+  head: ClothesGroup;
+  body: ClothesGroup;
+  bottom: ClothesGroup;
+}
