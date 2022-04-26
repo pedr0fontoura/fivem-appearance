@@ -483,3 +483,5 @@ export const SETTINGS_INITIAL_STATE: AppearanceSettings = {
 export const CAMERA_INITIAL_STATE = { head: false, body: false, bottom: false };
 
 export const ROTATE_INITIAL_STATE = { left: false, right: false };
+
+export const CLOTHES_INITIAL_STATE = { head: false, body: false, bottom: false };
