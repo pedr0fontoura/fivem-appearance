@@ -105,14 +105,14 @@ const Appearance = () => {
 
   const handleSetClothes = useCallback(
     (key: keyof ClothesState) => {
-      setClothes({ ...CLOTHES_INITIAL_STATE, [key]: !clothes[key] });
+      setClothes({ ...clothes, [key]: !clothes[key] });
       if (!clothes[key]) {
         Nui.post('appearance_remove_clothes', key);
       } else {
-        Nui.post('appearance_wear_clothes', key);
+        Nui.post('appearance_wear_clothes', { data, key });
       }
     },
-    [clothes, setClothes],
+    [data, clothes, setClothes],
   );
 
   const handleSetCamera = useCallback(
