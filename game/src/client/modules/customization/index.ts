@@ -422,7 +422,6 @@ export async function wearClothes(data: PedAppearance, typeClothes: string): Pro
     for (let i = 0; i < male.length; i++) {
       const [componentId] = male[i];
       for (let j = 0; j < components.length; j++) {
-        console.log(components[j]);
         const { component_id, drawable, texture } = components[j];
         // eslint-disable-next-line prettier/prettier
         if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
