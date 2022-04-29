@@ -3,7 +3,7 @@ node_modules/
 yarn.lock
 
 game/node_modules/
-game/build/
+game/dist/
 game/yarn.lock
 
 web/node_modules/
