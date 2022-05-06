@@ -7,5 +7,5 @@ game/dist/
 game/yarn.lock
 
 web/node_modules/
-web/build/
+web/dist/
 web/yarn.lock
