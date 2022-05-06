@@ -14,6 +14,8 @@ import {
   PedHeadOverlayValue,
   PedHair,
   CameraState,
+  ClothesState,
+  Tattoo,
 } from './interfaces';
 
 import {
@@ -21,6 +23,7 @@ import {
   SETTINGS_INITIAL_STATE,
   CAMERA_INITIAL_STATE,
   ROTATE_INITIAL_STATE,
+  CLOTHES_INITIAL_STATE,
 } from './settings';
 
 import Ped from './Ped';
@@ -31,6 +34,7 @@ import Components from './Components';
 import Props from './Props';
 import Options from './Options';
 import Modal from '../Modal';
+import Tattoos from './Tattoos';
 
 import { Wrapper, Container } from './styles';
 
@@ -70,6 +74,7 @@ const Appearance = () => {
 
   const [camera, setCamera] = useState(CAMERA_INITIAL_STATE);
   const [rotate, setRotate] = useState(ROTATE_INITIAL_STATE);
+  const [clothes, setClothes] = useState(CLOTHES_INITIAL_STATE);
 
   const [saveModal, setSaveModal] = useState(false);
   const [exitModal, setExitModal] = useState(false);
@@ -97,6 +102,18 @@ const Appearance = () => {
   const handleTurnAround = useCallback(() => {
     Nui.post('appearance_turn_around');
   }, []);
+
+  const handleSetClothes = useCallback(
+    (key: keyof ClothesState) => {
+      setClothes({ ...clothes, [key]: !clothes[key] });
+      if (!clothes[key]) {
+        Nui.post('appearance_remove_clothes', key);
+      } else {
+        Nui.post('appearance_wear_clothes', { data, key });
+      }
+    },
+    [data, clothes, setClothes],
+  );
 
   const handleSetCamera = useCallback(
     (key: keyof CameraState) => {
@@ -380,6 +397,41 @@ const Appearance = () => {
     return data.model === 'mp_m_freemode_01' || data.model === 'mp_f_freemode_01';
   }, [data]);
 
+  const handleApplyTattoo = useCallback(
+    async (tattoo: Tattoo) => {
+      if (!data) return;
+      const { tattoos } = data;
+      const updatedTattoos = { ...tattoos };
+      if (!updatedTattoos[tattoo.zone]) updatedTattoos[tattoo.zone] = [];
+      updatedTattoos[tattoo.zone].push(tattoo);
+      await Nui.post('appearance_apply_tattoo', updatedTattoos);
+      setData({ ...data, tattoos: updatedTattoos });
+    },
+    [data, setData],
+  );
+
+  const handlePreviewTattoo = useCallback(
+    (tattoo: Tattoo) => {
+      if (!data) return;
+      const { tattoos } = data;
+      Nui.post('appearance_preview_tattoo', { data: tattoos, tattoo });
+    },
+    [data],
+  );
+
+  const handleDeleteTattoo = useCallback(
+    async (tattoo: Tattoo) => {
+      if (!data) return;
+      const { tattoos } = data;
+      const updatedTattoos = tattoos;
+      // eslint-disable-next-line prettier/prettier
+      updatedTattoos[tattoo.zone] = updatedTattoos[tattoo.zone].filter(tattooDelete => tattooDelete.name !== tattoo.name);
+      await Nui.post('appearance_delete_tattoo', updatedTattoos);
+      setData({ ...data, tattoos: updatedTattoos });
+    },
+    [data, setData],
+  );
+
   useEffect(() => {
     Nui.post('appearance_get_locales').then(result => setLocales(JSON.parse(result)));
 
@@ -494,10 +546,21 @@ const Appearance = () => {
                       handlePropTextureChange={handlePropTextureChange}
                     />
                   )}
+                  {isPedFreemodeModel && config.tattoos && (
+                    <Tattoos
+                      settings={appearanceSettings.tattoos}
+                      data={data.tattoos}
+                      handleApplyTattoo={handleApplyTattoo}
+                      handlePreviewTattoo={handlePreviewTattoo}
+                      handleDeleteTattoo={handleDeleteTattoo}
+                    />
+                  )}
                 </Container>
                 <Options
                   camera={camera}
                   rotate={rotate}
+                  clothes={clothes}
+                  handleSetClothes={handleSetClothes}
                   handleSetCamera={handleSetCamera}
                   handleTurnAround={handleTurnAround}
                   handleRotateLeft={handleRotateLeft}

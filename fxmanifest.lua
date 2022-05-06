@@ -12,7 +12,8 @@ files {
   'web/build/index.html',
   'web/build/static/js/*.js',
   'locales/*.json',
-  'peds.json'
+  'peds.json',
+  'tattoos.json'
 }
 
 ui_page 'web/build/index.html'

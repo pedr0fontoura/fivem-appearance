@@ -1,8 +1,22 @@
 import { useState, useRef, useEffect, ReactElement, useCallback, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
-import { FaVideo, FaStreetView, FaUndo, FaRedo, FaSmile, FaMale, FaShoePrints, FaSave, FaTimes } from 'react-icons/fa';
+import {
+  FaVideo,
+  FaStreetView,
+  FaUndo,
+  FaRedo,
+  FaSmile,
+  FaMale,
+  FaShoePrints,
+  FaSave,
+  FaTimes,
+  FaTshirt,
+  FaHatCowboy,
+  FaSocks,
+} from 'react-icons/fa';
+import { GiClothes } from 'react-icons/gi';
 
-import { CameraState, RotateState } from './interfaces';
+import { CameraState, ClothesState, RotateState } from './interfaces';
 
 interface ToggleButtonProps {
   active: boolean;
@@ -26,6 +40,8 @@ interface ExtendendOptionProps {
 interface OptionsProps {
   camera: CameraState;
   rotate: RotateState;
+  clothes: ClothesState;
+  handleSetClothes: (key: keyof ClothesState) => void;
   handleSetCamera: (key: keyof CameraState) => void;
   handleTurnAround: () => void;
   handleRotateLeft: () => void;
@@ -210,6 +226,8 @@ const ExtendedOption: React.FC<ExtendendOptionProps> = ({ children, icon }) => {
 const Options: React.FC<OptionsProps> = ({
   camera,
   rotate,
+  clothes,
+  handleSetClothes,
   handleSetCamera,
   handleTurnAround,
   handleRotateLeft,
@@ -228,6 +246,17 @@ const Options: React.FC<OptionsProps> = ({
         </ToggleOption>
         <ToggleOption active={camera.bottom} onClick={() => handleSetCamera('bottom')}>
           <FaShoePrints size={20} />
+        </ToggleOption>
+      </ExtendedOption>
+      <ExtendedOption icon={<GiClothes size={20} />}>
+        <ToggleOption active={clothes.head} onClick={() => handleSetClothes('head')}>
+          <FaHatCowboy size={20} />
+        </ToggleOption>
+        <ToggleOption active={clothes.body} onClick={() => handleSetClothes('body')}>
+          <FaTshirt size={20} />
+        </ToggleOption>
+        <ToggleOption active={clothes.bottom} onClick={() => handleSetClothes('bottom')}>
+          <FaSocks size={20} />
         </ToggleOption>
       </ExtendedOption>
       <Option onClick={handleTurnAround}>

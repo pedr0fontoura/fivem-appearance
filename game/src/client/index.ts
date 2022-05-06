@@ -9,11 +9,15 @@ import {
   EYE_COLORS,
 } from './constants';
 
-import Customization from './modules/customization';
+import Customization, { getPedTattoos, setPedTattoos } from './modules/customization';
 
 const exp = (global as any).exports;
 
 const GET_PED_HEAD_BLEND_DATA = '0x2746bd9d88c5c5d0';
+
+export const totalTattoos: TattooList = JSON.parse(
+  LoadResourceFile(GetCurrentResourceName(), 'tattoos.json'),
+);
 
 export const pedModels: string[] = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'peds.json'),
@@ -163,6 +167,7 @@ export function getPedAppearance(ped: number): PedAppearance {
     props: getPedProps(ped),
     hair: getPedHair(ped),
     eyeColor: eyeColor < EYE_COLORS.length ? eyeColor : 0,
+    tattoos: getPedTattoos(),
   };
 }
 
@@ -320,8 +325,17 @@ export function setPedProps(ped: number, props: PedProp[]): void {
 export async function setPlayerAppearance(appearance: PedAppearance): Promise<void> {
   if (!appearance) return;
 
-  const { model, components, props, headBlend, faceFeatures, headOverlays, hair, eyeColor } =
-    appearance;
+  const {
+    model,
+    components,
+    props,
+    headBlend,
+    faceFeatures,
+    headOverlays,
+    hair,
+    eyeColor,
+    tattoos,
+  } = appearance;
 
   await setPlayerModel(model);
 
@@ -350,12 +364,17 @@ export async function setPlayerAppearance(appearance: PedAppearance): Promise<vo
   if (eyeColor) {
     setPedEyeColor(playerPed, eyeColor);
   }
+
+  if (tattoos) {
+    setPedTattoos(playerPed, tattoos);
+  }
 }
 
 function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>): void {
   if (!appearance) return;
 
-  const { components, props, headBlend, faceFeatures, headOverlays, hair, eyeColor } = appearance;
+  const { components, props, headBlend, faceFeatures, headOverlays, hair, eyeColor, tattoos } =
+    appearance;
 
   setPedComponents(ped, components);
 
@@ -380,6 +399,10 @@ function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>)
   if (eyeColor) {
     setPedEyeColor(ped, eyeColor);
   }
+
+  if (tattoos) {
+    setPedTattoos(ped, tattoos);
+  }
 }
 
 function init(): void {
@@ -392,6 +415,7 @@ function init(): void {
   exp('getPedFaceFeatures', getPedFaceFeatures);
   exp('getPedHeadOverlays', getPedHeadOverlays);
   exp('getPedHair', getPedHair);
+  exp('getPedTattoos', getPedTattoos);
   exp('getPedAppearance', getPedAppearance);
 
   exp('setPlayerModel', setPlayerModel);
@@ -404,6 +428,7 @@ function init(): void {
   exp('setPedComponents', setPedComponents);
   exp('setPedProp', setPedProp);
   exp('setPedProps', setPedProps);
+  exp('setPedTattoos', setPedTattoos);
   exp('setPlayerAppearance', setPlayerAppearance);
   exp('setPedAppearance', setPedAppearance);
 }

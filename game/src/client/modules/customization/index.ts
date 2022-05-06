@@ -4,11 +4,12 @@ import {
   FACE_FEATURES,
   HEAD_OVERLAYS,
   DEFAULT_CUSTOMIZATION_CONFIG,
+  DATA_CLOTHES,
 } from '../../constants';
 
-import { pedModels, getPedAppearance, setPlayerAppearance } from '../../index';
+import { pedModels, getPedAppearance, setPlayerAppearance, totalTattoos } from '../../index';
 
-import { arrayToVector3 } from '../../utils';
+import { arrayToVector3, isPedMale, Delay } from '../../utils';
 
 import { registerNuiCallbacks } from './nui';
 
@@ -56,6 +57,8 @@ let currentCamera: string;
 let reverseCamera: boolean;
 
 let isCameraInterpolating: boolean;
+
+let PED_TATTOOS: TattooList = {};
 
 function getRgbColors(): { hair: number[][]; makeUp: number[][] } {
   const colors = {
@@ -125,6 +128,10 @@ export function getAppearanceSettings(): AppearanceSettings {
     model: {
       items: pedModels,
     },
+  };
+
+  const tattoos: TattoosSettings = {
+    items: totalTattoos,
   };
 
   const components: ComponentSettings[] = PED_COMPONENTS_IDS.map(componentId =>
@@ -228,6 +235,7 @@ export function getAppearanceSettings(): AppearanceSettings {
     headOverlays,
     hair,
     eyeColor,
+    tattoos,
   };
 }
 
@@ -397,6 +405,126 @@ export function pedTurnAround(ped: number): void {
   ClearSequenceTask(sequenceTaskId);
 }
 
+export async function wearClothes(data: PedAppearance, typeClothes: string): Promise<void> {
+  const { animations, props } = DATA_CLOTHES[typeClothes];
+  const { dict, anim, move, duration } = animations.on;
+  const { male, female } = props;
+  const { components } = data;
+  const playerPed = PlayerPedId();
+  const isMale = isPedMale(playerPed);
+
+  RequestAnimDict(dict);
+  while (!HasAnimDictLoaded(dict)) {
+    await Delay(0);
+  }
+
+  if (isMale) {
+    for (let i = 0; i < male.length; i++) {
+      const [componentId] = male[i];
+      for (let j = 0; j < components.length; j++) {
+        const { component_id, drawable, texture } = components[j];
+        // eslint-disable-next-line prettier/prettier
+        if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
+      }
+    }
+  } else {
+    for (let i = 0; i < female.length; i++) {
+      const [componentId] = female[i];
+      for (let j = 0; j < components.length; j++) {
+        const { component_id, drawable, texture } = components[j];
+        // eslint-disable-next-line prettier/prettier
+        if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
+      }
+    }
+  }
+
+  TaskPlayAnim(playerPed, dict, anim, 3.0, 3.0, duration, move, 0, false, false, false);
+}
+
+export async function removeClothes(typeClothes: string): Promise<void> {
+  const { animations, props } = DATA_CLOTHES[typeClothes];
+  const { dict, anim, move, duration } = animations.off;
+  const { male, female } = props;
+  const playerPed = PlayerPedId();
+  const isMale = isPedMale(playerPed);
+
+  RequestAnimDict(dict);
+  while (!HasAnimDictLoaded(dict)) {
+    await Delay(0);
+  }
+
+  if (isMale) {
+    for (let i = 0; i < male.length; i++) {
+      const [componentId, drawableId] = male[i];
+      SetPedComponentVariation(playerPed, componentId, drawableId, 0, 2);
+    }
+  } else {
+    for (let i = 0; i < female.length; i++) {
+      const [componentId, drawableId] = female[i];
+      SetPedComponentVariation(playerPed, componentId, drawableId, 0, 2);
+    }
+  }
+  TaskPlayAnim(playerPed, dict, anim, 3.0, 3.0, duration, move, 0, false, false, false);
+}
+
+export const getPedTattoos = (): TattooList => {
+  return PED_TATTOOS;
+};
+
+export const setPedTattoos = (ped: number, tattoos: TattooList): void => {
+  PED_TATTOOS = tattoos;
+  const isMale = isPedMale(ped);
+  ClearPedDecorations(ped);
+  for (const zone in tattoos) {
+    for (let i = 0; i < tattoos[zone].length; i++) {
+      const { collection, hashFemale, hashMale } = tattoos[zone][i];
+      const tattooGender = isMale ? hashMale : hashFemale;
+      AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
+    }
+  }
+};
+
+export const addPedTattoo = (ped: number, tattoos: TattooList): void => {
+  const isMale = isPedMale(ped);
+  ClearPedDecorations(ped);
+  for (const zone in tattoos) {
+    for (let i = 0; i < tattoos[zone].length; i++) {
+      const { collection, hashFemale, hashMale } = tattoos[zone][i];
+      const tattooGender = isMale ? hashMale : hashFemale;
+      AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
+    }
+  }
+};
+
+export const removePedTattoo = (ped: number, tattoos: TattooList): void => {
+  const isMale = isPedMale(ped);
+  ClearPedDecorations(ped);
+  for (const zone in tattoos) {
+    for (let i = 0; i < tattoos[zone].length; i++) {
+      const { collection, hashFemale, hashMale } = tattoos[zone][i];
+      const tattooGender = isMale ? hashMale : hashFemale;
+      AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
+    }
+  }
+};
+
+export const setPreviewTattoo = (ped: number, data: TattooList, tattoo: Tattoo): void => {
+  const isMale = isPedMale(ped);
+  const { collection, hashFemale, hashMale } = tattoo;
+  const tattooGender = isMale ? hashMale : hashFemale;
+  ClearPedDecorations(ped);
+  AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
+  for (const zone in data) {
+    for (let i = 0; i < data[zone].length; i++) {
+      const { name, collection, hashFemale, hashMale } = data[zone][i];
+      if (tattoo.name !== name) {
+        const tattooGender = isMale ? hashMale : hashFemale;
+        AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
+      }
+    }
+  }
+};
+
 function startPlayerCustomization(
   cb: (appearance?: PedAppearance) => void,
   _config = DEFAULT_CUSTOMIZATION_CONFIG,
@@ -452,6 +580,9 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
 
   if (!appearance) {
     setPlayerAppearance(getAppearance());
+  } else {
+    const { tattoos } = appearance;
+    setPedTattoos(playerPed, tattoos);
   }
 
   if (callback) {

@@ -124,4 +124,12 @@ export default interface Locales {
     watches: string;
     bracelets: string;
   };
+  tattoos: {
+    title: string;
+    items: {
+      [key: string]: string;
+    };
+    apply: string;
+    delete: string;
+  };
 }

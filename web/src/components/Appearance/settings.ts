@@ -2,6 +2,7 @@ import { PedAppearance, AppearanceSettings } from './interfaces';
 
 export const APPEARANCE_INITIAL_STATE: PedAppearance = {
   model: 'mp_m_freemode_01',
+  tattoos: {},
   components: [
     { component_id: 0, drawable: 15, texture: 0 },
     { component_id: 1, drawable: 15, texture: 0 },
@@ -122,6 +123,9 @@ export const SETTINGS_INITIAL_STATE: AppearanceSettings = {
     model: {
       items: ['mp_m_freemode_01', 'mp_f_freemode_01', 'player_zero'],
     },
+  },
+  tattoos: {
+    items: {},
   },
   components: [
     { component_id: 0, drawable: { min: 0, max: 255 }, texture: { min: 0, max: 255 } },
@@ -479,3 +483,5 @@ export const SETTINGS_INITIAL_STATE: AppearanceSettings = {
 export const CAMERA_INITIAL_STATE = { head: false, body: false, bottom: false };
 
 export const ROTATE_INITIAL_STATE = { left: false, right: false };
+
+export const CLOTHES_INITIAL_STATE = { head: false, body: false, bottom: false };

@@ -116,7 +116,7 @@ export const HAIR_DECORATIONS: HairDecorations = {
     { id: 36, collection: 'mpbiker_overlays', overlay: 'MP_Biker_Hair_005_M' },
     { id: 72, collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_M_000_M' },
     { id: 73, collection: 'mpgunrunning_overlays', overlay: 'MP_Gunrunning_Hair_M_001_M' },
-    { id: 74, collection: 'mpVinewood_overlays', overlay: 'MP_Vinewood_Hair_M_000_M'},
+    { id: 74, collection: 'mpVinewood_overlays', overlay: 'MP_Vinewood_Hair_M_000_M' },
   ],
   female: [
     { id: 0, collection: 'mpbeach_overlays', overlay: 'FM_Hair_Fuzz' },
@@ -170,4 +170,86 @@ export const DEFAULT_CUSTOMIZATION_CONFIG: CustomizationConfig = {
   headOverlays: true,
   components: true,
   props: true,
+  tattoos: true,
+};
+
+export const DATA_CLOTHES: DataClothes = {
+  head: {
+    animations: {
+      on: {
+        dict: 'mp_masks@standard_car@ds@',
+        anim: 'put_on_mask',
+        move: 51,
+        duration: 600,
+      },
+      off: {
+        dict: 'missheist_agency2ahelmet',
+        anim: 'take_off_helmet_stand',
+        move: 51,
+        duration: 1200,
+      },
+    },
+    props: {
+      male: [[1, 0]],
+      female: [[1, 0]],
+    },
+  },
+  body: {
+    animations: {
+      on: {
+        dict: 'clothingtie',
+        anim: 'try_tie_negative_a',
+        move: 51,
+        duration: 1200,
+      },
+      off: {
+        dict: 'clothingtie',
+        anim: 'try_tie_negative_a',
+        move: 51,
+        duration: 1200,
+      },
+    },
+    props: {
+      male: [
+        [11, 252],
+        [3, 15],
+        [8, 15],
+        [10, 0],
+        [5, 0],
+      ],
+      female: [
+        [11, 15],
+        [8, 14],
+        [3, 15],
+        [10, 0],
+        [5, 0],
+      ],
+    },
+  },
+  bottom: {
+    animations: {
+      on: {
+        dict: 're@construction',
+        anim: 'out_of_breath',
+        move: 51,
+        duration: 1300,
+      },
+      off: {
+        dict: 're@construction',
+        anim: 'out_of_breath',
+        move: 51,
+        duration: 1300,
+      },
+    },
+    props: {
+      male: [
+        [4, 61],
+        [6, 34],
+      ],
+      female: [
+        [4, 15],
+        [6, 35],
+      ],
+    },
+  },
 };

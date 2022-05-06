@@ -9,6 +9,11 @@ import {
   rotateCamera,
   exitPlayerCustomization,
   playerHeading,
+  addPedTattoo,
+  setPreviewTattoo,
+  removePedTattoo,
+  wearClothes,
+  removeClothes,
 } from './index';
 
 import {
@@ -37,6 +42,11 @@ export function registerNuiCallbacks(): void {
   RegisterNuiCallbackType('appearance_change_eye_color');
   RegisterNuiCallbackType('appearance_change_component');
   RegisterNuiCallbackType('appearance_change_prop');
+  RegisterNuiCallbackType('appearance_apply_tattoo');
+  RegisterNuiCallbackType('appearance_preview_tattoo');
+  RegisterNuiCallbackType('appearance_delete_tattoo');
+  RegisterNuiCallbackType('appearance_wear_clothes');
+  RegisterNuiCallbackType('appearance_remove_clothes');
 
   RegisterNuiCallbackType('appearance_save');
   RegisterNuiCallbackType('appearance_exit');
@@ -141,6 +151,39 @@ export function registerNuiCallbacks(): void {
   on('__cfx_nui:appearance_change_eye_color', (eyeColor: number, cb: (arg: any) => void): void => {
     cb({});
     setPedEyeColor(PlayerPedId(), eyeColor);
+  });
+
+  on('__cfx_nui:appearance_apply_tattoo', (data: TattooList, cb: (arg: any) => void): void => {
+    cb({});
+    addPedTattoo(PlayerPedId(), data);
+  });
+
+  on(
+    '__cfx_nui:appearance_preview_tattoo',
+    (previewTattoo: PreviewTattoo, cb: (arg: any) => void): void => {
+      cb({});
+      const { data, tattoo } = previewTattoo;
+      setPreviewTattoo(PlayerPedId(), data, tattoo);
+    },
+  );
+
+  on('__cfx_nui:appearance_delete_tattoo', (data: TattooList, cb: (arg: any) => void): void => {
+    cb({});
+    removePedTattoo(PlayerPedId(), data);
+  });
+
+  on(
+    '__cfx_nui:appearance_wear_clothes',
+    (dataWearClothes: WearClothes, cb: (arg: any) => void): void => {
+      cb({});
+      const { data, key } = dataWearClothes;
+      wearClothes(data, key);
+    },
+  );
+
+  on('__cfx_nui:appearance_remove_clothes', (clothes: string, cb: (arg: any) => void): void => {
+    cb({});
+    removeClothes(clothes);
   });
 
   on('__cfx_nui:appearance_save', (appearance: PedAppearance, cb: (arg: any) => void): void => {

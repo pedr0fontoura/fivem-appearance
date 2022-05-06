@@ -95,6 +95,7 @@ interface PedAppearance {
   headOverlays: PedHeadOverlays;
   hair: PedHair;
   eyeColor: number;
+  tattoos: TattooList;
 }
 
 interface PedSettings {
@@ -208,6 +209,7 @@ interface AppearanceSettings {
   headOverlays: HeadOverlaysSettings;
   hair: HairSettings;
   eyeColor: EyeColorSettings;
+  tattoos: TattoosSettings;
 }
 
 interface CustomizationConfig {
@@ -217,6 +219,7 @@ interface CustomizationConfig {
   headOverlays: boolean;
   components: boolean;
   props: boolean;
+  tattoos: boolean;
 }
 
 interface CameraState {
@@ -228,4 +231,58 @@ interface CameraState {
 interface RotateState {
   left: boolean;
   right: boolean;
+}
+
+interface Tattoo {
+  name: string;
+  label: string;
+  hashMale: string;
+  hashFemale: string;
+  zone: string;
+  collection: string;
+}
+
+interface TattooList {
+  [key: string]: Tattoo[];
+}
+
+interface TattoosSettings {
+  items: TattooList;
+}
+
+interface PreviewTattoo {
+  data: TattooList;
+  tattoo: Tattoo;
+}
+
+interface Animation {
+  dict: string;
+  anim: string;
+  move: number;
+  duration: number;
+}
+
+interface AnimationsGroup {
+  on: Animation;
+  off: Animation;
+}
+
+interface PropsGroup {
+  male: Array<number[]>;
+  female: Array<number[]>;
+}
+interface ClothesGroup {
+  animations: AnimationsGroup;
+  props: PropsGroup;
+}
+
+interface DataClothes {
+  head: ClothesGroup;
+  body: ClothesGroup;
+  bottom: ClothesGroup;
+}
+
+interface WearClothes {
+  data: PedAppearance;
+  key: string;
 }
