@@ -129,7 +129,7 @@ function getPedHair(ped: number): PedHair {
   };
 }
 
-function getPedHairDecorationType(ped: number): 'male' | 'female' {
+/* function getPedHairDecorationType(ped: number): 'male' | 'female' {
   const pedModel = GetEntityModel(ped);
 
   let hairDecorationType: 'male' | 'female';
@@ -141,9 +141,9 @@ function getPedHairDecorationType(ped: number): 'male' | 'female' {
   }
 
   return hairDecorationType;
-}
+} */
 
-function getPedHairDecoration(ped: number, hairStyle: number): HairDecoration {
+/* function getPedHairDecoration(ped: number, hairStyle: number): HairDecoration {
   const hairDecorationType = getPedHairDecorationType(ped);
 
   if (!hairDecorationType) return;
@@ -153,7 +153,7 @@ function getPedHairDecoration(ped: number, hairStyle: number): HairDecoration {
   );
 
   return hairDecoration;
-}
+} */
 
 export function getPedAppearance(ped: number): PedAppearance {
   const eyeColor = GetPedEyeColor(ped);
@@ -264,7 +264,7 @@ export function setPedHair(ped: number, hair: PedHair): void {
 
   SetPedHairColor(ped, color, highlight);
 
-  const hairDecoration = getPedHairDecoration(ped, style);
+  /* const hairDecoration = getPedHairDecoration(ped, style);
 
   ClearPedDecorations(ped);
 
@@ -272,7 +272,7 @@ export function setPedHair(ped: number, hair: PedHair): void {
     const { collection, overlay } = hairDecoration;
 
     AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(overlay));
-  }
+  } */
 }
 
 export function setPedEyeColor(ped: number, eyeColor: number): void {
