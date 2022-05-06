@@ -239,6 +239,17 @@ const Appearance = () => {
     [data, setData],
   );
 
+  const handleChangeFade = useCallback(async (value: number) => {
+    if (!data || !appearanceSettings) return;
+      const { tattoos } = data;
+      const updatedTattoos = { ...tattoos };
+      const tattoo = appearanceSettings.tattoos.items['ZONE_HAIR'][value]
+      if (!updatedTattoos[tattoo.zone]) updatedTattoos[tattoo.zone] = [];
+      updatedTattoos[tattoo.zone] = [tattoo];
+      await Nui.post('appearance_apply_tattoo', updatedTattoos);
+      setData({ ...data, tattoos: updatedTattoos });
+  }, [appearanceSettings, data, setData])
+
   const handleHeadOverlayChange = useCallback(
     (key: keyof PedHeadOverlays, option: keyof PedHeadOverlayValue, value: number) => {
       if (!data) return;
@@ -510,20 +521,24 @@ const Appearance = () => {
                             hair: appearanceSettings.hair,
                             headOverlays: appearanceSettings.headOverlays,
                             eyeColor: appearanceSettings.eyeColor,
+                            fade: appearanceSettings.tattoos.items['ZONE_HAIR']
                           }}
                           storedData={{
                             hair: storedData.hair,
                             headOverlays: storedData.headOverlays,
                             eyeColor: storedData.eyeColor,
+                            fade: storedData.tattoos?.ZONE_HAIR?.length > 0 ? storedData.tattoos.ZONE_HAIR[0] : null
                           }}
                           data={{
                             hair: data.hair,
                             headOverlays: data.headOverlays,
                             eyeColor: data.eyeColor,
+                            fade: data.tattoos?.ZONE_HAIR?.length > 0 ? data.tattoos.ZONE_HAIR[0] : null
                           }}
                           handleHairChange={handleHairChange}
                           handleHeadOverlayChange={handleHeadOverlayChange}
                           handleEyeColorChange={handleEyeColorChange}
+                          handleChangeFade={handleChangeFade}
                         />
                       )}
                     </>
