@@ -57,6 +57,7 @@ let currentCamera: string;
 let reverseCamera: boolean;
 
 let isCameraInterpolating: boolean;
+export let isPlayerCustomizing: boolean = false;
 
 let PED_TATTOOS: TattooList = {};
 
@@ -558,6 +559,7 @@ function startPlayerCustomization(
   };
 
   SendNuiMessage(JSON.stringify(nuiMessage));
+  isPlayerCustomizing = true;
 }
 
 export function exitPlayerCustomization(appearance?: PedAppearance): void {
@@ -601,6 +603,7 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
   reverseCamera = null;
 
   isCameraInterpolating = null;
+  isPlayerCustomizing = false;
 }
 
 function onResourceStop(resource: string) {
@@ -618,6 +621,7 @@ export function loadModule(): void {
   on('onResourceStop', onResourceStop);
 
   exp('startPlayerCustomization', startPlayerCustomization);
+  exp('getIsPlayerCustomizing', () => isPlayerCustomizing);
 }
 
 export default { loadModule };
