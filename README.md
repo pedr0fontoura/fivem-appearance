@@ -99,6 +99,7 @@ RegisterCommand('customization', function()
     headOverlays = true,
     components = true,
     props = true,
+    allowExit = true
   }
 
   exports['fivem-appearance']:startPlayerCustomization(function (appearance)
