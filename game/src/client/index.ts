@@ -417,6 +417,10 @@ function init(): void {
   exp('getPedHair', getPedHair);
   exp('getPedTattoos', getPedTattoos);
   exp('getPedAppearance', getPedAppearance);
+  exp('getPlayerAppearance', (playerSrc : number) => {
+    const playerPed = playerSrc ? GetPlayerPed(playerSrc) : PlayerPedId();
+    return getPedAppearance(playerPed);
+  });
 
   exp('setPlayerModel', setPlayerModel);
   exp('setPedHeadBlend', setPedHeadBlend);

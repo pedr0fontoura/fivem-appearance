@@ -54,29 +54,31 @@ ensure fivem-appearance
 
 ### Appearance
 
-| Export              | Parameters                                     | Return            |
-| ------------------- | ---------------------------------------------- | ----------------- |
-| getPedModel         | ped: _number_                                  | _string_          |
-| getPedComponents    | ped: _number_                                  | _PedComponent[]_  |
-| getPedProps         | ped: _number_                                  | _PedProp[]_       |
-| getPedHeadBlend     | ped: _number_                                  | _PedHeadBlend_    |
-| getPedFaceFeatures  | ped: _number_                                  | _PedFaceFeatures_ |
-| getPedHeadOverlays  | ped: _number_                                  | _PedHeadOverlays_ |
-| getPedHair          | ped: _number_                                  | _PedHair_         |
-| getPedTattoos       |                                                | _TattooList_      |
-| getPedAppearance    | ped: _number_                                  | _PedAppearance_   |
-| setPlayerModel      | model: _string_                                | _Promise\<void\>_ |
-| setPedComponent     | ped: _number_, component: _PedComponent_       | _void_            |
-| setPedComponents    | ped: _number_, components: _PedComponent[]_    | _void_            |
-| setPedProp          | ped: _number_, prop: _PedProp_                 | _void_            |
-| setPedProps         | ped: _number_, props: _PedProp[]_              | _void_            |
-| setPedFaceFeatures  | ped: _number_, faceFeatures: _PedFaceFeatures_ | _void_            |
-| setPedHeadOverlays  | ped: _number_, headOverlays: _PedHeadOverlays_ | _void_            |
-| setPedHair          | ped: _number_, hair: _PedHair_                 | _void_            |
-| setPedEyeColor      | ped: _number_, eyeColor: _number_              | _void_            |
-| setPedTattoos       | ped: _number_, tattoos: _TattooList_           | _void_            |
-| setPlayerAppearance | appearance: _PedAppearance_                    | _void_            |
-| setPedAppearance    | ped: _number_, appearance: _PedAppearance_     | _void_            |
+| Export                 | Parameters                                     | Return            |
+| ---------------------- | ---------------------------------------------- | ----------------- |
+| getPedModel            | ped: _number_                                  | _string_          |
+| getPedComponents       | ped: _number_                                  | _PedComponent[]_  |
+| getPedProps            | ped: _number_                                  | _PedProp[]_       |
+| getPedHeadBlend        | ped: _number_                                  | _PedHeadBlend_    |
+| getPedFaceFeatures     | ped: _number_                                  | _PedFaceFeatures_ |
+| getPedHeadOverlays     | ped: _number_                                  | _PedHeadOverlays_ |
+| getPedHair             | ped: _number_                                  | _PedHair_         |
+| getPedTattoos          |                                                | _TattooList_      |
+| getPedAppearance       | ped: _number_                                  | _PedAppearance_   |
+| getIsPlayerCustomizing |                                                | _bool_            |
+| getPlayerAppearance    | playerSrc: _number_                            | _PedAppearance_   |
+| setPlayerModel         | model: _string_                                | _Promise\<void\>_ |
+| setPedComponent        | ped: _number_, component: _PedComponent_       | _void_            |
+| setPedComponents       | ped: _number_, components: _PedComponent[]_    | _void_            |
+| setPedProp             | ped: _number_, prop: _PedProp_                 | _void_            |
+| setPedProps            | ped: _number_, props: _PedProp[]_              | _void_            |
+| setPedFaceFeatures     | ped: _number_, faceFeatures: _PedFaceFeatures_ | _void_            |
+| setPedHeadOverlays     | ped: _number_, headOverlays: _PedHeadOverlays_ | _void_            |
+| setPedHair             | ped: _number_, hair: _PedHair_                 | _void_            |
+| setPedEyeColor         | ped: _number_, eyeColor: _number_              | _void_            |
+| setPedTattoos          | ped: _number_, tattoos: _TattooList_           | _void_            |
+| setPlayerAppearance    | appearance: _PedAppearance_                    | _void_            |
+| setPedAppearance       | ped: _number_, appearance: _PedAppearance_     | _void_            |
 
 ### Customization
 
