@@ -57,7 +57,7 @@ let currentCamera: string;
 let reverseCamera: boolean;
 
 let isCameraInterpolating: boolean;
-export let isPlayerCustomizing: boolean = false;
+let isPlayerCustomizing: boolean = false;
 
 let PED_TATTOOS: TattooList = {};
 
