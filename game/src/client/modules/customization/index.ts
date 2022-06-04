@@ -560,6 +560,7 @@ function startPlayerCustomization(
 
   SendNuiMessage(JSON.stringify(nuiMessage));
   isPlayerCustomizing = true;
+  emit('fivem-appearance:onEnteredCustomization');
 }
 
 export function exitPlayerCustomization(appearance?: PedAppearance): void {
@@ -604,6 +605,7 @@ export function exitPlayerCustomization(appearance?: PedAppearance): void {
 
   isCameraInterpolating = null;
   isPlayerCustomizing = false;
+  emit('fivem-appearance:onExitedCustomization');
 }
 
 function onResourceStop(resource: string) {
