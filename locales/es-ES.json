@@ -80,7 +80,8 @@
       "title": "Pelo",
       "style": "Estilo",
       "color": "Color",
-      "highlight": "Mechas"
+      "highlight": "Mechas",
+      "fade": "Degradado"
     },
     "opacity": "Opacidad",
     "style": "Estilo",
