@@ -221,6 +221,7 @@ interface CustomizationConfig {
   props: boolean;
   tattoos: boolean;
   allowExit: boolean;
+  automaticFade: boolean;
 }
 
 interface CameraState {

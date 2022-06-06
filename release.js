@@ -4,14 +4,14 @@ const path = require("path");
 const RELEASE_PATH = path.resolve(__dirname, "release");
 const RESOURCE_PATH = path.resolve(RELEASE_PATH, "fivem-appearance");
 
-const FILES = ["fxmanifest.lua", "peds.json", "README.md", "LICENSE"];
+const FILES = ["fxmanifest.lua", "peds.json", "tattoos.json" , "README.md", "LICENSE"];
 
-const TYPESCRIPT_BUILD_SRC = path.resolve(__dirname, "game", "build");
-const UI_BUILD_SRC = path.resolve(__dirname, "web", "build");
+const TYPESCRIPT_BUILD_SRC = path.resolve(__dirname, "game", "dist");
+const UI_BUILD_SRC = path.resolve(__dirname, "web", "dist");
 const LOCALES_SRC = path.resolve(__dirname, "locales");
 
-const TYPESCRIPT_BUILD_DEST = path.resolve(RESOURCE_PATH, "game", "build");
-const UI_BUILD_DEST = path.resolve(RESOURCE_PATH, "web", "build");
+const TYPESCRIPT_BUILD_DEST = path.resolve(RESOURCE_PATH, "game", "dist");
+const UI_BUILD_DEST = path.resolve(RESOURCE_PATH, "web", "dist");
 const LOCALES_DEST = path.resolve(RESOURCE_PATH, "locales");
 
 async function copyDir(src, dest) {
