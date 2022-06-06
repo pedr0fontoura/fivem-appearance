@@ -80,7 +80,8 @@
       "title": "Haare",
       "style": "Style",
       "color": "Farbe",
-      "highlight": "Highlight"
+      "highlight": "Highlight",
+      "fade": "Fade"
     },
     "opacity": "Transparenz",
     "style": "Style",
