@@ -27,6 +27,8 @@ const Tattoos = ({ settings, data, handleApplyTattoo, handlePreviewTattoo, handl
   return (
     <Section title={locales.tattoos.title}>
       {keys.map(key => (
+        key !== 'ZONE_HAIR' 
+        && 
         <Item key={key} title={locales.tattoos.items[key]}>
           <FlexWrapper>
             <SelectTattoo

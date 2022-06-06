@@ -42,11 +42,12 @@ This is a development resource, if you don't use the exports the resource itself
 Since this is a client script, you will need to use **setr** to set these convars.
 
 - **fivem-appearance:locale**: the name of one file inside `locales/`, default **en**, choose the locale file for the customization interface.
-
+- **fivem-appearance:automaticFade**: If set to 0, hair fade could be selected by the player, otherwise it will be automatic. default **1**.
 config.cfg example:
 
 ```cfg
 setr fivem-appearance:locale "en"
+setr fivem-appearance:automaticFade 1
 ensure fivem-appearance
 ```
 
@@ -99,6 +100,7 @@ RegisterCommand('customization', function()
     headOverlays = true,
     components = true,
     props = true,
+    tattoos = true
   }
 
   exports['fivem-appearance']:startPlayerCustomization(function (appearance)
