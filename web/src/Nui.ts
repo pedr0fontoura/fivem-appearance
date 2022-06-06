@@ -9,7 +9,7 @@ declare function GetParentResourceName(): string;
 const events: Events = {};
 
 async function post(event: string, data = {}): Promise<any> {
-  if (process.env.REACT_APP_ENV !== 'production') {
+  if (!import.meta.env.PROD) {
     if (!mocks[event]) return;
 
     return mocks[event](data);

@@ -27,6 +27,7 @@
     "camelcase": "off",
     "consistent-return": "off",
     "radix": "off",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": false}],
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-": "off",
@@ -43,6 +44,7 @@
     "import/prefer-default-export": "off",
     "no-use-before-define": "off",
     "prettier/prettier": "error",
+    "ignorePatterns": ["vite.config.ts"],
     "import/extensions": [
       "error",
       "ignorePackages",

@@ -38,7 +38,7 @@ import Tattoos from './Tattoos';
 
 import { Wrapper, Container } from './styles';
 
-if (process.env.REACT_APP_ENV !== 'production') {
+if (!import.meta.env.PROD) {
   mock('appearance_get_settings_and_data', () => ({
     appearanceData: { ...APPEARANCE_INITIAL_STATE, model: 'mp_f_freemode_01' },
     appearanceSettings: {

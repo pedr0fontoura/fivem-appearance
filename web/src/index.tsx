@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import Nui, { EventListener } from './Nui';
 
-if (process.env.REACT_APP_ENV === 'development') {
+if (!import.meta.env.PROD) {
   window.Nui = Nui;
 }
 
