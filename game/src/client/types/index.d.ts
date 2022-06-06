@@ -220,6 +220,7 @@ interface CustomizationConfig {
   components: boolean;
   props: boolean;
   tattoos: boolean;
+  automaticFade: boolean;
 }
 
 interface CameraState {

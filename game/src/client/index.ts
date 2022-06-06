@@ -14,6 +14,7 @@ import Customization, { getPedTattoos, setPedTattoos } from './modules/customiza
 const exp = (global as any).exports;
 
 const GET_PED_HEAD_BLEND_DATA = '0x2746bd9d88c5c5d0';
+const AUTOMATIC_FADE = Boolean(Number(GetConvar('fivem-appearance:automaticFade', '1')));
 
 export const totalTattoos: TattooList = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'tattoos.json'),
@@ -129,7 +130,7 @@ function getPedHair(ped: number): PedHair {
   };
 }
 
-/* function getPedHairDecorationType(ped: number): 'male' | 'female' {
+function getPedHairDecorationType(ped: number): 'male' | 'female' {
   const pedModel = GetEntityModel(ped);
 
   let hairDecorationType: 'male' | 'female';
@@ -141,9 +142,9 @@ function getPedHair(ped: number): PedHair {
   }
 
   return hairDecorationType;
-} */
+}
 
-/* function getPedHairDecoration(ped: number, hairStyle: number): HairDecoration {
+function getPedHairDecoration(ped: number, hairStyle: number): HairDecoration {
   const hairDecorationType = getPedHairDecorationType(ped);
 
   if (!hairDecorationType) return;
@@ -153,7 +154,7 @@ function getPedHair(ped: number): PedHair {
   );
 
   return hairDecoration;
-} */
+}
 
 export function getPedAppearance(ped: number): PedAppearance {
   const eyeColor = GetPedEyeColor(ped);
@@ -264,15 +265,17 @@ export function setPedHair(ped: number, hair: PedHair): void {
 
   SetPedHairColor(ped, color, highlight);
 
-  /* const hairDecoration = getPedHairDecoration(ped, style);
+  if (AUTOMATIC_FADE) {
+    const hairDecoration = getPedHairDecoration(ped, style);
 
-  ClearPedDecorations(ped);
+    ClearPedDecorations(ped);
 
-  if (hairDecoration) {
-    const { collection, overlay } = hairDecoration;
+    if (hairDecoration) {
+      const { collection, overlay } = hairDecoration;
 
-    AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(overlay));
-  } */
+      AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(overlay));
+    }
+  }
 }
 
 export function setPedEyeColor(ped: number, eyeColor: number): void {
@@ -405,7 +408,7 @@ function setPedAppearance(ped: number, appearance: Omit<PedAppearance, 'model'>)
   }
 }
 
-function init(): void {
+(() => {
   Customization.loadModule();
 
   exp('getPedModel', getPedModel);
@@ -431,6 +434,4 @@ function init(): void {
   exp('setPedTattoos', setPedTattoos);
   exp('setPlayerAppearance', setPlayerAppearance);
   exp('setPedAppearance', setPedAppearance);
-}
-
-init();
+})();
