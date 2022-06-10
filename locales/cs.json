@@ -77,11 +77,11 @@
   "headOverlays": {
     "title": "Vzhled",
     "hair": {
-      "title": "Vlasy",
-      "style": "Styl",
-      "color": "Barva",
-      "highlight": "Zvýraznění"
-      "fade": "Fade"
+    "title": "Vlasy",
+    "style": "Styl",
+    "color": "Barva",
+    "highlight": "Zvýraznění",
+    "fade": "Fade"
     },
     "opacity": "Hustota",
     "style": "Styl",
