@@ -34,6 +34,7 @@ export interface PedHeadOverlayValue {
   style: number;
   opacity: number;
   color?: number;
+  secondColor?: number;
 }
 
 export interface PedHeadOverlays {
