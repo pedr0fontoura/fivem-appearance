@@ -59,6 +59,7 @@ let reverseCamera: boolean;
 let isCameraInterpolating: boolean;
 
 let PED_TATTOOS: TattooList = {};
+let PED_OUTFITS: Outfit[] = [];
 
 function getRgbColors(): { hair: number[][]; makeUp: number[][] } {
   const colors = {
@@ -523,6 +524,41 @@ export const setPreviewTattoo = (ped: number, data: TattooList, tattoo: Tattoo):
         const tattooGender = isMale ? hashMale : hashFemale;
         AddPedDecorationFromHashes(ped, GetHashKey(collection), GetHashKey(tattooGender));
       }
+    }
+  }
+};
+
+export const getPedOutfits = (): Outfit[] => {
+  return PED_OUTFITS;
+};
+
+export const setPedOutfits = (outfits: Outfit[]): void => {
+  PED_OUTFITS = outfits;
+};
+
+export const addPedOutfit = (outfit: Outfit): void => {
+  PED_OUTFITS.push(outfit);
+  emitNet('fivem-appearance:outfitAdded', outfit);
+};
+
+export const removePedOutfit = (id: string): void => {
+  for (let i = 0; i < PED_OUTFITS.length; i++) {
+    const outfit = PED_OUTFITS[i];
+    if (outfit.id === id) {
+      PED_OUTFITS.splice(i, 1);
+      emitNet('fivem-appearance:outfitRemoved', id);
+      break;
+    }
+  }
+};
+
+export const editPedOutfit = (outfit: Outfit): void => {
+  for (let i = 0; i < PED_OUTFITS.length; i++) {
+    const savedOutfit = PED_OUTFITS[i];
+    if (savedOutfit.id === outfit.id) {
+      PED_OUTFITS[i] = outfit;
+      emitNet('fivem-appearance:outfitEdited', outfit);
+      break;
     }
   }
 };
