@@ -51,6 +51,7 @@ interface PedHeadOverlayValue {
   style: number;
   opacity: number;
   color?: number;
+  secondColor?: number;
 }
 
 interface PedHeadOverlays {

@@ -250,8 +250,8 @@ export function setPedHeadOverlays(ped: number, headOverlays: PedHeadOverlays): 
       if (isMakeupColor[key]) {
         colorType = 2;
       }
-
-      SetPedHeadOverlayColor(ped, index, colorType, headOverlay.color, headOverlay.color);
+      
+      SetPedHeadOverlayColor(ped, index, colorType, headOverlay.color, headOverlay.secondColor);
     }
   });
 }
