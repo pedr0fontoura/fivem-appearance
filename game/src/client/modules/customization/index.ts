@@ -7,7 +7,7 @@ import {
   DATA_CLOTHES,
 } from '../../constants';
 
-import { pedModels, getPedAppearance, setPlayerAppearance, totalTattoos } from '../../index';
+import { pedModels, getPedAppearance, setPlayerAppearance, totalTattoos, maleOnlyTattoos, femaleOnlyTattoos } from '../../index';
 
 import { arrayToVector3, isPedMale, Delay } from '../../utils';
 
@@ -131,7 +131,7 @@ export function getAppearanceSettings(): AppearanceSettings {
   };
 
   const tattoos: TattoosSettings = {
-    items: totalTattoos,
+    items: (isPedMale(playerPed)) ? maleOnlyTattoos : femaleOnlyTattoos,
   };
 
   const components: ComponentSettings[] = PED_COMPONENTS_IDS.map(componentId =>
