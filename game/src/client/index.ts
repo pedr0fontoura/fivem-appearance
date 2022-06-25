@@ -20,6 +20,14 @@ export const totalTattoos: TattooList = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'tattoos.json'),
 );
 
+export const femaleOnlyTattoos: TattooList = totalTattoos;
+export const maleOnlyTattoos: TattooList = totalTattoos;
+
+for (let [bodypart, content] of Object.entries(totalTattoos)) {
+  femaleOnlyTattoos[bodypart] = content.filter(tattoo => ((tattoo.hashFemale !== "")));
+  maleOnlyTattoos[bodypart] = content.filter(tattoo => ((tattoo.hashMale !== "")));
+}
+
 export const pedModels: string[] = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'peds.json'),
 );
