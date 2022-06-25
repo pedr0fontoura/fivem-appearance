@@ -80,7 +80,8 @@
       "title": "Cabello",
       "style": "Estilo",
       "color": "Color",
-      "highlight": "Resalte"
+      "highlight": "Resalte",
+      "fade": "Degradado"
     },
     "opacity": "Opacidad",
     "style": "Estilo",
