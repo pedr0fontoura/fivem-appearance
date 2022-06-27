@@ -192,6 +192,68 @@ export const DATA_CLOTHES: DataClothes = {
     props: {
       male: [[1, 0]],
       female: [[1, 0]],
+      maleProps: [[0, -1]],
+      femaleProps: [[0, -1]],
+    },
+  },
+  glasses: {
+    animations: {
+      on: {
+        dict: 'clothingspecs',
+        anim: 'take_off',
+        move: 51,
+        duration: 800,
+      },
+      off: {
+        dict: 'clothingspecs',
+        anim: 'take_off',
+        move: 51,
+        duration: 1400,
+      },
+    },
+    props: {
+      maleProps: [[1, 0]],
+      femaleProps: [[1, 0]],
+    },
+  },
+  earaccs: {
+    animations: {
+      on: {
+        dict: 'mp_cp_stolen_tut',
+        anim: 'b_think',
+        move: 51,
+        duration: 900,
+      },
+      off: {
+        dict: 'mp_cp_stolen_tut',
+        anim: 'b_think',
+        move: 51,
+        duration: 900,
+      },
+    },
+    props: {
+      maleProps: [[2, -1]],
+      femaleProps: [[2, -1]],
+    },
+  },
+  chain: {
+    animations: {
+      on: {
+        dict: 'clothingtie',
+        anim: 'try_tie_negative_a',
+        move: 51,
+        duration: 2100,
+      },
+      off: {
+        dict: 'clothingtie',
+        anim: 'try_tie_negative_a',
+        move: 51,
+        duration: 2100,
+      },
+    },
+    props: {
+      male: [[7, 0]],
+      female: [[7, 0]],
     },
   },
   body: {

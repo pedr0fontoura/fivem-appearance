@@ -410,8 +410,8 @@ export function pedTurnAround(ped: number): void {
 export async function wearClothes(data: PedAppearance, typeClothes: string): Promise<void> {
   const { animations, props } = DATA_CLOTHES[typeClothes];
   const { dict, anim, move, duration } = animations.on;
-  const { male, female } = props;
-  const { components } = data;
+  const { male, female, maleProps, femaleProps } = props;
+  const { components, props: pedProps } = data;
   const playerPed = PlayerPedId();
   const isMale = isPedMale(playerPed);
 
@@ -421,21 +421,47 @@ export async function wearClothes(data: PedAppearance, typeClothes: string): Pro
   }
 
   if (isMale) {
-    for (let i = 0; i < male.length; i++) {
-      const [componentId] = male[i];
-      for (let j = 0; j < components.length; j++) {
-        const { component_id, drawable, texture } = components[j];
-        // eslint-disable-next-line prettier/prettier
-        if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
+    if (male != undefined) {
+      for (let i = 0; i < male.length; i++) {
+        const [componentId] = male[i];
+        for (let j = 0; j < components.length; j++) {
+          const { component_id, drawable, texture } = components[j];
+          // eslint-disable-next-line prettier/prettier
+          if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
+        }
+      }
+    }
+    if (maleProps != undefined) {
+      // console.log("PUTTING PED PROPS BACK IN");
+      for (let i = 0; i < maleProps.length; i++) {
+        const [propId] = maleProps[i];
+        for (let j = 0; j < pedProps.length; j++) {
+          const { prop_id, drawable, texture } = pedProps[j];
+          // eslint-disable-next-line prettier/prettier
+          if (prop_id === propId) SetPedPropIndex(playerPed, propId, drawable, texture, false);
+          // console.log("SetPedPropIndex("+"playerPed"+", "+"propId:"+propId+", "+"drawable:"+drawable+", "+"texture:"+texture+", "+"false);");
+        }
       }
     }
   } else {
-    for (let i = 0; i < female.length; i++) {
-      const [componentId] = female[i];
-      for (let j = 0; j < components.length; j++) {
-        const { component_id, drawable, texture } = components[j];
-        // eslint-disable-next-line prettier/prettier
-        if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
+    if (female != undefined) {
+      for (let i = 0; i < female.length; i++) {
+        const [componentId] = female[i];
+        for (let j = 0; j < components.length; j++) {
+          const { component_id, drawable, texture } = components[j];
+          // eslint-disable-next-line prettier/prettier
+          if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
+        }
+      }
+    }
+    if (femaleProps != undefined) {
+      for (let i = 0; i < femaleProps.length; i++) {
+        const [propId] = femaleProps[i];
+        for (let j = 0; j < pedProps.length; j++) {
+          const { prop_id, drawable, texture } = pedProps[j];
+          // eslint-disable-next-line prettier/prettier
+          if (prop_id === propId) SetPedPropIndex(playerPed, propId, drawable, texture, false);
+        }
       }
     }
   }
@@ -446,7 +472,7 @@ export async function wearClothes(data: PedAppearance, typeClothes: string): Pro
 export async function removeClothes(typeClothes: string): Promise<void> {
   const { animations, props } = DATA_CLOTHES[typeClothes];
   const { dict, anim, move, duration } = animations.off;
-  const { male, female } = props;
+  const { male, female, maleProps, femaleProps } = props;
   const playerPed = PlayerPedId();
   const isMale = isPedMale(playerPed);
 
@@ -456,14 +482,41 @@ export async function removeClothes(typeClothes: string): Promise<void> {
   }
 
   if (isMale) {
-    for (let i = 0; i < male.length; i++) {
-      const [componentId, drawableId] = male[i];
-      SetPedComponentVariation(playerPed, componentId, drawableId, 0, 2);
+    if (male != undefined) {
+      for (let i = 0; i < male.length; i++) {
+        const [componentId, drawableId] = male[i];
+        SetPedComponentVariation(playerPed, componentId, drawableId, 0, 2);
+      }
+    }
+    if (maleProps != undefined) {
+      // console.log("REMOVING PED PROPS");
+      for (let i = 0; i < maleProps.length; i++) {
+        const [propId, drawableId] = maleProps[i];
+        if (drawableId == -1) {
+          ClearPedProp(playerPed, propId)
+        } else {
+          SetPedPropIndex(playerPed, propId, drawableId, 0, false);
+          // console.log("SetPedPropIndex("+"playerPed"+", "+"propId:"+propId+", "+"drawableId:"+drawableId+", "+"texture:0"+", "+"false);");
+        };
+      }
     }
   } else {
-    for (let i = 0; i < female.length; i++) {
-      const [componentId, drawableId] = female[i];
-      SetPedComponentVariation(playerPed, componentId, drawableId, 0, 2);
+    if (female != undefined) {
+      for (let i = 0; i < female.length; i++) {
+        const [componentId, drawableId] = female[i];
+        SetPedComponentVariation(playerPed, componentId, drawableId, 0, 2);
+      }
+    }
+    if (femaleProps != undefined) {
+      for (let i = 0; i < femaleProps.length; i++) {
+        const [componentId, drawableId] = femaleProps[i];
+        if (drawableId == -1) {
+          ClearPedProp(playerPed, propId)
+        } else {
+          SetPedPropIndex(playerPed, propId, drawableId, 0, false);
+          // console.log("SetPedPropIndex("+"playerPed"+", "+"propId:"+propId+", "+"drawableId:"+drawableId+", "+"texture:0"+", "+"false);");
+        };
+      }
     }
   }
   TaskPlayAnim(playerPed, dict, anim, 3.0, 3.0, duration, move, 0, false, false, false);
