@@ -77,6 +77,7 @@ export const APPEARANCE_INITIAL_STATE: PedAppearance = {
       style: 0,
       opacity: 0,
       color: 0,
+      secondColor: 0,
     },
     blush: {
       style: 0,
@@ -348,6 +349,13 @@ export const SETTINGS_INITIAL_STATE: AppearanceSettings = {
         factor: 0.1,
       },
       color: {
+        items: [
+          [255, 0, 0],
+          [0, 255, 0],
+          [0, 0, 255],
+        ],
+      },
+      secondColor: {
         items: [
           [255, 0, 0],
           [0, 255, 0],

@@ -114,7 +114,7 @@ function getPedFaceFeatures(ped: number): PedFaceFeatures {
 function getPedHeadOverlays(ped: number): PedHeadOverlays {
   const headOverlays = HEAD_OVERLAYS.reduce((object, overlay, index) => {
     // success, value, colorType, firstColor, secondColor, opacity
-    const [, value, , firstColor, , opacity] = GetPedHeadOverlayData(ped, index);
+    const [, value, , firstColor, secondColor, opacity] = GetPedHeadOverlayData(ped, index);
 
     const hasOverlay = value !== 255;
 
@@ -123,7 +123,7 @@ function getPedHeadOverlays(ped: number): PedHeadOverlays {
 
     return {
       ...object,
-      [overlay]: { style: safeValue, opacity: normalizedOpacity, color: firstColor },
+      [overlay]: { style: safeValue, opacity: normalizedOpacity, color: firstColor, secondColor: secondColor },
     };
   }, {} as PedHeadOverlays);
 
@@ -260,6 +260,7 @@ export function setPedHeadOverlays(ped: number, headOverlays: PedHeadOverlays): 
       }
       
       SetPedHeadOverlayColor(ped, index, colorType, headOverlay.color, headOverlay.secondColor);
+
     }
   });
 }

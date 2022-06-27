@@ -86,6 +86,7 @@ export default interface Locales {
     opacity: string;
     style: string;
     color: string;
+    secondColor: string;
     blemishes: string;
     beard: string;
     eyebrows: string;

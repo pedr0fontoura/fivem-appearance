@@ -162,6 +162,9 @@ type HeadOverlaysSettingsValue = {
   color?: {
     items: number[][];
   };
+  secondColor?: {
+    items: number[][];
+  };
 };
 
 export type HeadOverlaysSettings = Record<HeadOverlaysSettingsKey, HeadOverlaysSettingsValue>;
