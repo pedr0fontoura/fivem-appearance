@@ -131,7 +131,7 @@
     "items": {	
       "ZONE_TORSO": "Torso",	
       "ZONE_HEAD": "Cabeza",	
-      "ZONE_LEFT_ARM": "Brazo izquierda",	
+      "ZONE_LEFT_ARM": "Brazo izquierdo",	
       "ZONE_RIGHT_ARM": "Brazo derecho",	
       "ZONE_LEFT_LEG": "Pierna izquierdo",	
       "ZONE_RIGHT_LEG": "Pierna izquierda"	
