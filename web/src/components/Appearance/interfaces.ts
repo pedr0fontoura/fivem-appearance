@@ -204,6 +204,7 @@ export interface CustomizationConfig {
   components: boolean;
   props: boolean;
   tattoos: boolean;
+  allowExit: boolean;
   automaticFade: boolean;
 }
 
