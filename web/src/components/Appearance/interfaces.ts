@@ -34,6 +34,7 @@ export interface PedHeadOverlayValue {
   style: number;
   opacity: number;
   color?: number;
+  secondColor?: number;
 }
 
 export interface PedHeadOverlays {
@@ -203,6 +204,8 @@ export interface CustomizationConfig {
   components: boolean;
   props: boolean;
   tattoos: boolean;
+  allowExit: boolean;
+  automaticFade: boolean;
 }
 
 export interface CameraState {

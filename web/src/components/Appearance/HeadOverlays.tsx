@@ -13,27 +13,34 @@ import {
   PedHair,
   PedHeadOverlays,
   PedHeadOverlayValue,
+  Tattoo
 } from './interfaces';
+import { useCallback } from 'react';
 
 interface HeadOverlaysProps {
   settings: {
     hair: HairSettings;
     headOverlays: HeadOverlaysSettings;
     eyeColor: EyeColorSettings;
+    fade: Tattoo[];
   };
   storedData: {
     hair: PedHair;
     headOverlays: PedHeadOverlays;
     eyeColor: number;
+    fade: Tattoo | null;
   };
   data: {
     hair: PedHair;
     headOverlays: PedHeadOverlays;
     eyeColor: number;
+    fade: Tattoo | null;
   };
   handleHairChange: (key: keyof PedHair, value: number) => void;
   handleHeadOverlayChange: (key: keyof PedHeadOverlays, option: keyof PedHeadOverlayValue, value: number) => void;
   handleEyeColorChange: (value: number) => void;
+  handleChangeFade: (value: number) => void;
+  automaticFade: boolean;
 }
 
 const HeadOverlays = ({
@@ -42,13 +49,27 @@ const HeadOverlays = ({
   data,
   handleHairChange,
   handleHeadOverlayChange,
-  handleEyeColorChange,
+  handleEyeColorChange, 
+  handleChangeFade, 
+  automaticFade
 }: HeadOverlaysProps) => {
   const { locales } = useNuiState();
 
   if (!locales) {
     return null;
   }
+
+  const fadeValue = useCallback(() => {
+    const indexFade = settings?.fade?.findIndex(tattoo => tattoo.name === data.fade?.name)
+
+    return indexFade >= 0 ? indexFade : 0
+  }, [data.fade?.name])()
+
+  const storedFadeValue = useCallback(() => {
+    const indexFade = settings?.fade?.findIndex(tattoo => tattoo.name === storedData.fade?.name)
+
+    return indexFade >= 0 ? indexFade : 0
+  }, [storedData.fade?.name])()
 
   return (
     <Section title={locales.headOverlays.title} deps={[settings]}>
@@ -61,6 +82,14 @@ const HeadOverlays = ({
           clientValue={storedData.hair.style}
           onChange={value => handleHairChange('style', value)}
         />
+        {!automaticFade && <Input
+          title={locales.headOverlays.hair.fade}
+          min={0}
+          max={settings?.fade?.length - 1 ?? 0}
+          defaultValue={fadeValue}
+          clientValue={storedFadeValue}
+          onChange={value => handleChangeFade(value)}
+        />}
         <ColorInput
           title={locales.headOverlays.hair.color}
           colors={settings.hair.color.items}
@@ -189,6 +218,13 @@ const HeadOverlays = ({
           defaultValue={data.headOverlays.makeUp.color}
           clientValue={storedData.headOverlays.makeUp.color}
           onChange={value => handleHeadOverlayChange('makeUp', 'color', value)}
+        />
+        <ColorInput
+          title={locales.headOverlays.color}
+          colors={settings.headOverlays.makeUp.color?.items}
+          defaultValue={data.headOverlays.makeUp.secondColor}
+          clientValue={storedData.headOverlays.makeUp.secondColor}
+          onChange={value => handleHeadOverlayChange('makeUp', 'secondColor', value)}
         />
       </Item>
       <Item title={locales.headOverlays.blush}>

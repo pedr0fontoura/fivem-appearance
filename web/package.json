@@ -8,25 +8,19 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
-    "@types/react-dom": "^18.0.1",
-    "@types/react": "^18.0.5",
     "cross-env": "^7.0.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-icons": "^4.1.0",
-    "react-scripts": "4.0.1",
     "react-select": "^4.2.1",
     "react-spring": "^8.0.27",
     "styled-components": "^5.2.1",
-    "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "cross-env REACT_APP_ENV=development react-scripts start",
-    "build": "cross-env REACT_APP_ENV=production react-scripts build",
-    "build-game": "cross-env REACT_APP_ENV=game react-scripts build",
+    "start": "cross-env VITE_ENV=development vite",
+    "build": "cross-env VITE_ENV=production tsc && vite build",
+    "build-game": "cross-env VITE_ENV=game tsc && vite build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -64,6 +58,9 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1", 
+    "@vitejs/plugin-react": "^1.3.1",
+    "vite": "^2.9.6", 
+    "typescript": "^4.0.3"
   }
 }

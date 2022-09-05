@@ -80,7 +80,8 @@
       "title": "Hair",
       "style": "Style",
       "color": "Color",
-      "highlight": "Highlight"
+      "highlight": "Highlight", 
+      "fade": "Fade"
     },
     "opacity": "Opacity",
     "style": "Style",

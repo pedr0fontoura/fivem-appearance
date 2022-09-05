@@ -16,7 +16,7 @@ import {
 } from 'react-icons/fa';
 import { GiClothes } from 'react-icons/gi';
 
-import { CameraState, ClothesState, RotateState } from './interfaces';
+import { CameraState, ClothesState, CustomizationConfig, RotateState } from './interfaces';
 
 interface ToggleButtonProps {
   active: boolean;
@@ -41,6 +41,7 @@ interface OptionsProps {
   camera: CameraState;
   rotate: RotateState;
   clothes: ClothesState;
+  config: CustomizationConfig;
   handleSetClothes: (key: keyof ClothesState) => void;
   handleSetCamera: (key: keyof CameraState) => void;
   handleTurnAround: () => void;
@@ -227,6 +228,7 @@ const Options: React.FC<OptionsProps> = ({
   camera,
   rotate,
   clothes,
+  config,
   handleSetClothes,
   handleSetCamera,
   handleTurnAround,
@@ -271,9 +273,11 @@ const Options: React.FC<OptionsProps> = ({
       <Option onClick={handleSave}>
         <FaSave size={20} />
       </Option>
-      <Option onClick={handleExit}>
-        <FaTimes size={20} />
-      </Option>
+      {config.allowExit && (
+        <Option onClick={handleExit}>
+          <FaTimes size={20} />
+        </Option>
+      )}
     </Container>
   );
 };

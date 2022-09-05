@@ -38,7 +38,7 @@ import Tattoos from './Tattoos';
 
 import { Wrapper, Container } from './styles';
 
-if (process.env.REACT_APP_ENV !== 'production') {
+if (!import.meta.env.PROD) {
   mock('appearance_get_settings_and_data', () => ({
     appearanceData: { ...APPEARANCE_INITIAL_STATE, model: 'mp_f_freemode_01' },
     appearanceSettings: {
@@ -239,6 +239,17 @@ const Appearance = () => {
     [data, setData],
   );
 
+  const handleChangeFade = useCallback(async (value: number) => {
+    if (!data || !appearanceSettings) return;
+      const { tattoos } = data;
+      const updatedTattoos = { ...tattoos };
+      const tattoo = appearanceSettings.tattoos.items['ZONE_HAIR'][value]
+      if (!updatedTattoos[tattoo.zone]) updatedTattoos[tattoo.zone] = [];
+      updatedTattoos[tattoo.zone] = [tattoo];
+      await Nui.post('appearance_apply_tattoo', updatedTattoos);
+      setData({ ...data, tattoos: updatedTattoos });
+  }, [appearanceSettings, data, setData])
+
   const handleHeadOverlayChange = useCallback(
     (key: keyof PedHeadOverlays, option: keyof PedHeadOverlayValue, value: number) => {
       if (!data) return;
@@ -425,7 +436,9 @@ const Appearance = () => {
       const { tattoos } = data;
       const updatedTattoos = tattoos;
       // eslint-disable-next-line prettier/prettier
-      updatedTattoos[tattoo.zone] = updatedTattoos[tattoo.zone].filter(tattooDelete => tattooDelete.name !== tattoo.name);
+      updatedTattoos[tattoo.zone] = updatedTattoos[tattoo.zone].filter(
+        tattooDelete => tattooDelete.name !== tattoo.name,
+      );
       await Nui.post('appearance_delete_tattoo', updatedTattoos);
       setData({ ...data, tattoos: updatedTattoos });
     },
@@ -510,20 +523,25 @@ const Appearance = () => {
                             hair: appearanceSettings.hair,
                             headOverlays: appearanceSettings.headOverlays,
                             eyeColor: appearanceSettings.eyeColor,
+                            fade: appearanceSettings.tattoos.items['ZONE_HAIR']
                           }}
                           storedData={{
                             hair: storedData.hair,
                             headOverlays: storedData.headOverlays,
                             eyeColor: storedData.eyeColor,
+                            fade: storedData.tattoos?.ZONE_HAIR?.length > 0 ? storedData.tattoos.ZONE_HAIR[0] : null
                           }}
                           data={{
                             hair: data.hair,
                             headOverlays: data.headOverlays,
                             eyeColor: data.eyeColor,
+                            fade: data.tattoos?.ZONE_HAIR?.length > 0 ? data.tattoos.ZONE_HAIR[0] : null
                           }}
                           handleHairChange={handleHairChange}
                           handleHeadOverlayChange={handleHeadOverlayChange}
                           handleEyeColorChange={handleEyeColorChange}
+                          handleChangeFade={handleChangeFade}
+                          automaticFade={config.automaticFade}
                         />
                       )}
                     </>
@@ -560,6 +578,7 @@ const Appearance = () => {
                   camera={camera}
                   rotate={rotate}
                   clothes={clothes}
+                  config={config}
                   handleSetClothes={handleSetClothes}
                   handleSetCamera={handleSetCamera}
                   handleTurnAround={handleTurnAround}
