@@ -5,14 +5,14 @@
       "description": "Tu resteras moche"
     },
     "exit": {
-      "title": "Quitter la personnalisatioN",
+      "title": "Quitter la personnalisation",
       "description": "Aucune modification ne sera enregistrée"
     },
     "accept": "OUI",
     "decline": "NON"
   },
   "ped": {
-    "title": "Perso",
+    "title": "Personnage",
     "model": "Model"
   },
   "headBlend": {
@@ -21,13 +21,13 @@
       "title": "Visage",
       "firstOption": "Père",
       "secondOption": "Mère",
-      "mix": "Mix"
+      "mix": "Ressemblance"
     },
     "skin": {
       "title": "Peau",
       "firstOption": "Père",
       "secondOption": "Mère",
-      "mix": "Mix"
+      "mix": "Ressemblance"
     }
   },
   "faceFeatures": {
@@ -37,9 +37,9 @@
       "width": "Largeur",
       "height": "Hauteur",
       "size": "Taille",
-      "boneHeight": "Hauteur de l’os",
-      "boneTwist": "Torsion osseuse",
-      "peakHeight": "Hauteur maximale"
+      "boneHeight": "Hauteur de l’arête",
+      "boneTwist": "Torsion de l’arête",
+      "peakHeight": "Hauteur bout du nez"
     },
     "eyebrows": {
       "title": "Sourcils",
@@ -48,9 +48,9 @@
     },
     "cheeks": {
       "title": "Joues",
-      "boneHeight": "Hauteur de l’os",
-      "boneWidth": "Largeur de l’os",
-      "width": "Largeur"
+      "boneHeight": "Hauteur des paumettes",
+      "boneWidth": "Largeur des paumettes",
+      "width": "Largeur des joues"
     },
     "eyesAndMouth": {
       "title": "Yeux et bouche",
@@ -64,10 +64,10 @@
     },
     "chin": {
       "title": "Menton",
-      "lowering": "Abaissement",
+      "lowering": "Hauteur",
       "length": "Longueur",
       "size": "Taille",
-      "hole": "Taille du trou"
+      "hole": "Fossette"
     },
     "neck": {
       "title": "Cou",
@@ -89,39 +89,39 @@
     "blemishes": "Défauts",
     "beard": "Barbe",
     "eyebrows": "Sourcils",
-    "ageing": "Vieillissement",
+    "ageing": "Rides",
     "makeUp": "Maquillage",
     "blush": "Blush",
     "complexion": "Teint",
-    "sunDamage": "Dommage du soleil",
+    "sunDamage": "Dommages du soleil",
     "lipstick": "Rouge à lèvres",
-    "moleAndFreckles": "Taupe et taches de rousseur",
-    "chestHair": "Poil",
-    "bodyBlemishes": "Imperfections corporelles",
+    "moleAndFreckles": "Taches de rousseur et grains de beauté",
+    "chestHair": "Pilosité du corps",
+    "bodyBlemishes": "Imperfections du corps",
     "eyeColor": "Couleur des yeux"
   },
   "components": {
-    "title": "Vêtement",
+    "title": "Vêtements",
     "drawable": "Model",
-    "texture": "Texture",
-    "mask": "Masque",
+    "texture": "Couleur",
+    "mask": "Masques",
     "upperBody": "Mains",
     "lowerBody": "Jambes",
-    "bags": "Sacs et parachute",
+    "bags": "Sacs et parachutes",
     "shoes": "Chaussures",
-    "scarfAndChains": "Foulard et écharpes",
-    "shirt": "Chemise",
-    "bodyArmor": "Gilet pare-balles",
+    "scarfAndChains": "Foulards et écharpes",
+    "shirt": "Chemises",
+    "bodyArmor": "Gilets pare-balles",
     "decals": "Décalcomanies",
     "jackets": "Vestes"
   },
   "props": {
     "title": "Accessoires",
     "drawable": "Model",
-    "texture": "Texture",
+    "texture": "Couleur",
     "hats": "Chapeaux et casques",
     "glasses": "Lunettes",
-    "ear": "Oreille",
+    "ear": "Accessoires d'oreilles",
     "watches": "Montres",
     "bracelets": "Bracelets"
   },
