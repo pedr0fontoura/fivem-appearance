@@ -12,7 +12,7 @@ This resource was designed to manage all GTA V player/ped customization in only 
 
 ## Docs
 
-[![Fivepunch docs](https://i.imgur.com/lpVJu8v.png)](https://docs.fivepunch.io/resources/fivem-appearance)
+[![Fivepunch docs](https://i.imgur.com/krdL9bx.png)](https://docs.fivepunch.io/resources/fivem-appearance)
 
 ## License
 
