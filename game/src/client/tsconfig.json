@@ -1,18 +1,13 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "*": ["types/*"]
-    },
-    "outDir": "./",
-    "noImplicitAny": false,
-    "module": "es6",
-    "target": "esnext",
-    "allowJs": true,
-    "lib": ["es2017"],
-    "types": ["@citizenfx/client", "@types/node"],
-    "moduleResolution": "node"
+    "baseUrl": "./",
+    "target": "ES2018",
+    "moduleResolution": "Node",
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "types": ["@types/node", "@citizenfx/client"],
+    "paths": {}
   },
-  "include": ["./**/*"],
-  "exclude": ["**/node_modules", "**/__tests__/*"]
+  "include": ["./"]
 }

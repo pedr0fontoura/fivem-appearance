@@ -4,12 +4,9 @@
   "author": "snakewiz",
   "repository": "git@github.com:pedr0fontoura/fivem-appearance.git",
   "license": "MIT",
-  "type": "module",
   "scripts": {
-    "build": "node delete_dist.js && esbuild src/client/index.ts --bundle --external:./node_modules/* --format=iife --minify --platform=node --outdir=dist",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "watch": "esbuild src/client/index.ts --bundle --external:./node_modules/* --format=iife --minify --platform=node --outdir=dist --watch"
+    "watch": "esbuild src/client/index.ts --outfile=./dist/index.js --bundle --watch --format=cjs",
+    "build": "esbuild src/client/index.ts --outfile=./dist/index.js --bundle --minify --format=cjs"
   },
   "devDependencies": {
     "@citizenfx/client": "^1.0.3432-1",
@@ -21,7 +18,7 @@
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
     "prettier": "^2.2.1",
-    "typescript": "^4.1.3",
-    "esbuild": "^0.14.38"
+    "typescript": "^4.1.3"
   }
 }
+

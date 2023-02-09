@@ -7,7 +7,7 @@ import {
   DATA_CLOTHES,
 } from '../../constants';
 
-import { pedModels, getPedAppearance, setPlayerAppearance, totalTattoos } from '../../index';
+import { pedModels, getPedAppearance, setPlayerAppearance, totalTattoos } from '../../appearance';
 
 import { arrayToVector3, isPedMale, Delay } from '../../utils';
 
@@ -426,7 +426,8 @@ export async function wearClothes(data: PedAppearance, typeClothes: string): Pro
       for (let j = 0; j < components.length; j++) {
         const { component_id, drawable, texture } = components[j];
         // eslint-disable-next-line prettier/prettier
-        if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
+        if (component_id === componentId)
+          SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
       }
     }
   } else {
@@ -435,7 +436,8 @@ export async function wearClothes(data: PedAppearance, typeClothes: string): Pro
       for (let j = 0; j < components.length; j++) {
         const { component_id, drawable, texture } = components[j];
         // eslint-disable-next-line prettier/prettier
-        if (component_id === componentId) SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
+        if (component_id === componentId)
+          SetPedComponentVariation(playerPed, componentId, drawable, texture, 2);
       }
     }
   }
@@ -615,7 +617,7 @@ function onResourceStop(resource: string) {
   SetNuiFocusKeepInput(false);
 }
 
-export function loadModule(): void {
+function loadModule(): void {
   registerNuiCallbacks();
 
   on('onResourceStop', onResourceStop);

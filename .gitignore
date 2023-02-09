@@ -1,11 +1,3 @@
-release/
-node_modules/
-yarn.lock
-
-game/node_modules/
-game/dist/
-game/yarn.lock
-
-web/node_modules/
-web/dist/
-web/yarn.lock
+release
+node_modules
+dist

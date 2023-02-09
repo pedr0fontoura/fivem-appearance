@@ -26,7 +26,7 @@ import {
   setPedEyeColor,
   setPedComponent,
   setPedProp,
-} from '../../index';
+} from '../../appearance';
 
 export function registerNuiCallbacks(): void {
   RegisterNuiCallbackType('appearance_get_locales');
