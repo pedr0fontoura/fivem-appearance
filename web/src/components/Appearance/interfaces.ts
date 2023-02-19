@@ -162,6 +162,9 @@ type HeadOverlaysSettingsValue = {
   color?: {
     items: number[][];
   };
+  secondColor?: {
+    items: number[][];
+  };
 };
 
 export type HeadOverlaysSettings = Record<HeadOverlaysSettingsKey, HeadOverlaysSettingsValue>;
@@ -216,6 +219,9 @@ export interface CameraState {
 
 export interface ClothesState {
   head: boolean;
+  glasses: boolean;
+  earaccs: boolean;
+  chain: boolean;
   body: boolean;
   bottom: boolean;
 }

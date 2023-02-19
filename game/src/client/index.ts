@@ -20,6 +20,14 @@ export const totalTattoos: TattooList = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'tattoos.json'),
 );
 
+export const femaleOnlyTattoos: TattooList = totalTattoos;
+export const maleOnlyTattoos: TattooList = totalTattoos;
+
+for (let [bodypart, content] of Object.entries(totalTattoos)) {
+  femaleOnlyTattoos[bodypart] = content.filter(tattoo => ((tattoo.hashFemale !== "")));
+  maleOnlyTattoos[bodypart] = content.filter(tattoo => ((tattoo.hashMale !== "")));
+}
+
 export const pedModels: string[] = JSON.parse(
   LoadResourceFile(GetCurrentResourceName(), 'peds.json'),
 );
@@ -106,7 +114,7 @@ function getPedFaceFeatures(ped: number): PedFaceFeatures {
 function getPedHeadOverlays(ped: number): PedHeadOverlays {
   const headOverlays = HEAD_OVERLAYS.reduce((object, overlay, index) => {
     // success, value, colorType, firstColor, secondColor, opacity
-    const [, value, , firstColor, , opacity] = GetPedHeadOverlayData(ped, index);
+    const [, value, , firstColor, secondColor, opacity] = GetPedHeadOverlayData(ped, index);
 
     const hasOverlay = value !== 255;
 
@@ -115,7 +123,7 @@ function getPedHeadOverlays(ped: number): PedHeadOverlays {
 
     return {
       ...object,
-      [overlay]: { style: safeValue, opacity: normalizedOpacity, color: firstColor },
+      [overlay]: { style: safeValue, opacity: normalizedOpacity, color: firstColor, secondColor: secondColor },
     };
   }, {} as PedHeadOverlays);
 
@@ -251,6 +259,7 @@ export function setPedHeadOverlays(ped: number, headOverlays: PedHeadOverlays): 
         colorType = 2;
       }
       SetPedHeadOverlayColor(ped, index, colorType, headOverlay.color, headOverlay.secondColor);
+
     }
   });
 }

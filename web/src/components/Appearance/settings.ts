@@ -77,6 +77,7 @@ export const APPEARANCE_INITIAL_STATE: PedAppearance = {
       style: 0,
       opacity: 0,
       color: 0,
+      secondColor: 0,
     },
     blush: {
       style: 0,
@@ -354,6 +355,13 @@ export const SETTINGS_INITIAL_STATE: AppearanceSettings = {
           [0, 0, 255],
         ],
       },
+      secondColor: {
+        items: [
+          [255, 0, 0],
+          [0, 255, 0],
+          [0, 0, 255],
+        ],
+      },
     },
     blush: {
       style: {
@@ -484,4 +492,4 @@ export const CAMERA_INITIAL_STATE = { head: false, body: false, bottom: false };
 
 export const ROTATE_INITIAL_STATE = { left: false, right: false };
 
-export const CLOTHES_INITIAL_STATE = { head: false, body: false, bottom: false };
+export const CLOTHES_INITIAL_STATE = { head: false, glasses: false, earaccs: false, chain: false, body: false, bottom: false };
