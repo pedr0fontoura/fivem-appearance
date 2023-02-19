@@ -436,7 +436,9 @@ const Appearance = () => {
       const { tattoos } = data;
       const updatedTattoos = tattoos;
       // eslint-disable-next-line prettier/prettier
-      updatedTattoos[tattoo.zone] = updatedTattoos[tattoo.zone].filter(tattooDelete => tattooDelete.name !== tattoo.name);
+      updatedTattoos[tattoo.zone] = updatedTattoos[tattoo.zone].filter(
+        tattooDelete => tattooDelete.name !== tattoo.name,
+      );
       await Nui.post('appearance_delete_tattoo', updatedTattoos);
       setData({ ...data, tattoos: updatedTattoos });
     },
@@ -576,6 +578,7 @@ const Appearance = () => {
                   camera={camera}
                   rotate={rotate}
                   clothes={clothes}
+                  config={config}
                   handleSetClothes={handleSetClothes}
                   handleSetCamera={handleSetCamera}
                   handleTurnAround={handleTurnAround}
