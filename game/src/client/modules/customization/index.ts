@@ -536,7 +536,7 @@ function startPlayerCustomization(
   playerAppearance = getPedAppearance(playerPed);
 
   callback = cb;
-  _config.automaticFade = Boolean(Number(GetConvar('fivem-appearance:automaticFade', '1')));
+  _config.automaticFade = Boolean(GetConvarInt('fivem-appearance:automaticFade', 1));
   config = _config;
 
   playerCoords = arrayToVector3(GetEntityCoords(playerPed, true));
