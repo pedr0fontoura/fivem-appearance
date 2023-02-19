@@ -289,9 +289,3 @@ interface WearClothes {
   data: PedAppearance;
   key: string;
 }
-
-interface Outfit {
-  id: string;
-  name: string;
-  clothes: PedAppearance;
-}
