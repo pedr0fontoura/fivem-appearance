@@ -1,5 +1,7 @@
 # fivem-appearance
 
+# Now edited to fully work with FiveM for Enhanced
+
 A flexible player customization script for FiveM.
 
 This resource was designed to manage all GTA V player/ped customization in only one place, with an opinionated way to handle the data.
