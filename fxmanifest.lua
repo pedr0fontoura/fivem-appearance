@@ -5,6 +5,7 @@ author 'Snake'
 description 'A flexible player customization script for FiveM.'
 repository 'https://github.com/snakewiz/fivem-appearance'
 version '1.2.0'
+nui_callback_strict_mode 'false'
 
 client_scripts { 
   
